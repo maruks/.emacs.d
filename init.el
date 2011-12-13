@@ -53,13 +53,13 @@
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(defun load-zenburn () (interactive) (load-theme 'zenburn t))
-(defun load-sol-dark () (interactive) (load-theme 'solarized-dark t) )
-(defun load-sol-light () (interactive) (load-theme 'solarized-light t))
-
-(global-set-key (kbd "C-c C-t C-z") 'load-zenburn)
-(global-set-key (kbd "C-c C-t C-s") 'load-sol-dark)
-(global-set-key (kbd "C-c C-t C-l") 'load-sol-light)
+(global-set-key (kbd "C-c C-t C-z") '(lambda () (interactive) (load-theme 'zenburn t)))
+(global-set-key (kbd "C-c C-t C-s") '(lambda () (interactive) (load-theme 'solarized-dark t)))
+(global-set-key (kbd "C-c C-t C-l") '(lambda () (interactive) (load-theme 'solarized-light t)))
+(global-set-key (kbd "C-c C-t C-t") '(lambda () (interactive) (load-theme 'tango t)))
+(global-set-key (kbd "C-c C-t C-d") '(lambda () (interactive) (load-theme 'deeper-blue t)))
+(global-set-key (kbd "C-c C-t C-h") '(lambda () (interactive) (load-theme 'tsdh-dark t)))
+(global-set-key (kbd "C-c C-t C-i") '(lambda () (interactive) (load-theme 'dichromacy t)))
 
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
