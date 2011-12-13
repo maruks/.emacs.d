@@ -14,6 +14,9 @@
     (when (not (package-installed-p p))
       (package-install p))))
 
+;; magit
+(global-set-key (kbd "<f6>") 'magit-status)
+
 ;; clojure-mode
 (add-to-list 'load-path "~/.emacs.d/elpa/clojure-mode-1.11.4")
 (require 'clojure-mode)
@@ -23,13 +26,16 @@
 (global-set-key (kbd "C-c C-j C-i") 'clojure-jack-in)
 
 (add-hook 'clojure-mode-hook
-          '(lambda () (define-key clojure-mode-map (kbd "C-c C-g C-r") 'compile-and-goto-repl)))
+          '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
 
 ;; emacs lisp
 
-(defun eval-buff-go-to-repl () (progn (eval-buffer) (switch-to-buffer (get-buffer "*ielm*"))))
+(defun eval-buff-go-to-repl () (interactive) (progn 
+					       (eval-buffer) 
+					       (if (get-buffer "*ielm*")
+						   (switch-to-buffer-other-window (get-buffer "*ielm*")))))
 (add-hook 'emacs-lisp-mode-hook
-          '(lambda () (define-key emacs-lisp-mode-map (kbd "C-c C-g C-r") (eval-buff-go-to-repl))))
+          '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
 ;; paredit
 (add-to-list 'load-path "~/.emacs.d/elpa/paredit-22")
