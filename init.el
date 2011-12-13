@@ -20,17 +20,29 @@
 
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
 
-(global-set-key (kbd "C-c C-g C-r") 'compile-and-goto-repl)
 (global-set-key (kbd "C-c C-j C-i") 'clojure-jack-in)
+
+(add-hook 'clojure-mode-hook
+          '(lambda () (define-key clojure-mode-map (kbd "C-c C-g C-r") 'compile-and-goto-repl)))
+
+;; emacs lisp
+
+(defun eval-buff-go-to-repl () (progn (eval-buffer) (switch-to-buffer (get-buffer "*ielm*"))))
+(add-hook 'emacs-lisp-mode-hook
+          '(lambda () (define-key emacs-lisp-mode-map (kbd "C-c C-g C-r") (eval-buff-go-to-repl))))
 
 ;; paredit
 (add-to-list 'load-path "~/.emacs.d/elpa/paredit-22")
-(require 'paredit)
 
-(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+(autoload 'paredit-mode "paredit"  "Minor mode for pseudo-structurally editing Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
 
-(global-set-key (kbd "M-p M-m e") 'enable-paredit-mode)
-(global-set-key (kbd "M-p M-m d") 'disable-paredit-mode)
+(global-set-key (kbd "C-c C-p C-e") (lambda () (paredit-mode +1)))
+(global-set-key (kbd "C-c C-p C-d") (lambda () (paredit-mode -1)))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -39,9 +51,10 @@
 (defun load-sol-dark () (interactive) (load-theme 'solarized-dark t) )
 (defun load-sol-light () (interactive) (load-theme 'solarized-light t))
 
-(global-set-key (kbd "C-c C-z C-b") 'load-zenburn)
-(global-set-key (kbd "C-c C-s C-d") 'load-sol-dark)
-(global-set-key (kbd "C-c C-s C-l") 'load-sol-light)
+(global-set-key (kbd "C-c C-t C-z") 'load-zenburn)
+(global-set-key (kbd "C-c C-t C-s") 'load-sol-dark)
+(global-set-key (kbd "C-c C-t C-l") 'load-sol-light)
+
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
 (require 'framemove)
@@ -75,7 +88,7 @@
 	(insert current-line)
 	(decf n)))))
     
-(global-set-key (kbd "C-S-l") 'duplicate-current-line)
+(global-set-key (kbd "C-c C-d") 'duplicate-current-line)
 
 ;; font
 (if (eq system-type 'darwin)
