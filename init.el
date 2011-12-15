@@ -60,6 +60,7 @@
 (global-set-key (kbd "C-c C-t C-d") '(lambda () (interactive) (load-theme 'deeper-blue t)))
 (global-set-key (kbd "C-c C-t C-h") '(lambda () (interactive) (load-theme 'tsdh-dark t)))
 (global-set-key (kbd "C-c C-t C-i") '(lambda () (interactive) (load-theme 'dichromacy t)))
+(global-set-key (kbd "C-c C-t C-w") '(lambda () (interactive) (load-theme 'wombat t)))
 
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
