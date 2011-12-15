@@ -100,3 +100,6 @@
 ;; font
 (if (eq system-type 'darwin)
     (set-default-font "Menlo-14"))
+
+;; Allow hash to be entered
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
