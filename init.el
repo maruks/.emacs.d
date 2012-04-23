@@ -9,11 +9,20 @@
     (package-refresh-contents))
   (defvar my-packages '(clojure-mode
 			scala-mode
+			projectile
+			monokai-theme
+			pastels-on-dark-theme
+			tango-2-theme
+			twilight-theme
 			paredit
 			magit))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+;; projectile
+(require 'projectile)
+(projectile-global-mode)
 
 ;; magit
 (global-set-key (kbd "<f6>") 'magit-status)
@@ -103,15 +112,3 @@
     (progn  
       (set-default-font "Menlo-14")
       (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("1440d751f5ef51f9245f8910113daee99848e2c0" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
