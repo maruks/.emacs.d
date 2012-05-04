@@ -10,10 +10,6 @@
   (defvar my-packages '(clojure-mode
 			scala-mode
 			projectile
-			monokai-theme
-			pastels-on-dark-theme
-			tango-2-theme
-			twilight-theme
 			paredit
 			magit))
   (dolist (p my-packages)
@@ -112,3 +108,22 @@
     (progn  
       (set-default-font "Menlo-14")
       (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))))
+
+;; frame size
+(defun set-frame-size-according-to-resolution ()
+  (interactive)
+  (if window-system
+      (let ((width (x-display-pixel-width)) 
+	    (height (x-display-pixel-height)))
+	(add-to-list 'default-frame-alist 
+		     (cons 'top 0))
+	(add-to-list 'default-frame-alist 
+		     (cons 'left 0))
+	(add-to-list 'default-frame-alist 
+		     (cons 'width (/ (- width (/ width 8))  
+				     (frame-char-width))))
+	(add-to-list 'default-frame-alist 
+		     (cons 'height (/ (- height (/ height 8))
+				      (frame-char-height)))))))
+
+(set-frame-size-according-to-resolution)
