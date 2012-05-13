@@ -9,9 +9,11 @@
     (package-refresh-contents))
   (defvar my-packages '(clojure-mode
 			scala-mode
+			yasnippet
 			projectile
 			popup
 			auto-complete
+			pos-tip
 			ac-slime
 			fuzzy
 			paredit
@@ -42,7 +44,6 @@
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
 
 ;; emacs lisp
-
 (defun eval-buff-go-to-repl () (interactive) (progn 
 					       (eval-buffer) 
 					       (if (get-buffer "*ielm*")
@@ -65,8 +66,6 @@
 (global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
 
 ;; color themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
 (global-set-key (kbd "C-c ltw") '(lambda () (interactive) (load-theme 'wombat t)))
 (global-set-key (kbd "C-c ltz") '(lambda () (interactive) (load-theme 'zenburn t)))
 (global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (load-theme 'solarized-dark t)))
@@ -145,11 +144,11 @@
 
 ;; auto complete
 (require 'auto-complete-config)
+(require 'pos-tip)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-1.4/dict")
 (ac-config-default)
-(setq ac-delay 1.0)
+(setq ac-auto-show-menu nil)
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-
 (global-set-key (kbd "C-c acm") 'auto-complete-mode)
 
 ;; configure auto complete to work in slime
@@ -162,15 +161,21 @@
 (require 'fuzzy)
 (global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
 (global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("1c766b1cde7547a33dcc098f0eb487eccad76c1f" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;; yasnippet
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
+(require 'yasnippet) 
+(yas/initialize)
+(setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.6.1/snippets"
+                           "~/.emacs.d/snippets"))
+
+(mapc 'yas/load-directory yas/root-directory)
+
+;; backups
+(setq make-backup-files t
+      backup-by-copying t     
+      backup-directory-alist '(("." . "~/.emacs.d/backups")) 
+      version-control t
+      kept-new-versions 2
+      kept-old-versions 5
+      delete-old-versions t)
