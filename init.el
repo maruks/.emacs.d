@@ -10,7 +10,14 @@
   (defvar my-packages '(clojure-mode
 			scala-mode
 			projectile
+			popup
+			auto-complete
+			ac-slime
+			fuzzy
 			paredit
+			load-theme-buffer-local
+			zenburn-theme
+			solarized-theme
 			magit))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
@@ -47,26 +54,34 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/paredit-22")
 
 (autoload 'paredit-mode "paredit"  "Minor mode for pseudo-structurally editing Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
+(add-hook 'emacs-lisp-mode-hook       '(lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             '(lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook '(lambda () (paredit-mode +1)))
+(add-hook 'scheme-mode-hook           '(lambda () (paredit-mode +1)))
+(add-hook 'clojure-mode-hook          '(lambda () (paredit-mode +1)))
+(add-hook 'slime-repl-mode-hook       '(lambda () (paredit-mode +1)))
 
-(global-set-key (kbd "C-c C-p C-e") (lambda () (paredit-mode +1)))
-(global-set-key (kbd "C-c C-p C-d") (lambda () (paredit-mode -1)))
+(global-set-key (kbd "C-c pme") '(lambda () (paredit-mode +1)))
+(global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(global-set-key (kbd "C-c C-t C-z") '(lambda () (interactive) (load-theme 'zenburn t)))
-(global-set-key (kbd "C-c C-t C-s") '(lambda () (interactive) (load-theme 'solarized-dark t)))
-(global-set-key (kbd "C-c C-t C-l") '(lambda () (interactive) (load-theme 'solarized-light t)))
-(global-set-key (kbd "C-c C-t C-t") '(lambda () (interactive) (load-theme 'tango t)))
-(global-set-key (kbd "C-c C-t C-d") '(lambda () (interactive) (load-theme 'deeper-blue t)))
-(global-set-key (kbd "C-c C-t C-h") '(lambda () (interactive) (load-theme 'tsdh-dark t)))
-(global-set-key (kbd "C-c C-t C-i") '(lambda () (interactive) (load-theme 'dichromacy t)))
-(global-set-key (kbd "C-c C-t C-w") '(lambda () (interactive) (load-theme 'wombat t)))
+(global-set-key (kbd "C-c ltw") '(lambda () (interactive) (load-theme 'wombat t)))
+(global-set-key (kbd "C-c ltz") '(lambda () (interactive) (load-theme 'zenburn t)))
+(global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (load-theme 'solarized-dark t)))
+(global-set-key (kbd "C-c ltsl") '(lambda () (interactive) (load-theme 'solarized-light t)))
+(global-set-key (kbd "C-c ltta") '(lambda () (interactive) (load-theme 'tango t)))
+(global-set-key (kbd "C-c ltdb") '(lambda () (interactive) (load-theme 'deeper-blue t)))
+(global-set-key (kbd "C-c ltdi") '(lambda () (interactive) (load-theme 'dichromacy t)))
+
+(global-set-key (kbd "C-c dtw") '(lambda () (interactive) (disable-theme 'wombat)))
+(global-set-key (kbd "C-c dtz") '(lambda () (interactive) (disable-theme 'zenburn)))
+(global-set-key (kbd "C-c dtsd") '(lambda () (interactive) (disable-theme 'solarized-dark)))
+(global-set-key (kbd "C-c dtsl") '(lambda () (interactive) (disable-theme 'solarized-light)))
+(global-set-key (kbd "C-c dtta") '(lambda () (interactive) (disable-theme 'tango)))
+(global-set-key (kbd "C-c dtdb") '(lambda () (interactive) (disable-theme 'deeper-blue)))
+(global-set-key (kbd "C-c dtdi") '(lambda () (interactive) (disable-theme 'dichromacy)))
 
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
@@ -127,3 +142,35 @@
 				      (frame-char-height)))))))
 
 (set-frame-size-according-to-resolution)
+
+;; auto complete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-1.4/dict")
+(ac-config-default)
+(setq ac-delay 1.0)
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+
+(global-set-key (kbd "C-c acm") 'auto-complete-mode)
+
+;; configure auto complete to work in slime
+(add-to-list 'load-path "~/.emacs.d/elpa/ac-slime-0.1")
+(require 'ac-slime)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+
+;; fuzzy search
+(require 'fuzzy)
+(global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
+(global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("1c766b1cde7547a33dcc098f0eb487eccad76c1f" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
