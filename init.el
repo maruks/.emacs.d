@@ -121,6 +121,7 @@
 (if (eq system-type 'darwin)
     (progn  
       (set-default-font "Menlo-14")
+      (add-to-list 'default-frame-alist '(font . "Menlo-14"))
       (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))))
 
 ;; frame size
