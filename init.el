@@ -33,7 +33,6 @@
 (global-set-key (kbd "<f6>") 'magit-status)
 
 ;; clojure-mode
-(add-to-list 'load-path "~/.emacs.d/elpa/clojure-mode-1.11.4")
 (require 'clojure-mode)
 
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
@@ -52,8 +51,6 @@
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
 ;; paredit
-(add-to-list 'load-path "~/.emacs.d/elpa/paredit-22")
-
 (autoload 'paredit-mode "paredit"  "Minor mode for pseudo-structurally editing Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       '(lambda () (paredit-mode +1)))
 (add-hook 'lisp-mode-hook             '(lambda () (paredit-mode +1)))
@@ -153,7 +150,6 @@
 (global-set-key (kbd "C-c acm") 'auto-complete-mode)
 
 ;; configure auto complete to work in slime
-(add-to-list 'load-path "~/.emacs.d/elpa/ac-slime-0.1")
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
@@ -164,7 +160,6 @@
 (global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
 
 ;; yasnippet
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
 (require 'yasnippet) 
 (yas/initialize)
 (setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.6.1/snippets"
