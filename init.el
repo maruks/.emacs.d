@@ -1,5 +1,8 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
+;; themes
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
 ;; repo
 (progn
   (require 'package)
@@ -69,6 +72,10 @@
 (global-set-key (kbd "C-c ltz") '(lambda () (interactive) (load-theme 'zenburn t)))
 (global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (load-theme 'solarized-dark t)))
 (global-set-key (kbd "C-c ltsl") '(lambda () (interactive) (load-theme 'solarized-light t)))
+(global-set-key (kbd "C-c lttne") '(lambda () (interactive) (load-theme 'tomorrow-night-eighties t)))
+(global-set-key (kbd "C-c lttni") '(lambda () (interactive) (load-theme 'tomorrow-night t)))
+(global-set-key (kbd "C-c lttnb") '(lambda () (interactive) (load-theme 'tomorrow-night-bright t)))
+(global-set-key (kbd "C-c ltto") '(lambda () (interactive) (load-theme 'tomorrow t)))
 (global-set-key (kbd "C-c ltta") '(lambda () (interactive) (load-theme 'tango t)))
 (global-set-key (kbd "C-c ltdb") '(lambda () (interactive) (load-theme 'deeper-blue t)))
 (global-set-key (kbd "C-c ltdi") '(lambda () (interactive) (load-theme 'dichromacy t)))
@@ -77,6 +84,10 @@
 (global-set-key (kbd "C-c dtz") '(lambda () (interactive) (disable-theme 'zenburn)))
 (global-set-key (kbd "C-c dtsd") '(lambda () (interactive) (disable-theme 'solarized-dark)))
 (global-set-key (kbd "C-c dtsl") '(lambda () (interactive) (disable-theme 'solarized-light)))
+(global-set-key (kbd "C-c dttne") '(lambda () (interactive) (disable-theme 'tomorrow-night-eighties)))
+(global-set-key (kbd "C-c dttni") '(lambda () (interactive) (disable-theme 'tomorrow-night)))
+(global-set-key (kbd "C-c dttnb") '(lambda () (interactive) (disable-theme 'tomorrow-night-bright)))
+(global-set-key (kbd "C-c dtto") '(lambda () (interactive) (disable-theme 'tomorrow)))
 (global-set-key (kbd "C-c dtta") '(lambda () (interactive) (disable-theme 'tango)))
 (global-set-key (kbd "C-c dtdb") '(lambda () (interactive) (disable-theme 'deeper-blue)))
 (global-set-key (kbd "C-c dtdi") '(lambda () (interactive) (disable-theme 'dichromacy)))
