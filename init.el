@@ -43,10 +43,12 @@
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
 
 ;; emacs lisp
-(defun eval-buff-go-to-repl () (interactive) (progn 
-					       (eval-buffer) 
-					       (if (get-buffer "*ielm*")
-						   (switch-to-buffer-other-window (get-buffer "*ielm*")))))
+(defun eval-buff-go-to-repl () (interactive) 
+  (progn 
+    (eval-buffer) 
+    (if (get-buffer "*ielm*")
+	(switch-to-buffer-other-window (get-buffer "*ielm*")))))
+
 (add-hook 'emacs-lisp-mode-hook
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
@@ -121,24 +123,27 @@
       (add-to-list 'default-frame-alist '(font . "Menlo-14"))
       (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))))
 
-;; frame size
-(defun set-frame-size-according-to-resolution ()
-  (interactive)
-  (if window-system
-      (let ((width (x-display-pixel-width)) 
-	    (height (x-display-pixel-height)))
-	(add-to-list 'default-frame-alist 
-		     (cons 'top 0))
-	(add-to-list 'default-frame-alist 
-		     (cons 'left 0))
-	(add-to-list 'default-frame-alist 
-		     (cons 'width (/ (- width (/ width 8))  
-				     (frame-char-width))))
-	(add-to-list 'default-frame-alist 
-		     (cons 'height (/ (- height (/ height 8))
-				      (frame-char-height)))))))
+;; maxframe
+(add-to-list 'load-path "~/.emacs.d/maxframe")
+(require 'maxframe)
+(global-set-key (kbd "C-c mf") 'maximize-frame)
+(global-set-key (kbd "C-c rf") 'restore-frame)
 
-(set-frame-size-according-to-resolution)
+;; slime
+(defun load-slime ()
+  (interactive)
+  (add-to-list 'load-path "~/.emacs.d/slime")
+  (setq inferior-lisp-program "/opt/local/bin/sbcl")
+  (require 'slime)
+  (slime-setup '(slime-fancy)))
+
+;; slime 2010 (for clojure)
+(defun load-slime-2010 ()
+  (interactive)
+  (add-to-list 'load-path "~/.emacs.d/slime-20100404.1")
+  (add-to-list 'load-path "~/.emacs.d/slime-repl-20100404")
+  (require 'slime)
+  (slime-setup '(slime-repl)))
 
 ;; auto complete
 (require 'auto-complete-config)
