@@ -144,7 +144,7 @@
 (defun load-slime ()
   (interactive)
   (add-to-list 'load-path "~/.emacs.d/slime")
-  (setq inferior-lisp-program "/opt/local/bin/sbcl")
+  (setq inferior-lisp-program "sbcl")
   (require 'slime)
   (slime-setup '(slime-fancy)))
 
