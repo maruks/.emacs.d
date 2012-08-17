@@ -40,7 +40,7 @@
 
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
 
-(global-set-key (kbd "C-c C-j C-i") 'clojure-jack-in)
+(global-set-key (kbd "C-c ji") 'clojure-jack-in)
 
 (add-hook 'clojure-mode-hook
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
