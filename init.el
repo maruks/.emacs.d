@@ -134,8 +134,8 @@
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
 
 (when (eq system-type 'gnu/linux)
-  (set-default-font "DejaVu Sans Mono-12")
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12")))
+  (set-default-font "DejaVu Sans Mono-10")
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
 
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
