@@ -1,8 +1,5 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
-;; themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
 ;; repo
 (progn
   (require 'package)
@@ -68,29 +65,32 @@
 (global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
 
 ;; color themes
-(global-set-key (kbd "C-c ltw") '(lambda () (interactive) (load-theme 'wombat t)))
-(global-set-key (kbd "C-c ltz") '(lambda () (interactive) (load-theme 'zenburn t)))
-(global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (load-theme 'solarized-dark t)))
-(global-set-key (kbd "C-c ltsl") '(lambda () (interactive) (load-theme 'solarized-light t)))
-(global-set-key (kbd "C-c lttne") '(lambda () (interactive) (load-theme 'tomorrow-night-eighties t)))
-(global-set-key (kbd "C-c lttni") '(lambda () (interactive) (load-theme 'tomorrow-night t)))
-(global-set-key (kbd "C-c lttnb") '(lambda () (interactive) (load-theme 'tomorrow-night-bright t)))
-(global-set-key (kbd "C-c ltto") '(lambda () (interactive) (load-theme 'tomorrow t)))
-(global-set-key (kbd "C-c ltta") '(lambda () (interactive) (load-theme 'tango t)))
-(global-set-key (kbd "C-c ltdb") '(lambda () (interactive) (load-theme 'deeper-blue t)))
-(global-set-key (kbd "C-c ltdi") '(lambda () (interactive) (load-theme 'dichromacy t)))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(global-set-key (kbd "C-c dtw") '(lambda () (interactive) (disable-theme 'wombat)))
-(global-set-key (kbd "C-c dtz") '(lambda () (interactive) (disable-theme 'zenburn)))
-(global-set-key (kbd "C-c dtsd") '(lambda () (interactive) (disable-theme 'solarized-dark)))
-(global-set-key (kbd "C-c dtsl") '(lambda () (interactive) (disable-theme 'solarized-light)))
-(global-set-key (kbd "C-c dttne") '(lambda () (interactive) (disable-theme 'tomorrow-night-eighties)))
-(global-set-key (kbd "C-c dttni") '(lambda () (interactive) (disable-theme 'tomorrow-night)))
-(global-set-key (kbd "C-c dttnb") '(lambda () (interactive) (disable-theme 'tomorrow-night-bright)))
-(global-set-key (kbd "C-c dtto") '(lambda () (interactive) (disable-theme 'tomorrow)))
-(global-set-key (kbd "C-c dtta") '(lambda () (interactive) (disable-theme 'tango)))
-(global-set-key (kbd "C-c dtdb") '(lambda () (interactive) (disable-theme 'deeper-blue)))
-(global-set-key (kbd "C-c dtdi") '(lambda () (interactive) (disable-theme 'dichromacy)))
+(setq current-t43m3 nil)
+
+(defun enab-theme (theme) 
+  (if current-t43m3 (disable-theme current-t43m3))
+  (setq current-t43m3 theme) 
+  (load-theme theme t)) 
+
+(defun disab-current-theme () 
+  (if current-t43m3 (disable-theme current-t43m3))
+  (setq current-t43m3 nil))
+
+(global-set-key (kbd "C-c ltwo") '(lambda () (interactive) (enab-theme 'wombat)))
+(global-set-key (kbd "C-c ltze") '(lambda () (interactive) (enab-theme 'zenburn)))
+(global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (enab-theme 'solarized-dark)))
+(global-set-key (kbd "C-c ltsl") '(lambda () (interactive) (enab-theme 'solarized-light)))
+(global-set-key (kbd "C-c ltne") '(lambda () (interactive) (enab-theme 'tomorrow-night-eighties)))
+(global-set-key (kbd "C-c ltni") '(lambda () (interactive) (enab-theme 'tomorrow-night)))
+(global-set-key (kbd "C-c ltnb") '(lambda () (interactive) (enab-theme 'tomorrow-night-bright)))
+(global-set-key (kbd "C-c ltto") '(lambda () (interactive) (enab-theme 'tomorrow)))
+(global-set-key (kbd "C-c ltta") '(lambda () (interactive) (enab-theme 'tango)))
+(global-set-key (kbd "C-c ltdb") '(lambda () (interactive) (enab-theme 'deeper-blue)))
+(global-set-key (kbd "C-c ltdi") '(lambda () (interactive) (enab-theme 'dichromacy)))
+
+(global-set-key (kbd "C-c dct") '(lambda () (interactive) (disab-current-theme)))
 
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
@@ -191,3 +191,11 @@
       kept-new-versions 2
       kept-old-versions 5
       delete-old-versions t)
+
+;; ensime
+
+;;(add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
+;;(require 'ensime)
+
+;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
