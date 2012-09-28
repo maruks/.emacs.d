@@ -37,7 +37,7 @@
 
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
 
-(global-set-key (kbd "C-c C-j C-i") 'clojure-jack-in)
+(global-set-key (kbd "C-c ji") 'clojure-jack-in)
 
 (add-hook 'clojure-mode-hook
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
@@ -128,11 +128,14 @@
 (global-set-key (kbd "C-c C-d") 'duplicate-current-line)
 
 ;; font & hash
-(if (eq system-type 'darwin)
-    (progn  
-      (set-default-font "Menlo-14")
-      (add-to-list 'default-frame-alist '(font . "Menlo-14"))
-      (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))))
+(when (eq system-type 'darwin)
+  (set-default-font "Menlo-14")
+  (add-to-list 'default-frame-alist '(font . "Menlo-14"))
+  (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
+
+(when (eq system-type 'gnu/linux)
+  (set-default-font "DejaVu Sans Mono-10")
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
 
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
@@ -144,7 +147,7 @@
 (defun load-slime ()
   (interactive)
   (add-to-list 'load-path "~/.emacs.d/slime")
-  (setq inferior-lisp-program "/opt/local/bin/sbcl")
+  (setq inferior-lisp-program "sbcl")
   (require 'slime)
   (slime-setup '(slime-fancy)))
 
