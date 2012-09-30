@@ -92,6 +92,13 @@
 
 (global-set-key (kbd "C-c dct") '(lambda () (interactive) (disab-current-theme)))
 
+(defun l0ad-theme (name) 
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+			     (mapcar 'symbol-name (custom-available-themes))))))
+  (enab-theme name))
+
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
 (require 'framemove)
