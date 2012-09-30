@@ -128,14 +128,19 @@
 (global-set-key (kbd "C-c C-d") 'duplicate-current-line)
 
 ;; font & hash
+
+(setq font (getenv "EMACS_DEFAULT_FONT"))
+
 (when (eq system-type 'darwin)
-  (set-default-font "Menlo-14")
-  (add-to-list 'default-frame-alist '(font . "Menlo-14"))
+  (setq font (or font "Menlo-14"))
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
 
 (when (eq system-type 'gnu/linux)
-  (set-default-font "DejaVu Sans Mono-10")
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
+  (setq font (or font "DejaVu Sans Mono-9")))
+
+(when font
+  (set-default-font font)
+  (add-to-list 'default-frame-alist (cons 'font font)))
 
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
