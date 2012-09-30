@@ -143,7 +143,7 @@
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
 
 (when (eq system-type 'gnu/linux)
-  (setq font (or font "DejaVu Sans Mono-9")))
+  (setq font (or font "DejaVu Sans Mono-10")))
 
 (when font
   (set-default-font font)
