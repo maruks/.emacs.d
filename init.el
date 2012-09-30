@@ -20,7 +20,9 @@
 			load-theme-buffer-local
 			zenburn-theme
 			solarized-theme
-			magit))
+			magit
+			nrepl
+			ac-nrepl))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -60,6 +62,7 @@
 (add-hook 'scheme-mode-hook           '(lambda () (paredit-mode +1)))
 (add-hook 'clojure-mode-hook          '(lambda () (paredit-mode +1)))
 (add-hook 'slime-repl-mode-hook       '(lambda () (paredit-mode +1)))
+(add-hook 'nrepl-mode-hook            '(lambda () (paredit-mode +1)) )
 
 (global-set-key (kbd "C-c pme") '(lambda () (paredit-mode +1)))
 (global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
@@ -214,4 +217,21 @@
       kept-old-versions 5
       delete-old-versions t)
 
+;; nrepl
+(add-hook 'nrepl-interaction-mode-hook
+  'nrepl-turn-on-eldoc-mode)
+(add-to-list 'same-window-buffer-names "*nrepl*") 
 
+;; ac-nrepl
+(require 'ac-nrepl)
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'nrepl-mode))
+
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
