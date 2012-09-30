@@ -156,7 +156,7 @@
 (global-set-key (kbd "C-c rf") 'restore-frame)
 
 ;; slime
-(defun load-slime ()
+(defun l0ad-slime ()
   (interactive)
   (add-to-list 'load-path "~/.emacs.d/slime")
   (setq inferior-lisp-program "sbcl")
@@ -164,7 +164,7 @@
   (slime-setup '(slime-fancy)))
 
 ;; slime 2010 (for clojure)
-(defun load-slime-2010 ()
+(defun l0ad-slime-2010 ()
   (interactive)
   (add-to-list 'load-path "~/.emacs.d/slime-20100404.1")
   (add-to-list 'load-path "~/.emacs.d/slime-repl-20100404")
@@ -198,6 +198,13 @@
 
 (mapc 'yas/load-directory yas/root-directory)
 
+;; ensime
+(defun l0ad-ensime () 
+  (interactive)
+  (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
+  (require 'ensime)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
+
 ;; backups
 (setq make-backup-files t
       backup-by-copying t     
@@ -207,10 +214,4 @@
       kept-old-versions 5
       delete-old-versions t)
 
-;; ensime
-
-;;(add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
-;;(require 'ensime)
-
-;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
