@@ -159,6 +159,15 @@
 (global-set-key (kbd "C-c mf") 'maximize-frame)
 (global-set-key (kbd "C-c rf") 'restore-frame)
 
+;; mark
+
+(require 'mark)
+
+;; sudoku
+
+(add-to-list 'load-path "~/.emacs.d/sudoku")
+(require 'sudoku)
+
 ;; slime
 (defun l0ad-slime ()
   (interactive)
