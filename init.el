@@ -11,6 +11,7 @@
 			scala-mode
 			yasnippet
 			projectile
+			perspective
 			popup
 			auto-complete
 			pos-tip
