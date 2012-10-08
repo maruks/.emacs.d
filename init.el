@@ -9,6 +9,8 @@
     (package-refresh-contents))
   (defvar my-packages '(clojure-mode
 			scala-mode
+			ace-jump-mode
+			exec-path-from-shell
 			yasnippet
 			projectile
 			perspective
@@ -218,19 +220,15 @@
   (require 'ensime)
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
-;; backups
-(setq make-backup-files t
-      backup-by-copying t     
-      backup-directory-alist '(("." . "~/.emacs.d/backups")) 
-      version-control t
-      kept-new-versions 2
-      kept-old-versions 5
-      delete-old-versions t)
-
 ;; nrepl
 (add-hook 'nrepl-interaction-mode-hook
   'nrepl-turn-on-eldoc-mode)
 (add-to-list 'same-window-buffer-names "*nrepl*") 
+
+;; exec-path-from-shell
+
+(when (memq window-system '(mac ns)) 
+  (exec-path-from-shell-initialize))
 
 ;; ac-nrepl
 (require 'ac-nrepl)
