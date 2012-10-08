@@ -34,6 +34,17 @@
 (require 'projectile)
 (projectile-global-mode)
 
+;; ace jump mode
+;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
+;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
+;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
+;; "M-`"                                     Jump backdddd
+
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+(add-hook 'ace-jump-mode-before-jump-hook
+	  (lambda () (push-mark (point) t)))
+
 ;; magit
 (global-set-key (kbd "<f6>") 'magit-status)
 
@@ -104,6 +115,11 @@
     (intern (completing-read "Load custom theme: "
 			     (mapcar 'symbol-name (custom-available-themes))))))
   (enab-theme name))
+
+(setq d3fault-theme (getenv "EMACS_DEFAULT_THEME"))
+
+(when d3fault-theme
+  (enab-theme (intern d3fault-theme)))
 
 ;; windmove and framemove
 (add-to-list 'load-path "~/.emacs.d/framemove")
