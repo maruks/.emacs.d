@@ -259,3 +259,7 @@
 
 (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+;; server
+(load "server")
+(unless (server-running-p) (server-start))
