@@ -38,7 +38,7 @@
 ;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
 ;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
 ;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
-;; "M-`"                                     Jump backdddd
+;; "M-`"                                     Jump back
 
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
@@ -215,8 +215,8 @@
 
 ;; yasnippet
 (require 'yasnippet) 
-(yas/initialize)
-(setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.6.1/snippets"
+(yas--initialize)
+(setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.8.0/snippets"
                            "~/.emacs.d/snippets"))
 
 (mapc 'yas/load-directory yas/root-directory)
