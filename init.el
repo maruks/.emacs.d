@@ -53,7 +53,7 @@
 
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
 
-(global-set-key (kbd "C-c ji") 'clojure-jack-in)
+(global-set-key (kbd "C-c ji") 'nrepl-jack-in)
 
 (add-hook 'clojure-mode-hook
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
@@ -70,13 +70,13 @@
 
 ;; paredit
 (autoload 'paredit-mode "paredit"  "Minor mode for pseudo-structurally editing Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       '(lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             '(lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook '(lambda () (paredit-mode +1)))
-(add-hook 'scheme-mode-hook           '(lambda () (paredit-mode +1)))
-(add-hook 'clojure-mode-hook          '(lambda () (paredit-mode +1)))
-(add-hook 'slime-repl-mode-hook       '(lambda () (paredit-mode +1)))
-(add-hook 'nrepl-mode-hook            '(lambda () (paredit-mode +1)) )
+(add-hook 'emacs-lisp-mode-hook       'paredit-mode)
+(add-hook 'lisp-mode-hook             'paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'paredit-mode)
+(add-hook 'scheme-mode-hook           'paredit-mode)
+(add-hook 'clojure-mode-hook          'paredit-mode)
+(add-hook 'slime-repl-mode-hook       'paredit-mode)
+(add-hook 'nrepl-mode-hook            'paredit-mode)
 
 (global-set-key (kbd "C-c pme") '(lambda () (paredit-mode +1)))
 (global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
@@ -194,14 +194,6 @@
   (require 'slime)
   (slime-setup '(slime-fancy)))
 
-;; slime 2010 (for clojure)
-(defun l0ad-slime-2010 ()
-  (interactive)
-  (add-to-list 'load-path "~/.emacs.d/slime-20100404.1")
-  (add-to-list 'load-path "~/.emacs.d/slime-repl-20100404")
-  (require 'slime)
-  (slime-setup '(slime-repl)))
-
 ;; auto complete
 (require 'auto-complete-config)
 (require 'pos-tip)
@@ -237,9 +229,11 @@
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
 ;; nrepl
-(add-hook 'nrepl-interaction-mode-hook
-  'nrepl-turn-on-eldoc-mode)
-(add-to-list 'same-window-buffer-names "*nrepl*") 
+(add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+(setq nrepl-hide-special-buffers t)
+(setq nrepl-tab-command 'indent-for-tab-command)
+(setq nrepl-popup-stacktraces nil)
+(add-hook 'nrepl-mode-hook 'subword-mode)
 
 ;; exec-path-from-shell
 
@@ -250,15 +244,7 @@
 (require 'ac-nrepl)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'nrepl-mode))
-
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
 
 ;; server
 (load "server")
