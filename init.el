@@ -24,6 +24,7 @@
 			zenburn-theme
 			solarized-theme
 			magit
+      haskell-mode
 			nrepl
 			ac-nrepl))
   (dolist (p my-packages)
@@ -141,6 +142,16 @@
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+;; haskell
+(require 'haskell-ac)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
+(add-to-list 'completion-ignored-extensions ".hi")
+
  ;; duplicate current line
 (defun duplicate-current-line (&optional n)
   "duplicate current line, make more than 1 copy given a numeric argument"
@@ -157,7 +168,6 @@
 (global-set-key (kbd "C-c C-d") 'duplicate-current-line)
 
 ;; font & hash
-
 (setq font (getenv "EMACS_DEFAULT_FONT"))
 
 (when (eq system-type 'darwin)
@@ -178,21 +188,17 @@
 (global-set-key (kbd "C-c rf") 'restore-frame)
 
 ;; mark
-
 (require 'mark)
 
 ;; sudoku
-
 (add-to-list 'load-path "~/.emacs.d/sudoku")
 (require 'sudoku)
 
 ;; slime
-(defun l0ad-slime ()
-  (interactive)
-  (add-to-list 'load-path "~/.emacs.d/slime")
-  (setq inferior-lisp-program "sbcl")
-  (require 'slime)
-  (slime-setup '(slime-fancy)))
+(add-to-list 'load-path "~/.emacs.d/slime")
+(setq inferior-lisp-program "sbcl")
+(require 'slime)
+(slime-setup '(slime-fancy))
 
 ;; auto complete
 (require 'auto-complete-config)
@@ -236,7 +242,6 @@
 (add-hook 'nrepl-mode-hook 'subword-mode)
 
 ;; exec-path-from-shell
-
 (when (memq window-system '(mac ns)) 
   (exec-path-from-shell-initialize))
 
@@ -249,3 +254,4 @@
 ;; server
 (load "server")
 (unless (server-running-p) (server-start))
+(setq inhibit-startup-screen 1)
