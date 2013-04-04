@@ -190,7 +190,7 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
-(global-set-key [f12] 'toggle-fullscreen)
+(global-set-key (kbd "C-c tf") 'toggle-fullscreen)
 
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
