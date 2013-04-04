@@ -24,7 +24,7 @@
 			zenburn-theme
 			solarized-theme
 			magit
-      haskell-mode
+			haskell-mode
 			nrepl
 			ac-nrepl))
   (dolist (p my-packages)
@@ -180,6 +180,17 @@
 (when font
   (set-default-font font)
   (add-to-list 'default-frame-alist (cons 'font font)))
+
+;; fullscreen on x11
+(defun toggle-fullscreen ()
+  "Toggle full screen on X11"
+  (interactive)
+  (when (eq window-system 'x)
+    (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
+
+(global-set-key [f12] 'toggle-fullscreen)
 
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
