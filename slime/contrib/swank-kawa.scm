@@ -17,6 +17,7 @@
 ;; You also need to start the debug agent.
 (setq slime-lisp-implementations
       '((kawa ("java"
+               "-Xss450k" ; compiler needs more stack
 	       "-cp" "/opt/kawa/kawa-svn:/opt/java/jdk1.6.0/lib/tools.jar"
 	       "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n"
 	       "kawa.repl" "-s")
@@ -36,14 +37,15 @@
 
 (module-export start-swank create-swank-server swank-java-source-path break)
 
-(module-static #t)
-
 (module-compile-options
+ warn-unknown-member: #t
  warn-invoke-unknown-method: #t
  warn-undefined-variable: #t
  )
 
-(require 'hash-table)
+(import (rnrs hashtables))
+;;(require 'hash-table)
+(import (only (gnu kawa slib syntaxutils) expand))
 
 
 ;;;; Macros ()
@@ -321,13 +323,13 @@
 (define-alias <array-ref> <com.sun.jdi.ArrayReference>)
 (define-alias <str-ref> <com.sun.jdi.StringReference>)
 (define-alias <meth-ref> <com.sun.jdi.Method>)
-(define-alias <class-ref> <com.sun.jdi.ClassType>)
+(define-alias <class-type> <com.sun.jdi.ClassType>)
+(define-alias <ref-type> <com.sun.jdi.ReferenceType>)
 (define-alias <frame> <com.sun.jdi.StackFrame>)
 (define-alias <field> <com.sun.jdi.Field>)
 (define-alias <local-var> <com.sun.jdi.LocalVariable>)
 (define-alias <location> <com.sun.jdi.Location>)
 (define-alias <absent-exc> <com.sun.jdi.AbsentInformationException>)
-(define-alias <ref-type> <com.sun.jdi.ReferenceType>)
 (define-alias <event> <com.sun.jdi.event.Event>)
 (define-alias <exception-event> <com.sun.jdi.event.ExceptionEvent>)
 (define-alias <step-event> <com.sun.jdi.event.StepEvent>)
@@ -600,7 +602,8 @@
     (let ((vm (as <vm> (rpc c `(get-vm)))))
       (send c `(set-listener ,(vm-mirror vm (current-thread))))
       (request-uncaught-exception-events vm)
-      (request-caught-exception-events vm)
+      ;;stack snaphost are too expensive
+      ;;(request-caught-exception-events vm)
       )
     (rpc c `(get-vm))
     (listener-loop c env out)))
@@ -617,7 +620,7 @@
     ;;(log "listener-loop: ~s ~s\n" (current-thread) c)
     (mlet ((form id) (recv c))
       (let ((restart (fun ()
-                       (close-output-port port)
+                       (close-port port)
                        (reply-abort c id)
                        (send (car (spawn/chan
                                    (fun (cc) 
@@ -754,11 +757,11 @@
 (df error-loc>elisp ((e <source-error>))
   (cond ((nul? (@ filename e)) `(:error "No source location"))
         ((! starts-with (@ filename e) "(buffer ")
-         (mlet (('buffer b 'offset o 'str s) (read-from-string (@ filename e)))
-           `(:location (:buffer ,b)
-                       (:position ,(+ o (line>offset (1- (@ line e)) s)
-                                      (1- (@ column e))))
-                       nil)))
+         (mlet (('buffer b 'offset ('quote ((:position o) _)) 'str s)
+                (read-from-string (@ filename e)))
+           (let ((off (line>offset (1- (@ line e)) s))
+                 (col (1- (@ column e))))
+             `(:location (:buffer ,b) (:position ,(+ o off col)) nil))))
         (#t
          `(:location (:file ,(to-string (@ filename e)))
                      (:line ,(@ line e) ,(1- (@ column e)))
@@ -817,9 +820,9 @@
 
 ;;;; Dummy defs
 
-
 (defslimefun buffer-first-change (#!rest y) '())
 (defslimefun swank-require (#!rest y) '())
+(defslimefun frame-package-name (#!rest y) '())
 
 ;;;; arglist
 
@@ -914,30 +917,40 @@
   (! location (module-method>meth-ref f)))
 
 (df module-method>meth-ref ((f <gnu.expr.ModuleMethod>) => <meth-ref>)
-  (let ((module (! reference-type
-                   (as <obj-ref> (vm-mirror *the-vm* (@ module f)))))
-	(name (mangled-name f)))
-    (as <meth-ref> (1st (! methods-by-name module name)))))
+  (let* ((module (! reference-type
+                    (as <obj-ref> (vm-mirror *the-vm* (@ module f)))))
+         (1st-method-by-name (fun (name)
+                               (let ((i (! methods-by-name module name)))
+                                 (cond ((! is-empty i) #f)
+                                       (#t (1st i)))))))
+    (as <meth-ref> (or (1st-method-by-name (! get-name f))
+                       (let ((mangled (mangled-name f)))
+                         (or (1st-method-by-name mangled)
+                             (1st-method-by-name (cat mangled "$V"))
+                             (1st-method-by-name (cat mangled "$X"))))))))
 
 (df mangled-name ((f <gnu.expr.ModuleMethod>))
-  (let ((name (gnu.expr.Compilation:mangleName (! get-name f))))
-    (if (= (! maxArgs f) -1)
-        (cat name "$V")
-        name)))
+  (let* ((name0 (! get-name f))
+         (name (cond ((nul? name0) (format "lambda~d" (@ selector f)))
+                     (#t (gnu.expr.Compilation:mangleName name0)))))
+    name))
 
 (df class>src-loc ((c <java.lang.Class>) => <location>)
-  (let* ((type (class>class-ref c))
+  (let* ((type (class>ref-type c))
          (locs (! all-line-locations type)))
     (cond ((not (! isEmpty locs)) (1st locs))
           (#t (<swank-location> (1st (! source-paths type "Java"))
                                 #f)))))
 
-(df class>class-ref ((class <java.lang.Class>) => <class-ref>)
+(df class>ref-type ((class <java.lang.Class>) => <ref-type>)
   (! reflectedType (as <com.sun.jdi.ClassObjectReference>
                        (vm-mirror *the-vm* class))))
 
+(df class>class-type ((class <java.lang.Class>) => <class-type>)
+  (class>ref-type class))
+
 (df bytemethod>src-loc ((m <gnu.bytecode.Method>) => <location>)
-  (let* ((cls (class>class-ref (! get-reflect-class (! get-declaring-class m))))
+  (let* ((cls (class>class-type (! get-reflect-class (! get-declaring-class m))))
          (name (! get-name m))
          (sig (! get-signature m))
          (meth (! concrete-method-by-name cls name sig)))
@@ -1099,16 +1112,14 @@
 
 ;;;; Macroexpansion
 
-(defslimefun swank-expand-1 (env s) (%swank-macroexpand s))
-(defslimefun swank-expand (env s) (%swank-macroexpand s))
-(defslimefun swank-expand-all (env s) (%swank-macroexpand s))
+(defslimefun swank-expand-1 (env s) (%swank-macroexpand s env))
+(defslimefun swank-expand (env s) (%swank-macroexpand s env))
+(defslimefun swank-expand-all (env s) (%swank-macroexpand s env))
 
-(df %swank-macroexpand (string)
-  (pprint-to-string (%macroexpand (read-from-string string))))
+(df %swank-macroexpand (string env)
+  (pprint-to-string (%macroexpand (read-from-string string) env)))
 
-(df %macroexpand (sexp)
-  (let ((tr :: kawa.lang.Translator (gnu.expr.Compilation:getCurrent)))
-    (! rewrite tr `(begin ,sexp))))
+(df %macroexpand (sexp env) (expand sexp env: env))
 
 
 ;;;; Inspector
@@ -1163,29 +1174,41 @@
                            (content-range  c 0 (len c)))))))
 
 (df inspect (obj vm)
-  (let* ((obj (as <obj-ref> (vm-mirror vm obj))))
-    (packing (pack)
-      (typecase obj
-        (<array-ref>
-         (let ((i 0))
-           (iter (! getValues obj)
-                 (fun ((v <value>))
-                   (pack (format "~d: " i))
-                   (set i (1+ i))
-                   (pack `(:value ,(vm-demirror vm v)))
-                   (pack "\n")))))
-        (<obj-ref>
-         (let* ((type (! referenceType obj))
-                (fields (! allFields type))
-                (values (! getValues obj fields)))
-           (iter fields 
-                 (fun ((f <field>))
-                   (let ((val (as <value> (! get values f))))
-                     (when (! is-static f)
-                       (pack "static "))
-                     (pack (! name f)) (pack ": ") 
-                     (pack `(:value ,(vm-demirror vm val)))
-                     (pack "\n"))))))))))
+  (let ((obj (as <obj-ref> (vm-mirror vm obj))))
+    (typecase obj 
+      (<array-ref> (inspect-array-ref vm obj))
+      (<obj-ref> (inspect-obj-ref vm obj)))))
+
+(df inspect-array-ref ((vm <vm>) (obj <array-ref>))
+  (packing (pack)
+    (let ((i 0))
+      (for (((v <value>) (! getValues obj)))
+        (pack (format "~d: " i))
+        (pack `(:value ,(vm-demirror vm v)))
+        (pack "\n")
+        (set i (1+ i))))))
+
+(df inspect-obj-ref ((vm <vm>) (obj <obj-ref>))
+  (let* ((type (! referenceType obj))
+         (fields (! allFields type))
+         (values (! getValues obj fields))
+         (ifields '()) (sfields '()) (imeths '()) (smeths '())
+         (frob (lambda (lists) (apply append (reverse lists)))))
+    (for (((f <field>) fields))
+      (let* ((val (as <value> (! get values f)))
+             (l `(,(! name f) ": " (:value ,(vm-demirror vm val)) "\n")))
+        (if (! is-static f) 
+            (pushf l sfields)
+            (pushf l ifields))))
+    (for (((m <meth-ref>) (! allMethods type)))
+      (let ((l `(,(! name m) ,(! signature m) "\n")))
+        (if (! is-static m)
+            (pushf l smeths)
+            (pushf l imeths))))
+    `(,@(frob ifields) 
+      "--- static fields ---\n" ,@(frob sfields)
+      "--- methods ---\n" ,@(frob imeths)
+      "--- static methods ---\n" ,@(frob smeths))))
 
 (df inspector-content (content (state <inspector-state>))
   (map (fun (part)
@@ -1423,7 +1446,7 @@
 
 ;; Enable breakpoints event on the breakpoint function.
 (df request-breakpoint ((vm <vm>))
-  (let* ((class :: <class-ref> (1st (! classesByName vm "swank$Mnkawa")))
+  (let* ((class :: <class-type> (1st (! classesByName vm "swank$Mnkawa")))
          (meth :: <meth-ref> (1st (! methodsByName class "breakpoint")))
          (erm (! eventRequestManager vm))
          (req (! createBreakpointRequest erm (! location meth))))
@@ -1696,7 +1719,7 @@
 (df eval-in-thread ((t <thread-ref>) sexp 
 		    #!optional (env :: <env> (<env>:current)))
   (let* ((vm (! virtualMachine t))
-	 (sc :: <class-ref>
+	 (sc :: <class-type>
 	     (1st (! classes-by-name vm "kawa.standard.Scheme")))
 	 (ev :: <meth-ref>
 	     (1st (! methods-by-name sc "eval" 
@@ -2010,10 +2033,15 @@
     (<java.util.List> (! size x))
     (<object[]> (@ length x))))
 
-(df put (tab key value) (hash-table-set! tab key value) tab)
-(df get (tab key default) (hash-table-ref/default tab key default))
-(df del (tab key) (hash-table-delete! tab key) tab)
-(df tab () (make-hash-table))
+;;(df put (tab key value) (hash-table-set! tab key value) tab)
+;;(df get (tab key default) (hash-table-ref/default tab key default))
+;;(df del (tab key) (hash-table-delete! tab key) tab)
+;;(df tab () (make-hash-table))
+
+(df put (tab key value) (hashtable-set! tab key value) tab)
+(df get (tab key default) (hashtable-ref tab key default))
+(df del (tab key) (hashtable-delete! tab key) tab)
+(df tab () (make-eqv-hashtable))
 
 (df equal (x y => <boolean>) (equal? x y))
 
@@ -2039,10 +2067,14 @@
 
 (df print-object (obj stream)
   (typecase obj
+    #;
     ((or (eql #!null) (eql #!eof)
          <list> <number> <character> <string> <vector> <procedure> <boolean>)
      (write obj stream))
-    (#t (print-unreadable-object obj stream))))
+    (#t 
+     #;(print-unreadable-object obj stream)
+     (write obj stream)
+     )))
 
 (df print-unreadable-object ((o <object>) stream)
   (let* ((string (! to-string o))
@@ -2223,11 +2255,11 @@
       ((:file s) (read-bytes (<java.io.FileInputStream> (as <str> s)))))))
 
 (df all-instances ((vm <vm>) (classname <str>))
-  (mappend (fun ((c <class-ref>)) (to-list (! instances c (as long 9999))))
+  (mappend (fun ((c <class-type>)) (to-list (! instances c (as long 9999))))
 	   (%all-subclasses vm classname)))
 
 (df %all-subclasses ((vm <vm>) (classname <str>))
-  (mappend (fun ((c <class-ref>)) (cons c (to-list (! subclasses c))))
+  (mappend (fun ((c <class-type>)) (cons c (to-list (! subclasses c))))
            (to-list (! classes-by-name vm classname))))
 
 (df with-output-to-string (thunk => <str>)
@@ -2303,5 +2335,8 @@
 
 ;; Local Variables:
 ;; mode: goo 
-;; compile-command:"kawa -e '(compile-file \"swank-kawa.scm\"\"swank-kawa.zip\")'" 
+;; compile-command: "\
+;;  rm -rf classes && \
+;;  JAVA_OPTS=-Xss450k kawa -d classes -C swank-kawa.scm && \
+;;  jar cf swank-kawa.jar -C classes ."
 ;; End:

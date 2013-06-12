@@ -80,7 +80,8 @@
    standard-slot-definition ;;dummy
    cl:method
    cl:standard-class
-   #+#.(swank-backend:with-symbol 'compute-applicable-methods-using-classes 'mop)
+   #+#.(swank-backend:with-symbol 'compute-applicable-methods-using-classes 
+         'mop)
    mop::compute-applicable-methods-using-classes
    ;; standard-class readers
    mop::class-default-initargs
@@ -90,6 +91,7 @@
    mop::class-direct-superclasses
    mop::eql-specializer
    mop::class-finalized-p 
+   mop:finalize-inheritance
    cl:class-name
    mop::class-precedence-list
    class-prototype ;;dummy
@@ -131,7 +133,7 @@
 (defimplementation preferred-communication-style ()
   :spawn)
 
-(defimplementation create-socket (host port)
+(defimplementation create-socket (host port &key backlog)
   (ext:make-server-socket port))
 
 (defimplementation local-port (socket)
@@ -144,13 +146,55 @@
                                       &key external-format buffering timeout)
   (declare (ignore buffering timeout))
   (ext:get-socket-stream (ext:socket-accept socket)
-                         :external-format external-format))
+                         :element-type (if external-format 
+                                           'character 
+                                           '(unsigned-byte 8))
+                         :external-format (or external-format :default)))
+
+;;;; UTF8 
+
+;; faster please!
+(defimplementation string-to-utf8 (s)
+  (jbytes-to-octets
+   (java:jcall 
+    (java:jmethod "java.lang.String" "getBytes" "java.lang.String")
+    s
+    "UTF8")))
+
+(defimplementation utf8-to-string (u)
+  (java:jnew 
+   (java:jconstructor "org.armedbear.lisp.SimpleString" 
+                      "java.lang.String")
+   (java:jnew (java:jconstructor "java.lang.String" "[B" "java.lang.String")
+              (octets-to-jbytes u)
+              "UTF8")))
+
+(defun octets-to-jbytes (octets)
+  (declare (type octets (simple-array (unsigned-byte 8) (*))))
+  (let* ((len (length octets))
+         (bytes (java:jnew-array "byte" len)))
+    (loop for byte across octets
+          for i from 0
+          do (java:jstatic (java:jmethod "java.lang.reflect.Array"  "setByte" 
+                            "java.lang.Object" "int" "byte")
+                           "java.lang.relect.Array"
+                           bytes i byte))
+    bytes))
+
+(defun jbytes-to-octets (jbytes)
+  (let* ((len (java:jarray-length jbytes))
+         (octets (make-array len :element-type '(unsigned-byte 8))))
+    (loop for i from 0 below len
+          for jbyte = (java:jarray-ref jbytes i)
+          do (setf (aref octets i) jbyte))
+    octets))
 
 ;;;; External formats
 
 (defvar *external-format-to-coding-system*
   '((:iso-8859-1 "latin-1" "iso-latin-1" "iso-8859-1")
-    ((:iso-8859-1 :eol-style :lf) "latin-1-unix" "iso-latin-1-unix" "iso-8859-1-unix")
+    ((:iso-8859-1 :eol-style :lf) 
+     "latin-1-unix" "iso-latin-1-unix" "iso-8859-1-unix")
     (:utf-8 "utf-8")
     ((:utf-8 :eol-style :lf) "utf-8-unix")
     (:euc-jp "euc-jp")
@@ -215,7 +259,8 @@
               (sys::arglist fun)
             (when (and (not present)
                        (fboundp fun)
-                       (typep (symbol-function fun) 'standard-generic-function))
+                       (typep (symbol-function fun) 
+                              'standard-generic-function))
               (setq arglist
                     (mop::generic-function-lambda-list (symbol-function fun))
                     present
@@ -370,24 +415,23 @@
     ;; filter condition signaled more than once.
     (unless (member condition *abcl-signaled-conditions*) 
       (push condition *abcl-signaled-conditions*) 
-      (signal (make-condition
-               'compiler-condition
-               :original-condition condition
-               :severity :warning
-               :message (format nil "~A" condition)
-               :location (cond (*buffer-name*
-                                (make-location 
-                                 (list :buffer *buffer-name*)
-                                 (list :offset *buffer-start-position* 0)))
-                               (loc
-                                (destructuring-bind (file . pos) loc
-                                  (make-location
-                                   (list :file (namestring (truename file)))
-                                   (list :position (1+ pos)))))
-                               (t  
-                                (make-location
-                                 (list :file (namestring *compile-filename*))
-                                 (list :position 1)))))))))
+      (signal 'compiler-condition
+              :original-condition condition
+              :severity :warning
+              :message (format nil "~A" condition)
+              :location (cond (*buffer-name*
+                               (make-location 
+                                (list :buffer *buffer-name*)
+                                (list :offset *buffer-start-position* 0)))
+                              (loc
+                               (destructuring-bind (file . pos) loc
+                                 (make-location
+                                  (list :file (namestring (truename file)))
+                                  (list :position (1+ pos)))))
+                              (t  
+                               (make-location
+                                (list :file (namestring *compile-filename*))
+                                (list :position 1))))))))
 
 (defimplementation swank-compile-file (input-file output-file
                                        load-p external-format
@@ -551,6 +595,7 @@
                  if (try dir) return it)))))
 
 (defimplementation find-definitions (symbol)
+  (ext:resolve symbol)
   (let ((srcloc (source-location symbol)))
     (and srcloc `((,symbol ,srcloc)))))
 
@@ -588,22 +633,25 @@ part of *sysdep-pathnames* in swank.loader.lisp.
       ,@(if parts
            (loop :for (label . value) :in parts
               :appending (label-value-line label value))
-            (list "No inspectable parts, dumping output of CL:DESCRIBE:" '(:newline) 
+           (list "No inspectable parts, dumping output of CL:DESCRIBE:" 
+                 '(:newline) 
                   (with-output-to-string (desc) (describe o desc)))))))
 
 (defmethod emacs-inspect ((slot mop::slot-definition))
-  `("Name: " (:value ,(mop::%slot-definition-name slot))
-             (:newline)
-             "Documentation:" (:newline)
-             ,@(when (slot-definition-documentation slot)
-                     `((:value ,(slot-definition-documentation slot)) (:newline)))
-             "Initialization:" (:newline)
-             "  Args: " (:value ,(mop::%slot-definition-initargs slot)) (:newline)
-             "  Form: "  ,(if (mop::%slot-definition-initfunction slot)
-                              `(:value ,(mop::%slot-definition-initform slot))
-                              "#<unspecified>") (:newline)
-                              "  Function: " (:value ,(mop::%slot-definition-initfunction slot))
-                              (:newline)))
+  `("Name: " 
+    (:value ,(mop::%slot-definition-name slot))
+    (:newline)
+    "Documentation:" (:newline)
+    ,@(when (slot-definition-documentation slot)
+            `((:value ,(slot-definition-documentation slot)) (:newline)))
+    "Initialization:" (:newline)
+    "  Args: " (:value ,(mop::%slot-definition-initargs slot)) (:newline)
+    "  Form: "  ,(if (mop::%slot-definition-initfunction slot)
+                     `(:value ,(mop::%slot-definition-initform slot))
+                     "#<unspecified>") (:newline)
+                     "  Function: " 
+                     (:value ,(mop::%slot-definition-initfunction slot))
+                     (:newline)))
 
 (defmethod emacs-inspect ((f function))
   `(,@(when (function-name f)
@@ -611,10 +659,13 @@ part of *sysdep-pathnames* in swank.loader.lisp.
               ,(princ-to-string (function-name f)) (:newline)))
       ,@(multiple-value-bind (args present) 
                              (sys::arglist f)
-                             (when present `("Argument list: " ,(princ-to-string args) (:newline))))
+                             (when present 
+                               `("Argument list: " 
+                                 ,(princ-to-string args) (:newline))))
       (:newline)
       #+nil,@(when (documentation f t)
-                   `("Documentation:" (:newline) ,(documentation f t) (:newline)))
+                   `("Documentation:" (:newline) 
+                                      ,(documentation f t) (:newline)))
       ,@(when (function-lambda-expression f)
               `("Lambda expression:" 
                 (:newline) ,(princ-to-string
@@ -625,20 +676,21 @@ part of *sysdep-pathnames* in swank.loader.lisp.
 ;;; case, so make its computation a user interaction.
 (defparameter *to-string-hashtable* (make-hash-table))
 (defmethod emacs-inspect ((o java:java-object))
-    (let ((to-string (lambda ()
-                      (handler-case
-                          (setf (gethash o *to-string-hashtable*)
-                                         (java:jcall "toString" o))
-                        (t (e)
-                          (setf (gethash o *to-string-hashtable*)
-                                         (format nil "Could not invoke toString(): ~A"
-                                                 e)))))))
-      (append
-       (if (gethash o *to-string-hashtable*)
-           (label-value-line "toString()" (gethash o *to-string-hashtable*))
-           `((:action "[compute toString()]" ,to-string) (:newline)))
-       (loop :for (label . value) :in (sys:inspected-parts o)
-          :appending (label-value-line label value)))))
+  (let ((to-string (lambda ()
+                     (handler-case
+                         (setf (gethash o *to-string-hashtable*)
+                               (java:jcall "toString" o))
+                       (t (e)
+                         (setf (gethash o *to-string-hashtable*)
+                               (format nil 
+                                       "Could not invoke toString(): ~A"
+                                       e)))))))
+    (append
+     (if (gethash o *to-string-hashtable*)
+         (label-value-line "toString()" (gethash o *to-string-hashtable*))
+         `((:action "[compute toString()]" ,to-string) (:newline)))
+     (loop :for (label . value) :in (sys:inspected-parts o)
+      :appending (label-value-line label value)))))
 
 ;;;; Multithreading
 

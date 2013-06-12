@@ -18,7 +18,8 @@
 
 (defvar slime-package-file-candidates
   (mapcar #'file-name-nondirectory
-	  '("package.lisp" "packages.lisp" "pkgdcl.lisp" "defpackage.lisp")))
+	  '("package.lisp" "packages.lisp" "pkgdcl.lisp"
+            "defpackage.lisp")))
 
 (defvar slime-export-symbol-representation-function
   #'(lambda (n) (format "#:%s" n)))
@@ -28,11 +29,15 @@
 If it's mixed or no symbols are exported so far,
 use `slime-export-symbol-representation-function'.")
 
+(defvar slime-export-save-file nil
+  "Save the package file after each automatic modification")
+
 (defvar slime-defpackage-regexp
   "^(\\(cl:\\|common-lisp:\\)?defpackage\\>[ \t']*")
 
 (defun slime-find-package-definition-rpc (package)
-  (slime-eval `(swank:find-definition-for-thing (swank::guess-package ,package))))
+  (slime-eval `(swank:find-definition-for-thing
+                (swank::guess-package ,package))))
 
 (defun slime-find-package-definition-regexp (package)
   (save-excursion
@@ -70,14 +75,16 @@ use `slime-export-symbol-representation-function'.")
 		    (file-name-as-directory ".."))))
 	 (try (dirname)
 	   (dolist (package-file-name slime-package-file-candidates)
-	     (let ((f (slime-to-lisp-filename (concat dirname package-file-name))))
+	     (let ((f (slime-to-lisp-filename
+                       (concat dirname package-file-name))))
 	       (when (file-readable-p f)
 		 (return f))))))
     (when buffer-file-name
       (let ((buffer-cwd (file-name-directory buffer-file-name)))
 	(or (try buffer-cwd)
 	    (try (file-name-subdirectory buffer-cwd))
-	    (try (file-name-subdirectory (file-name-subdirectory buffer-cwd))))))))
+	    (try (file-name-subdirectory
+                  (file-name-subdirectory buffer-cwd))))))))
 
 (defun slime-goto-package-source-definition (package)
   "Tries to find the DEFPACKAGE form of `package'. If found,
@@ -88,7 +95,8 @@ places the cursor at the start of the DEFPACKAGE form."
 	     t)))
     (or (try (slime-find-package-definition-rpc package))
 	(try (slime-find-package-definition-regexp package))
-	(try (when-let (package-file (slime-find-possible-package-file (buffer-file-name)))
+	(try (when-let (package-file (slime-find-possible-package-file
+                                      (buffer-file-name)))
 	       (with-current-buffer (find-file-noselect package-file t)
 		 (slime-find-package-definition-regexp package))))
 	(error "Couldn't find source definition of package: %s" package))))
@@ -181,6 +189,8 @@ already exported/unexported."
              (when (slime-symbol-exported-p symbol-name exported-symbols)
                (slime-remove-export symbol-name)
                (incf number-of-actions))))))
+      (when slime-export-save-file
+        (save-buffer))
       number-of-actions)))
 
 (defun slime-add-export ()
@@ -212,7 +222,9 @@ already exported/unexported."
     (slime-beginning-of-list)
     (slime-forward-sexp)
     (let ((symbols (slime-export-symbols)))
-      (cond ((every (lambda (x)
+      (cond ((null symbols)
+             slime-export-symbol-representation-function)
+            ((every (lambda (x)
                       (string-match "^:" x))
                     symbols)
              (lambda (n) (format ":%s" n)))
@@ -259,13 +271,17 @@ symbol in the Lisp image if possible."
     (unless symbol (error "No symbol at point."))
     (cond (current-prefix-arg
 	   (if (plusp (slime-frob-defpackage-form package :unexport symbol))
-	       (message "Symbol `%s' no longer exported form `%s'" symbol package)
-	       (message "Symbol `%s' is not exported from `%s'" symbol package))
+	       (message "Symbol `%s' no longer exported form `%s'"
+                        symbol package)
+	       (message "Symbol `%s' is not exported from `%s'"
+                        symbol package))
 	   (slime-unexport-symbol symbol package))
 	  (t
 	   (if (plusp (slime-frob-defpackage-form package :export symbol))
-	       (message "Symbol `%s' now exported from `%s'" symbol package)
-	       (message "Symbol `%s' already exported from `%s'" symbol package))
+	       (message "Symbol `%s' now exported from `%s'"
+                        symbol package)
+	       (message "Symbol `%s' already exported from `%s'"
+                        symbol package))
 	   (slime-export-symbol symbol package)))))
 
 (defun slime-export-class (name)

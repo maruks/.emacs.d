@@ -1,4 +1,3 @@
-
 (define-slime-contrib slime-asdf
   "ASDF support."
   (:authors "Daniel Barlow       <dan@telent.net>"
@@ -18,6 +17,11 @@
 
 ;;; Utilities
 
+(defgroup slime-asdf nil
+  "ASDF support for Slime."
+  :prefix "slime-asdf-"
+  :group 'slime)
+
 (defvar slime-system-history nil
   "History list for ASDF system names.")
 
@@ -32,13 +36,14 @@ in the directory of the current buffer."
   (let* ((completion-ignore-case nil)
          (prompt (or prompt "System"))
          (system-names (slime-eval `(swank:list-asdf-systems)))
-         (default-value (or default-value 
-                            (if determine-default-accurately
-                                (slime-determine-asdf-system (buffer-file-name)
-                                                             (slime-current-package))
-                                (slime-find-asd-file (or default-directory
-                                                         (buffer-file-name))
-                                                     system-names))))
+         (default-value
+           (or default-value 
+               (if determine-default-accurately
+                   (slime-determine-asdf-system (buffer-file-name)
+                                                (slime-current-package))
+                   (slime-find-asd-file (or default-directory
+                                            (buffer-file-name))
+                                        system-names))))
          (prompt (concat prompt (if default-value
                                     (format " (default `%s'): " default-value)
                                     ": "))))
@@ -60,8 +65,10 @@ in the directory of the current buffer."
 
 (defun slime-determine-asdf-system (filename buffer-package)
   "Try to determine the asdf system that `filename' belongs to."
-  (slime-eval `(swank:asdf-determine-system ,(slime-to-lisp-filename filename)
-                                            ,buffer-package)))
+  (slime-eval
+   `(swank:asdf-determine-system ,(and filename
+                                       (slime-to-lisp-filename filename))
+                                 ,buffer-package)))
 
 (defun slime-who-depends-on-rpc (system)
   (slime-eval `(swank:who-depends-on ,system)))
@@ -69,7 +76,9 @@ in the directory of the current buffer."
 (defcustom slime-asdf-collect-notes t
   "Collect and display notes produced by the compiler.
 
-See also `slime-highlight-compiler-notes' and `slime-compilation-finished-hook'.")
+See also `slime-highlight-compiler-notes' and
+`slime-compilation-finished-hook'."
+  :group 'slime-asdf)
 
 (defun slime-asdf-operation-finished-function (system)
   (if slime-asdf-collect-notes

@@ -62,6 +62,14 @@
                                 :check-redefinition-p nil)
        ,(funcall *original-defimplementation* whole env))))
 
+;;; UTF8
+
+(defimplementation string-to-utf8 (string)
+  (ef:encode-lisp-string string '(:utf-8 :eol-style :lf)))
+
+(defimplementation utf8-to-string (octets)
+  (ef:decode-external-string octets '(:utf-8 :eol-style :lf)))
+
 ;;; TCP server
 
 (defimplementation preferred-communication-style ()
@@ -72,10 +80,11 @@
     (fixnum socket)
     (comm:socket-stream (comm:socket-stream-socket socket))))
 
-(defimplementation create-socket (host port)
+(defimplementation create-socket (host port &key backlog)
   (multiple-value-bind (socket where errno)
       #-(or lispworks4.1 (and macosx lispworks4.3))
-      (comm::create-tcp-socket-for-service port :address host)
+      (comm::create-tcp-socket-for-service port :address host
+                                           :backlog (or backlog 5))
       #+(or lispworks4.1 (and macosx lispworks4.3))
       (comm::create-tcp-socket-for-service port)
     (cond (socket socket)
@@ -96,235 +105,40 @@
   (declare (ignore buffering))
   (let* ((fd (comm::get-fd-from-socket socket)))
     (assert (/= fd -1))
-    (assert (valid-external-format-p external-format))
-    (cond ((member (first external-format) '(:latin-1 :ascii))
+    (cond ((not external-format)
            (make-instance 'comm:socket-stream
                           :socket fd
                           :direction :io
                           :read-timeout timeout
-                          :element-type 'base-char))
+                          :element-type '(unsigned-byte 8)))
           (t
-           (assert (member (first external-format) '(:utf-8)))
-           (make-instance 'utf8-stream
-                          :byte-stream
-                          (make-instance 'comm:socket-stream
-                                         :socket fd
-                                         :direction :io
-                                         :read-timeout timeout
-                                         :element-type '(unsigned-byte 8)))))))
+           (assert (valid-external-format-p external-format))
+           (ecase (first external-format)
+             ((:latin-1 :ascii)
+              (make-instance 'comm:socket-stream
+                             :socket fd
+                             :direction :io
+                             :read-timeout timeout
+                             :element-type 'base-char))
+             (:utf-8
+              (make-flexi-stream 
+               (make-instance 'comm:socket-stream
+                              :socket fd
+                              :direction :io
+                              :read-timeout timeout
+                              :element-type '(unsigned-byte 8))
+               external-format)))))))
 
-(defclass utf8-stream (stream:fundamental-character-input-stream
-                       stream:fundamental-character-output-stream)
-  ((byte-stream :type comm:socket-stream
-                :initform nil
-                :initarg :byte-stream
-                :accessor utf8-stream-byte-stream)))
-
-;; Helper function.  Decode the next N bytes starting from INDEX.
-;; Return the decoded char and the new index.
-(defun utf8-decode-aux (buffer index limit byte0 n)
-  (declare (simple-string buffer) (fixnum index limit byte0 n))
-  (if (< (- limit index) n)
-      (values nil index)
-      (do ((i 0 (1+ i))
-           (code byte0 (let ((byte (char-code (schar buffer (+ index i)))))
-                         (cond ((= (ldb (byte 2 6) byte) #b10)
-                                (+ (ash code 6) (ldb (byte 6 0) byte)))
-                               (t
-                                (error "Invalid encoding"))))))
-          ((= i n)
-           (values (cond ((<= code #xff) (code-char code))
-                         ((<= #xdc00 code #xdbff)
-                          (error "Invalid Unicode code point: #x~x" code))
-                         ((< code char-code-limit)
-                          (code-char code))
-                         (t
-                          (error
-                           "Can't represent code point: #x~x ~
-                            (char-code-limit is #x~x)" 
-                           code char-code-limit)))
-                   (+ index n))))))
-
-;; Decode one character in BUFFER starting at INDEX.
-;; Return 2 values: the character and the new index.
-;; If there aren't enough bytes between INDEX and LIMIT return nil. 
-(defun utf8-decode (buffer index limit)
-  (declare (simple-string buffer) (fixnum index limit))
-  (if (= index limit)
-      (values nil index)
-      (let ((b (char-code (schar buffer index))))
-        (if (<= b #x7f)
-            (values (code-char b) (1+ index))
-            (macrolet ((try (marker else)
-                         (let* ((l (integer-length marker))
-                                (n (- l 2)))
-                           `(if (= (ldb (byte ,l ,(- 8 l)) b) ,marker)
-                                (utf8-decode-aux buffer (1+ index) limit
-                                                 (ldb (byte ,(- 8 l) 0) b)
-                                                 ,n)
-                                ,else))))
-              (try #b110
-                   (try #b1110
-                        (try #b11110
-                             (try #b111110
-                                  (try #b1111110
-                                       (error "Invalid encoding")))))))))))
-
-;; Decode characters from BUFFER and write them to STRING.
-;; Return 2 values: LASTINDEX and LASTSTART where
-;; LASTINDEX is the last index in BUFFER that was not decoded
-;; and LASTSTART is the last index in STRING not written.
-(defun utf8-decode-into (buffer index limit string start end)
-  (declare (string string) (fixnum index limit start end))
-  (loop
-   (cond ((= start end)
-          (return (values index start)))
-         (t
-          (multiple-value-bind (c i) (utf8-decode buffer index limit)
-            (cond (c
-                   (setf (aref string start) c)
-                   (setq index i)
-                   (setq start (1+ start)))
-                  (t
-                   (return (values index start)))))))))
-
-(defmacro utf8-encode-aux (code buffer start end n)
-  `(cond ((< (- ,end ,start) ,n)
-          ,start)
-         (t
-          (setf (schar ,buffer ,start)
-                (code-char
-                 (dpb (ldb (byte ,(- 7 n) ,(* 6 (1- n))) ,code)
-                      (byte ,(- 7 n) 0)
-                      ,(dpb 0 (byte 1 (- 7 n)) #xff))))
-          ,@(loop for i from 0 upto (- n 2) collect
-                  `(setf (schar ,buffer (+ ,start ,(- n 1 i)))
-                         (code-char
-                          (dpb (ldb (byte 6 ,(* 6 i)) ,code)
-                               (byte 6 0)
-                               #b10111111))))
-          (+ ,start ,n))))
-
-(defun utf8-encode (char buffer start end)
-  (declare (fixnum start end))
-  (let ((code (char-code char)))
-    (cond ((<= code #x7f)
-           (cond ((< start end)
-                  (setf (schar buffer start) char)
-                  (1+ start))
-                 (t start)))
-          ((<= code #x7ff) (utf8-encode-aux code buffer start end 2))
-          ((<= #xd800 code #xdfff)
-           (error "Invalid Unicode code point (surrogate): #x~x" code))
-          ((<= code #xffff) (utf8-encode-aux code buffer start end 3))
-          ((<= code #x1fffff) (utf8-encode-aux code buffer start end 4))
-          ((<= code #x3ffffff) (utf8-encode-aux code buffer start end 5))
-          ((<= code #x7fffffff) (utf8-encode-aux code buffer start end 6))
-          (t (error "Can't encode ~s (~x)" char code)))))
-
-(defun utf8-encode-into (string start end buffer index limit)
-  (loop
-   (cond ((= start end)
-          (return (values start index)))
-         ((= index limit)
-          (return (values start index)))
-         (t
-          (let ((i2 (utf8-encode (char string start) buffer index limit)))
-            (cond ((= i2 index)
-                   (return (values start index)))
-                  (t
-                   (setq index i2)
-                   (incf start))))))))
-
-(defun utf8-stream-read-char (stream no-hang)
-  (with-slots (byte-stream) stream
-    (loop
-     (stream:with-stream-input-buffer (b i l) byte-stream
-       (multiple-value-bind (c i2) (utf8-decode b i l)
-         (cond (c 
-                (setf i i2)
-                (return c))
-               ((and no-hang
-                     (not (sys:wait-for-input-streams-returning-first 
-                           (list byte-stream) :timeout 0)))
-                (return nil))
-               ((stream:stream-fill-buffer byte-stream)
-                #| next iteration |# )
-               (t
-                (return :eof))))))))
-
-(defmethod stream:stream-read-char ((stream utf8-stream))
-  (utf8-stream-read-char stream nil))
-
-(defmethod stream:stream-read-char-no-hang ((stream utf8-stream))
-  (utf8-stream-read-char stream t))
-
-(defmethod stream:stream-read-sequence ((stream utf8-stream) (string string)
-                                        start end)
-  (with-slots (byte-stream) stream
-    (loop
-     (stream:with-stream-input-buffer (b i l) byte-stream
-       (multiple-value-bind (i2 s2) (utf8-decode-into b i l string start end)
-         (setq i i2)
-         (setq start s2)
-         (cond ((= start end)
-                (return start))
-               ((stream:stream-fill-buffer byte-stream)
-                #| next iteration |# )
-               (t
-                (return start))))))))
-
-(defmethod stream:stream-unread-char ((stream utf8-stream) (c character))
-  (with-slots (byte-stream) stream
-    (stream:with-stream-input-buffer (b i l) byte-stream
-      (declare (ignorable l))
-      (let* ((bytes (ef:encode-lisp-string (string c) :utf-8))
-             (len (length bytes))
-             (i2 (- i len)))
-        (assert (equal (utf8-decode b i2 i) c))
-        (setq i i2)
-        nil))))
-
-(defmethod stream:stream-write-char ((stream utf8-stream) (char character))
-  (with-slots (byte-stream) stream
-    (loop
-     (stream:with-stream-output-buffer (b i l) byte-stream
-       (let ((i2 (utf8-encode char b i l)))
-         (cond ((< i i2)
-                (setf i i2)
-                (return char))
-               ((stream:stream-flush-buffer byte-stream)
-                )
-               (t
-                (error "Can't flush buffer"))))))))
-
-(defmethod stream:stream-write-string ((stream utf8-stream) 
-                                       (string string) 
-                                       &optional (start 0) 
-                                         (end (length string)))
-  (with-slots (byte-stream) stream
-    (loop
-     (stream:with-stream-output-buffer (b i l) byte-stream
-       (multiple-value-bind (s2 i2) (utf8-encode-into string start end
-                                                      b i l)
-         (setf i i2)
-         (setf start s2)
-         (cond ((= start end)
-                (return string))
-               ((stream:stream-flush-buffer byte-stream)
-                )
-               (t
-                (error "Can't flush buffer"))))))))
-
-(defmethod stream:stream-write-sequence ((stream utf8-stream)
-                                         seq start end)
-  (stream:stream-write-string seq start end))
-
-(defmethod stream:stream-force-output ((stream utf8-stream))
-  (with-slots (byte-stream) stream (force-output byte-stream)))
-
-(defmethod stream:stream-finish-output ((stream utf8-stream))
-  (with-slots (byte-stream) stream (finish-output byte-stream)))
+(defun make-flexi-stream (stream external-format)
+  (unless (member :flexi-streams *features*)
+    (error "Cannot use external format ~A~
+            without having installed flexi-streams in the inferior-lisp."
+           external-format))
+  (funcall (read-from-string "FLEXI-STREAMS:MAKE-FLEXI-STREAM")
+           stream
+           :external-format
+           (apply (read-from-string "FLEXI-STREAMS:MAKE-EXTERNAL-FORMAT")
+                  external-format)))
 
 ;;; Coding Systems
 
@@ -483,6 +297,11 @@ Return NIL if the symbol is unbound."
   (when (fboundp sym)
     (describe-function sym)))
 
+(defimplementation type-specifier-p (symbol)
+  (or (ignore-errors
+       (subtypep nil symbol))
+      (not (eq (type-specifier-arglist symbol) :not-available))))
+
 ;;; Debugging
 
 (defclass slime-env (env:environment) 
@@ -549,7 +368,8 @@ Return NIL if the symbol is unbound."
                     (eq (dbg::call-frame-function-name frame) 
                         'invoke-debugger)))
            (nth-next-frame frame 1)))
-      ;; if we can't find a invoke-debugger frame, take any old frame at the top
+      ;; if we can't find a invoke-debugger frame, take any old frame
+      ;; at the top
       (dbg::debugger-stack-current-frame dbg::*debugger-stack*)))
   
 (defimplementation call-with-debugging-environment (fn)
@@ -586,7 +406,8 @@ Return NIL if the symbol is unbound."
                           (list (cond ((symbolp arg)
                                        (intern (symbol-name arg) :keyword))
                                       ((and (consp arg) (symbolp (car arg)))
-                                       (intern (symbol-name (car arg)) :keyword))
+                                       (intern (symbol-name (car arg))
+                                               :keyword))
                                       (t (caar arg)))))
                      (list (dbg::dbg-eval
                             (cond ((symbolp arg) arg)
@@ -638,10 +459,26 @@ Return NIL if the symbol is unbound."
   (let ((frame (nth-frame frame-number)))
     (dbg::dbg-eval form frame)))
 
+(defun function-name-package (name)
+  (typecase name
+    (null nil)
+    (symbol (symbol-package name))
+    ((cons (eql hcl:subfunction))
+     (destructuring-bind (name parent) (cdr name)
+       (declare (ignore name))
+       (function-name-package parent)))
+    ((cons (eql lw:top-level-form)) nil)
+    (t nil)))
+
+(defimplementation frame-package (frame-number)
+  (let ((frame (nth-frame frame-number)))
+    (if (dbg::call-frame-p frame)
+        (function-name-package (dbg::call-frame-function-name frame)))))
+
 (defimplementation return-from-frame (frame-number form)
   (let* ((frame (nth-frame frame-number))
          (return-frame (dbg::find-frame-for-return frame)))
-    (dbg::dbg-return-from-call-frame frame form return-frame 
+    (dbg::dbg-return-from-call-frame frame form return-frame
                                      dbg::*debugger-stack*)))
 
 (defimplementation restart-frame (frame-number)
@@ -845,7 +682,7 @@ Return NIL if the symbol is unbound."
     (with-open-file (stream file)
       (let ((pos 
              #-(or lispworks4.1 lispworks4.2)
-             (dspec-stream-position stream dspec)))
+             (ignore-errors (dspec-stream-position stream dspec))))
         (if pos
             (list :position (1+ pos))
             (dspec-function-name-position dspec `(:position 1)))))))
@@ -867,8 +704,8 @@ Return NIL if the symbol is unbound."
     (symbol 
      `(:error ,(format nil "Cannot resolve location: ~S" location)))
     ((satisfies emacs-buffer-location-p)
-     (destructuring-bind (_ buffer offset string) location
-       (declare (ignore _ string))
+     (destructuring-bind (_ buffer offset) location
+       (declare (ignore _))
        (make-location `(:buffer ,buffer)
                       (dspec-function-name-position dspec `(:offset ,offset 0))
                       hints)))))
@@ -919,7 +756,7 @@ function names like \(SETF GET)."
   (declare (ignore filename policy))
   (assert buffer)
   (assert position)
-  (let* ((location (list :emacs-buffer buffer position string))
+  (let* ((location (list :emacs-buffer buffer position))
          (tmpname (hcl:make-temp-file nil "lisp")))
     (with-swank-compilation-unit (location)
       (compile-from-temp-file 
@@ -951,7 +788,8 @@ function names like \(SETF GET)."
      #'(lambda (object)
          (when (and #+Harlequin-PC-Lisp (low:compiled-code-p object)
                     #+Harlequin-Unix-Lisp (sys:callablep object)
-                    #-(or Harlequin-PC-Lisp Harlequin-Unix-Lisp) (sys:compiled-code-p object)
+                    #-(or Harlequin-PC-Lisp Harlequin-Unix-Lisp) 
+                    (sys:compiled-code-p object)
                     (system::find-constant$funcallable name object))
            (vector-push-extend object callers))))
     ;; Delay dspec:object-dspec until after sweep-all-objects
@@ -1130,6 +968,26 @@ function names like \(SETF GET)."
     (mp:with-lock ((mailbox.mutex mbox))
       (setf (mailbox.queue mbox)
             (nconc (mailbox.queue mbox) (list message))))))
+
+(let ((alist '())
+      (lock (mp:make-lock :name "register-thread")))
+
+  (defimplementation register-thread (name thread)
+    (declare (type symbol name))
+    (mp:with-lock (lock)
+      (etypecase thread
+        (null 
+         (setf alist (delete name alist :key #'car)))
+        (mp:process
+         (let ((probe (assoc name alist)))
+           (cond (probe (setf (cdr probe) thread))
+                 (t (setf alist (acons name thread alist))))))))
+    nil)
+
+  (defimplementation find-registered (name)
+    (mp:with-lock (lock)
+      (cdr (assoc name alist)))))
+
 
 (defimplementation set-default-initial-binding (var form)
   (setq mp:*process-initial-bindings* 

@@ -23,7 +23,9 @@
 (import-from :ccl *gray-stream-symbols* :swank-backend)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (require 'xref))
+  (multiple-value-bind (ok err) (ignore-errors (require 'xref))
+    (unless ok
+      (warn "~a~%" err))))
 
 ;;; swank-mop
 
@@ -82,15 +84,23 @@
   (let ((str (symbol-name sym)))
     `(or (find-symbol ,str :swank)
          (error "There is no symbol named ~a in the SWANK package" ,str))))
+;;; UTF8
+
+(defimplementation string-to-utf8 (string)
+  (ccl:encode-string-to-octets string :external-format :utf-8))
+
+(defimplementation utf8-to-string (octets)
+  (ccl:decode-string-from-octets octets :external-format :utf-8))
 
 ;;; TCP Server
 
 (defimplementation preferred-communication-style ()
   :spawn)
 
-(defimplementation create-socket (host port)
+(defimplementation create-socket (host port &key backlog)
   (ccl:make-socket :connect :passive :local-port port 
-                   :local-host host :reuse-address t))
+                   :local-host host :reuse-address t
+                   :backlog (or backlog 5)))
 
 (defimplementation local-port (socket)
   (ccl:local-port socket))
@@ -148,16 +158,15 @@
 
 (defun handle-compiler-warning (condition)
   "Resignal a ccl:compiler-warning as swank-backend:compiler-warning."
-  (signal (make-condition
-           'compiler-condition
-           :original-condition condition
-           :message (compiler-warning-short-message condition)
-           :source-context nil
-           :severity (compiler-warning-severity condition)
-           :location (source-note-to-source-location 
-                      (ccl:compiler-warning-source-note condition)
-                      (lambda () "Unknown source")
-                      (ccl:compiler-warning-function-name condition)))))
+  (signal 'compiler-condition
+          :original-condition condition
+          :message (compiler-warning-short-message condition)
+          :source-context nil
+          :severity (compiler-warning-severity condition)
+          :location (source-note-to-source-location 
+                     (ccl:compiler-warning-source-note condition)
+                     (lambda () "Unknown source")
+                     (ccl:compiler-warning-function-name condition))))
 
 (defgeneric compiler-warning-severity (condition))
 (defmethod compiler-warning-severity ((c ccl:compiler-warning)) :warning)
@@ -170,6 +179,11 @@
 (defmethod compiler-warning-short-message ((c ccl:compiler-warning))
   (with-output-to-string (stream)
     (ccl:report-compiler-warning c stream :short t)))
+
+;; Needed because `ccl:report-compiler-warning' would return
+;; "Nonspecific warning".
+(defmethod compiler-warning-short-message ((c ccl::shadowed-typecase-clause))
+  (princ-to-string c))
 
 (defimplementation call-with-compilation-hooks (function)
   (handler-bind ((ccl:compiler-warning 'handle-compiler-warning))
@@ -197,7 +211,7 @@
       (unwind-protect
            (progn
              (with-open-file (s temp-file-name :direction :output 
-                                :if-exists :error)
+                                :if-exists :error :external-format :utf-8)
                (write-string string s))
              (let ((binary-filename (compile-temp-file
                                      temp-file-name filename buffer position)))
@@ -216,7 +230,8 @@
                       (setf (gethash temp-file-name *temp-file-map*)
                             buffer-name)
                       temp-file-name))
-                :compile-file-original-buffer-offset (1- offset)))
+                :compile-file-original-buffer-offset (1- offset)
+                :external-format :utf-8))
 
 (defimplementation save-image (filename &optional restart-function)
   (ccl:save-application filename :toplevel-function restart-function))
@@ -227,8 +242,8 @@
   (delete-duplicates
    (mapcan #'find-definitions
            (if inverse 
-             (ccl:get-relation relation name :wild :exhaustive t)
-             (ccl:get-relation relation :wild name :exhaustive t)))
+             (ccl::get-relation relation name :wild :exhaustive t)
+             (ccl::get-relation relation :wild name :exhaustive t)))
    :test 'equal))
 
 (defimplementation who-binds (name)
@@ -396,6 +411,22 @@
       (if pc
         (pc-source-location lfun pc)
         (function-source-location lfun)))))
+
+(defun function-name-package (name)
+  (etypecase name
+    (null nil)
+    (symbol (symbol-package name))
+    ((cons (eql setf) symbol) (symbol-package (cadr name)))
+    ((cons (eql :internal)) (function-name-package (car (last name))))
+    ((cons (and symbol (not keyword)) (cons list null))
+     (symbol-package (car name)))
+    (standard-method (function-name-package (ccl:method-name name)))))
+
+(defimplementation frame-package (frame-number)
+  (with-frame (p context) frame-number
+    (let* ((lfun (ccl:frame-function p context))
+           (name (ccl:function-name lfun)))
+      (function-name-package name))))
 
 (defimplementation eval-in-frame (form index)
   (with-frame (p context) index
@@ -663,6 +694,10 @@
     (loop for i below (ccl:uvsize object) append 
           (label-value-line (princ-to-string i) (ccl:uvref object i)))))
 
+(defimplementation type-specifier-p (symbol)
+  (or (ccl:type-specifier-p symbol)
+      (not (eq (type-specifier-arglist symbol) :not-available))))
+
 ;;; Multiprocessing
 
 (defvar *known-processes* 
@@ -752,6 +787,25 @@
      (when (eq timeout t) (return (values nil t)))
      (ccl:timed-wait-on-semaphore (mailbox.semaphore mbox) 1))))
 
+(let ((alist '())
+      (lock (ccl:make-lock "register-thread")))
+
+  (defimplementation register-thread (name thread)
+    (declare (type symbol name))
+    (ccl:with-lock-grabbed (lock)
+      (etypecase thread
+        (null 
+         (setf alist (delete name alist :key #'car)))
+        (ccl:process
+         (let ((probe (assoc name alist)))
+           (cond (probe (setf (cdr probe) thread))
+                 (t (setf alist (acons name thread alist))))))))
+    nil)
+
+  (defimplementation find-registered (name)
+    (ccl:with-lock-grabbed (lock)
+      (cdr (assoc name alist)))))
+
 (defimplementation set-default-initial-binding (var form)
   (eval `(ccl::def-standard-initial-binding ,var ,form)))
 
@@ -768,3 +822,5 @@
 
 (defimplementation hash-table-weakness (hashtable)
   (ccl:hash-table-weak-p hashtable))
+
+(pushnew 'deinit-log-output ccl:*save-exit-functions*)

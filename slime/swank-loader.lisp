@@ -10,13 +10,12 @@
 
 ;; If you want customize the source- or fasl-directory you can set
 ;; swank-loader:*source-directory* resp. swank-loader:*fasl-directory*
-;; before loading this files. (you also need to create the
-;; swank-loader package.)
+;; before loading this files. 
 ;; E.g.:
 ;;
-;;   (make-package :swank-loader)
-;;   (defparameter swank-loader::*fasl-directory* "/tmp/fasl/")
 ;;   (load ".../swank-loader.lisp")
+;;   (setq swank-loader::*fasl-directory* "/tmp/fasl/")
+;;   (swank-loader:init)
 
 (cl:defpackage :swank-loader
   (:use :cl)
@@ -74,11 +73,16 @@
 (defun lisp-version-string ()
   #+(or clozure cmu) (substitute-if #\_ (lambda (x) (find x " /"))
                                     (lisp-implementation-version))
-  #+(or cormanlisp scl sbcl) (lisp-implementation-version)
+  #+(or cormanlisp scl) (lisp-implementation-version)
+  #+sbcl (format nil "~a~:[~;-no-threads~]"
+                 (lisp-implementation-version)
+                 #+sb-thread nil
+                 #-sb-thread t)
   #+lispworks (lisp-implementation-version)
-  #+allegro   (format nil "~A~A~A~A"
+  #+allegro   (format nil "~@{~a~}"
                       excl::*common-lisp-version-number*
                       (if (eq 'h 'H) "A" "M")     ; ANSI vs MoDeRn
+                      (if (member :smp *features*) "s" "")
                       (if (member :64bit *features*) "-64bit" "")
                       (excl:ics-target-case
                        (:-ics "")
@@ -152,7 +156,7 @@ Return nil if nothing appropriate is available."
     (ignore-errors (delete-file pathname)))
   (abort))
 
-(defun compile-files (files fasl-dir load)
+(defun compile-files (files fasl-dir load quiet)
   "Compile each file in FILES if the source is newer than its
 corresponding binary, or the file preceding it was recompiled.
 If LOAD is true, load the fasl file."
@@ -170,13 +174,14 @@ If LOAD is true, load the fasl file."
                 ;; everything after this too.
                 (setq needs-recompile t)
                 (setq state :compile)
-                (or (compile-file src :output-file dest :print nil :verbose t)
+                (or (compile-file src :output-file dest :print nil
+                                  :verbose (not quiet))
                     ;; An implementation may not necessarily signal a
                     ;; condition itself when COMPILE-FILE fails (e.g. ECL)
                     (error "COMPILE-FILE returned NIL.")))
               (when load
                 (setq state :load)
-                (load dest :verbose t)))
+                (load dest :verbose (not quiet))))
           ;; Fail as early as possible
           (serious-condition (c)
             (ecase state
@@ -185,13 +190,13 @@ If LOAD is true, load the fasl file."
               (:unknown (handle-swank-load-error c "???ing" src)))))))))
 
 #+(or cormanlisp)
-(defun compile-files (files fasl-dir load)
+(defun compile-files (files fasl-dir load quiet)
   "Corman Lisp has trouble with compiled files."
   (declare (ignore fasl-dir))
   (when load
     (dolist (file files)
-      (load file :verbose t)
-      (force-output))))
+      (load file :verbose (not quiet)
+      (force-output)))))
 
 (defun load-user-init-file ()
   "Load the user init file, return NIL if it does not exist."
@@ -214,13 +219,15 @@ If LOAD is true, load the fasl file."
   `(swank-backend ,@*sysdep-files* swank-match swank-rpc swank))
 
 (defvar *contribs*
-  '(swank-c-p-c swank-arglists swank-fuzzy
+  '(swank-util swank-repl
+    swank-c-p-c swank-arglists swank-fuzzy
     swank-fancy-inspector
     swank-presentations swank-presentation-streams
     #+(or asdf sbcl ecl) swank-asdf
     swank-package-fu
     swank-hyperdoc
     #+sbcl swank-sbcl-exts
+    swank-mrepl
     )
   "List of names for contrib modules.")
 
@@ -233,18 +240,32 @@ If LOAD is true, load the fasl file."
   (append-dir base-dir "contrib"))
 
 (defun load-swank (&key (src-dir *source-directory*)
-                        (fasl-dir *fasl-directory*))
-  (compile-files (src-files *swank-files* src-dir) fasl-dir t)
+                     (fasl-dir *fasl-directory*)
+                     quiet)
+  (compile-files (src-files *swank-files* src-dir) fasl-dir t quiet)
   (funcall (q "swank::before-init")
            (slime-version-string)
            (list (contrib-dir fasl-dir)
                  (contrib-dir src-dir))))
 
+(defun delete-stale-contrib-fasl-files (swank-files contrib-files fasl-dir)
+  (let ((newest (reduce #'max (mapcar #'file-write-date swank-files))))
+    (dolist (src contrib-files)
+      (let ((fasl (binary-pathname src fasl-dir)))
+        (when (and (probe-file fasl)
+                   (<= (file-write-date fasl) newest))
+          (delete-file fasl))))))
+
 (defun compile-contribs (&key (src-dir (contrib-dir *source-directory*))
-                         (fasl-dir (contrib-dir *fasl-directory*))
-                         load)
-  (compile-files (src-files *contribs* src-dir) fasl-dir load))
-  
+                           (fasl-dir (contrib-dir *fasl-directory*))
+                           (swank-src-dir *source-directory*)
+                           load quiet)
+  (let* ((swank-src-files (src-files *swank-files* swank-src-dir))
+         (contrib-src-files (src-files *contribs* src-dir)))
+    (delete-stale-contrib-fasl-files swank-src-files contrib-src-files 
+                                     fasl-dir)
+    (compile-files contrib-src-files fasl-dir load quiet)))
+
 (defun loadup ()
   (load-swank)
   (compile-contribs :load t))
@@ -258,7 +279,8 @@ If LOAD is true, load the fasl file."
     (eval `(pushnew 'compile-contribs ,(q "swank::*after-init-hook*"))))
   (funcall (q "swank::init")))
 
-(defun init (&key delete reload load-contribs (setup t))
+(defun init (&key delete reload load-contribs (setup t)
+               (quiet (not *load-verbose*)))
   "Load SWANK and initialize some global variables.
 If DELETE is true, delete any existing SWANK packages.
 If RELOAD is true, reload SWANK, even if the SWANK package already exists.
@@ -268,11 +290,11 @@ global variabes in SWANK."
   (when (and delete (find-package :swank))
     (mapc #'delete-package '(:swank :swank-io-package :swank-backend)))
   (cond ((or (not (find-package :swank)) reload)
-         (load-swank))
-        (t 
+         (load-swank :quiet quiet))
+        (t
          (warn "Not reloading SWANK.  Package already exists.")))
   (when load-contribs
-    (compile-contribs :load t))
+    (compile-contribs :load t :quiet quiet))
   (when setup
     (setup)))
 

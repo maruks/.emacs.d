@@ -27,10 +27,10 @@ maintain."
   (:authors "too many to mention")
   (:license "GPL")
   (:on-load
-   (add-hook 'slime-event-hooks 'slime-repl-event-hook-function)
-   (add-hook 'slime-connected-hook 'slime-repl-connected-hook-function)
+   (slime-repl-add-hooks) 
    (setq slime-find-buffer-package-function 'slime-repl-find-buffer-package))
-  (:on-unload (slime-repl-remove-hooks)))
+  (:on-unload (slime-repl-remove-hooks))
+  (:swank-dependencies swank-repl))
 
 ;;;;; slime-repl
 
@@ -49,6 +49,12 @@ maintain."
   NIL slime will attempt to save all buffers (as per
   save-some-buffers). This applies to all ASDF related repl
   shortcuts."
+  :type '(boolean)
+  :group 'slime-repl)
+
+(defcustom slime-repl-auto-right-margin nil
+  "When T we bind CL:*PRINT-RIGHT-MARGIN* to the width of the
+current repl's (as per slime-output-buffer) window."
   :type '(boolean)
   :group 'slime-repl)
 
@@ -180,15 +186,18 @@ maintain."
 
 (defvar slime-open-stream-hooks)
 
-(defun slime-open-stream-to-lisp (port)
+(defun slime-open-stream-to-lisp (port coding-system)
   (let ((stream (open-network-stream "*lisp-output-stream*" 
                                      (slime-with-connection-buffer ()
                                        (current-buffer))
-				     slime-lisp-host port)))
+				     (car (process-contact (slime-connection)))
+                                     port))
+        (emacs-coding-system (car (find coding-system
+                                        slime-net-valid-coding-systems
+                                        :key #'third))))
     (slime-set-query-on-exit-flag stream)
     (set-process-filter stream 'slime-output-filter)
-    (let ((pcs (process-coding-system (slime-current-connection))))
-      (set-process-coding-system stream (car pcs) (cdr pcs)))
+    (set-process-coding-system stream emacs-coding-system emacs-coding-system)
     (when-let (secret (slime-secret))
       (slime-net-send secret stream))
     (run-hook-with-args 'slime-open-stream-hooks stream)
@@ -522,7 +531,13 @@ joined together."))
 
 (defun slime-repl-eval-string (string)
   (slime-rex ()
-      ((list 'swank:listener-eval string) (slime-lisp-package))
+      ((if slime-repl-auto-right-margin
+           `(swank:listener-eval ,string
+                                 :window-width
+                                 ,(with-current-buffer (slime-output-buffer)
+                                    (window-width)))
+           `(swank:listener-eval ,string))
+       (slime-lisp-package))
     ((:ok result)
      (slime-repl-insert-result result))
     ((:abort condition)
@@ -548,7 +563,8 @@ joined together."))
       (slime-save-marker slime-output-start
         (slime-save-marker slime-output-end
           (goto-char slime-output-end)
-          (insert-before-markers (format "; Evaluation aborted on %s.\n" condition))
+          (insert-before-markers (format "; Evaluation aborted on %s.\n"
+                                         condition))
           (slime-repl-insert-prompt))))
     (slime-repl-show-maximum-output)))
 
@@ -572,7 +588,8 @@ If `slime-repl-suppress-prompt' is true, does nothing and returns nil."
               '(face slime-repl-prompt-face read-only t intangible t
                      slime-repl-prompt t
                      ;; emacs stuff
-                     rear-nonsticky (slime-repl-prompt read-only face intangible)
+                     rear-nonsticky (slime-repl-prompt read-only face
+                                     intangible)
                      ;; xemacs stuff
                      start-open t end-open t)
             (insert-before-markers prompt))
@@ -752,7 +769,6 @@ If NEWLINE is true then add a newline at the end of the input."
     (let ((overlay (make-overlay slime-repl-input-start-mark end)))
       ;; These properties are on an overlay so that they won't be taken
       ;; by kill/yank.
-      (overlay-put overlay 'read-only t)
       (overlay-put overlay 'face 'slime-repl-input-face)))
   (let ((input (slime-repl-current-input)))
     (goto-char (point-max))
@@ -1510,7 +1526,8 @@ expansion will be added to the REPL's history.)"
                               name))
                   (qualified-symbol-name (slime-qualify-cl-symbol-name symbol))
                   (symbol-name (slime-cl-symbol-name qualified-symbol-name))
-                  (symbol-package (slime-cl-symbol-package qualified-symbol-name))
+                  (symbol-package (slime-cl-symbol-package
+                                   qualified-symbol-name))
                   (call (if (equalp (slime-lisp-package) symbol-package)
                             symbol-name
                             qualified-symbol-name)))
@@ -1584,7 +1601,8 @@ expansion will be added to the REPL's history.)"
   (interactive)
   (let* ((package (slime-current-package))
          (exists-p (or (null package)
-                       (slime-eval `(cl:packagep (swank::guess-package ,package)))))
+                       (slime-eval `(cl:packagep
+                                     (swank::guess-package ,package)))))
          (directory default-directory))
     (when (and package exists-p)
       (slime-repl-set-package package))
@@ -1657,10 +1675,21 @@ expansion will be added to the REPL's history.)"
            (pop-to-buffer repl-buffer)
            (goto-char (point-max))))))
 
+(defun slime-repl-choose-coding-system ()
+  (let ((candidates (slime-connection-coding-systems)))
+    (or (find (symbol-name (car default-process-coding-system))
+	      candidates
+	      :test (lambda (s1 s2)
+		      (if (fboundp 'coding-system-equal)
+			  (coding-system-equal (intern s1) (intern s2)))))
+	(car candidates)
+	(error "Can't find suitable coding-system"))))
+
 (defun slime-repl-connected-hook-function ()
   (destructuring-bind (package prompt) 
-      (let ((slime-current-thread t))
-	(slime-eval '(swank:create-repl nil)))
+      (let ((slime-current-thread t)
+	    (cs (slime-repl-choose-coding-system)))
+	(slime-eval `(swank:create-repl nil :coding-system ,cs)))
     (setf (slime-lisp-package) package)
     (setf (slime-lisp-package-prompt-string) prompt))
   (slime-hide-inferior-lisp-buffer)
@@ -1678,8 +1707,8 @@ expansion will be added to the REPL's history.)"
     ((:read-aborted thread tag)
      (slime-repl-abort-read thread tag)
      t)
-    ((:open-dedicated-output-stream port)
-     (slime-open-stream-to-lisp port)
+    ((:open-dedicated-output-stream port coding-system)
+     (slime-open-stream-to-lisp port coding-system)
      t)
     ((:new-package package prompt-string)
      (setf (slime-lisp-package) package)
@@ -1691,13 +1720,28 @@ expansion will be added to the REPL's history.)"
      t)
     (t nil)))
 
+(defun slime-change-repl-to-default-connection ()
+  "Change current REPL to the REPL of the default connection.
+If the current buffer is not a REPL, don't do anything."
+  (when (equal major-mode 'slime-repl-mode)
+    (let ((slime-buffer-connection slime-default-connection))
+      (pop-to-buffer-same-window (slime-connection-output-buffer)))))
+
 (defun slime-repl-find-buffer-package ()
   (or (slime-search-buffer-package)
       (slime-lisp-package)))
 
+(defun slime-repl-add-hooks ()
+  (add-hook 'slime-event-hooks 'slime-repl-event-hook-function)
+  (add-hook 'slime-connected-hook 'slime-repl-connected-hook-function)
+  (add-hook 'slime-cycle-connections-hook
+            'slime-change-repl-to-default-connection))
+
 (defun slime-repl-remove-hooks ()
   (remove-hook 'slime-event-hooks 'slime-repl-event-hook-function)
-  (remove-hook 'slime-connected-hook 'slime-repl-connected-hook-function))
+  (remove-hook 'slime-connected-hook 'slime-repl-connected-hook-function)
+  (remove-hook 'slime-cycle-connections-hook
+               'slime-change-repl-to-default-connection))
 
 (let ((byte-compile-warnings '()))
   (mapc #'byte-compile
@@ -1964,7 +2008,8 @@ SWANK> [*foo]"))
     (slime-wait-condition "Debugger visible" 
                           (lambda () 
                             (and (slime-sldb-level= 1)
-                                 (get-buffer-window (sldb-get-default-buffer))))
+                                 (get-buffer-window
+                                  (sldb-get-default-buffer))))
                           5)
     (with-current-buffer (sldb-get-default-buffer)
       (sldb-continue))
