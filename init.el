@@ -26,7 +26,9 @@
 			magit
 			haskell-mode
 			nrepl
-			ac-nrepl))
+			ac-nrepl
+			quack
+			geiser))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -261,6 +263,9 @@
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
+
+;; geiser
+(setq geiser-active-implementations '(racket))
 
 ;; server
 (load "server")
