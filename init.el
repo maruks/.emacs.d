@@ -73,16 +73,11 @@
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
 ;; smart parens
-(add-hook 'emacs-lisp-mode-hook       'smartparens-mode)
-(add-hook 'lisp-mode-hook             'smartparens-mode)
-(add-hook 'lisp-interaction-mode-hook 'smartparens-mode)
-(add-hook 'scheme-mode-hook           'smartparens-mode)
-(add-hook 'clojure-mode-hook          'smartparens-mode)
-(add-hook 'slime-repl-mode-hook       'smartparens-mode)
-(add-hook 'nrepl-mode-hook            'smartparens-mode)
+(smartparens-global-mode t)
+(load "smartparens-init")
 
-(global-set-key (kbd "C-c esp") '(lambda () (smartparens-mode +1)))
-(global-set-key (kbd "C-c dsp") '(lambda () (smartparens-mode -1)))
+(global-set-key (kbd "C-c spe") '(lambda () (smartparens-mode +1)))
+(global-set-key (kbd "C-c spd") '(lambda () (smartparens-mode -1)))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
