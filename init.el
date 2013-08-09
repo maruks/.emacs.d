@@ -1,9 +1,10 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
-;; repo
+;; repo 
 (progn
   (require 'package)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives 	       
+	       '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (package-initialize)
   (when (not package-archive-contents)
     (package-refresh-contents))
@@ -19,7 +20,7 @@
 			pos-tip
 			ac-slime
 			fuzzy
-			paredit
+			smartparens
 			load-theme-buffer-local
 			zenburn-theme
 			solarized-theme
@@ -71,18 +72,17 @@
 (add-hook 'emacs-lisp-mode-hook
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
-;; paredit
-(autoload 'paredit-mode "paredit"  "Minor mode for pseudo-structurally editing Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       'paredit-mode)
-(add-hook 'lisp-mode-hook             'paredit-mode)
-(add-hook 'lisp-interaction-mode-hook 'paredit-mode)
-(add-hook 'scheme-mode-hook           'paredit-mode)
-(add-hook 'clojure-mode-hook          'paredit-mode)
-(add-hook 'slime-repl-mode-hook       'paredit-mode)
-(add-hook 'nrepl-mode-hook            'paredit-mode)
+;; smart parens
+(add-hook 'emacs-lisp-mode-hook       'smartparens-mode)
+(add-hook 'lisp-mode-hook             'smartparens-mode)
+(add-hook 'lisp-interaction-mode-hook 'smartparens-mode)
+(add-hook 'scheme-mode-hook           'smartparens-mode)
+(add-hook 'clojure-mode-hook          'smartparens-mode)
+(add-hook 'slime-repl-mode-hook       'smartparens-mode)
+(add-hook 'nrepl-mode-hook            'smartparens-mode)
 
-(global-set-key (kbd "C-c pme") '(lambda () (paredit-mode +1)))
-(global-set-key (kbd "C-c pmd") '(lambda () (paredit-mode -1)))
+(global-set-key (kbd "C-c esp") '(lambda () (smartparens-mode +1)))
+(global-set-key (kbd "C-c dsp") '(lambda () (smartparens-mode -1)))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
