@@ -259,6 +259,13 @@
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
 
+;; ido
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1) 
+(setq ido-create-new-buffer 'always)
+(setq ido-file-extensions-order '(".clj" ".js" ".java" ".html" ".xml" ".sh" ".el"))
+
 ;; geiser
 (setq geiser-active-implementations '(racket))
 
