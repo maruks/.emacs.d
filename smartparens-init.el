@@ -32,11 +32,11 @@
 (define-key sp-keymap (kbd "<delete>") 'sp-delete-char)
 (define-key sp-keymap (kbd "<backspace>") 'sp-backward-delete-char)
 
-(define-key sp-keymap (kbd "M-<delete>") 'sp-kill-symbol)
-(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-kill-symbol)
+(define-key sp-keymap (kbd "M-<delete>") 'sp-kill-word)
+(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-kill-word)
 (define-key sp-keymap (kbd "C-<delete>") 'sp-kill-symbol)
 (define-key sp-keymap (kbd "C-<backspace>") 'sp-backward-kill-symbol)
-(define-key sp-keymap (kbd "M-d") 'sp-kill-symbol)
+(define-key sp-keymap (kbd "M-d") 'sp-kill-word)
 (define-key sp-keymap (kbd "C-d") 'sp-kill-symbol)
 
 (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
