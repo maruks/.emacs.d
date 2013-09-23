@@ -24,14 +24,19 @@
 (define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
 (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
 
-(define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-
 ;; manipulation
 
 (define-key sp-keymap (kbd "C-k") 'sp-kill-sexp)
 
-(define-key sp-keymap [delete] 'sp-delete-char)
-(define-key sp-keymap [backspace] 'sp-backward-delete-char)
+(define-key sp-keymap (kbd "<delete>") 'sp-delete-char)
+(define-key sp-keymap (kbd "<backspace>") 'sp-backward-delete-char)
+
+(define-key sp-keymap (kbd "M-<delete>") 'sp-kill-symbol)
+(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-kill-symbol)
+(define-key sp-keymap (kbd "C-<delete>") 'sp-kill-symbol)
+(define-key sp-keymap (kbd "C-<backspace>") 'sp-backward-kill-symbol)
+(define-key sp-keymap (kbd "M-d") 'sp-kill-symbol)
+(define-key sp-keymap (kbd "C-d") 'sp-backward-kill-symbol)
 
 (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
 
@@ -81,3 +86,8 @@
 ;; lisp modes
 (sp-with-modes sp--lisp-modes
   (sp-local-pair "(" nil :bind "C-("))
+
+;; disable closing parens
+(define-key sp-keymap (kbd ")") 'sp-up-sexp)
+(define-key sp-keymap (kbd "}") 'sp-up-sexp)
+(define-key sp-keymap (kbd "]") 'sp-up-sexp)
