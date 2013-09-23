@@ -27,6 +27,7 @@
 ;; manipulation
 
 (define-key sp-keymap (kbd "C-k") 'sp-kill-sexp)
+(define-key sp-keymap (kbd "C-M-k") 'kill-line)
 
 (define-key sp-keymap (kbd "<delete>") 'sp-delete-char)
 (define-key sp-keymap (kbd "<backspace>") 'sp-backward-delete-char)
