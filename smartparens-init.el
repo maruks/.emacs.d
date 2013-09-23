@@ -1,5 +1,12 @@
 (require 'smartparens-config)
-(smartparens-global-mode t)
+(smartparens-mode t)
+(show-smartparens-mode t)
+
+;; disable highlightning
+
+(setq sp-highlight-pair-overlay nil)
+(setq sp-highlight-wrap-overlay nil)
+(setq sp-highlight-wrap-tag-overlay nil)
 
 ;; navigation
 
@@ -21,7 +28,11 @@
 
 ;; manipulation
 
-(define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
+(define-key sp-keymap (kbd "C-k") 'sp-kill-sexp)
+
+(define-key sp-keymap [delete] 'sp-delete-char)
+(define-key sp-keymap [backspace] 'sp-backward-delete-char)
+
 (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
 
 (define-key sp-keymap (kbd "C-M-}") 'sp-unwrap-sexp)

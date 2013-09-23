@@ -72,12 +72,21 @@
 (add-hook 'emacs-lisp-mode-hook
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
-;; smart parens
-(smartparens-global-mode t)
-(load "smartparens-init")
+;; smartparens
+(defun load-smartparens() 
+  (load "smartparens-init"))
 
-(global-set-key (kbd "C-c spe") '(lambda () (smartparens-mode +1)))
-(global-set-key (kbd "C-c spd") '(lambda () (smartparens-mode -1)))
+(defvar lisp-mode-hooks
+  '(clojure-mode-hook
+    nrepl-mode-hook
+    emacs-lisp-mode-hook 
+    ielm-mode-hook
+    lisp-mode-hook
+    lisp-interaction-mode-hook
+    scheme-mode-hook))
+
+(dolist (h lisp-mode-hooks)
+  (add-hook h #'load-smartparens))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -127,13 +136,18 @@
 
 ;; customizations
 (menu-bar-mode -1) 
-(show-paren-mode t)
+
 (if (and window-system (boundp 'tool-bar-mode))
     (tool-bar-mode -1))
-
 (if 
     (boundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
+
+(setq make-backup-files nil)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ;; shell fix
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
