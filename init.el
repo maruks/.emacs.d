@@ -1,35 +1,35 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
-;; repo 
+;; repo
 (progn
   (require 'package)
-  (add-to-list 'package-archives 	       
-	       '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives
+               '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (package-initialize)
   (when (not package-archive-contents)
     (package-refresh-contents))
   (defvar my-packages '(clojure-mode
-			scala-mode
-			ace-jump-mode
-			exec-path-from-shell
-			yasnippet
-			projectile
-			perspective
-			popup
-			auto-complete
-			pos-tip
-			ac-slime
-			fuzzy
-			smartparens
-			load-theme-buffer-local
-			zenburn-theme
-			solarized-theme
-			magit
-			haskell-mode
-			nrepl
-			ac-nrepl
-			quack
-			geiser))
+                        scala-mode
+                        ace-jump-mode
+                        exec-path-from-shell
+                        yasnippet
+                        projectile
+                        perspective
+                        popup
+                        auto-complete
+                        pos-tip
+                        ac-slime
+                        fuzzy
+                        smartparens
+                        load-theme-buffer-local
+                        zenburn-theme
+                        solarized-theme
+                        magit
+                        haskell-mode
+                        nrepl
+                        ac-nrepl
+                        quack
+                        geiser))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -47,7 +47,7 @@
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (add-hook 'ace-jump-mode-before-jump-hook
-	  (lambda () (push-mark (point) t)))
+          (lambda () (push-mark (point) t)))
 
 ;; magit
 (global-set-key (kbd "<f6>") 'magit-status)
@@ -63,23 +63,24 @@
           '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
 
 ;; emacs lisp
-(defun eval-buff-go-to-repl () (interactive) 
-  (progn 
-    (eval-buffer) 
+(defun eval-buff-go-to-repl () (interactive)
+  (progn
+    (eval-buffer)
     (if (get-buffer "*ielm*")
-	(switch-to-buffer-other-window (get-buffer "*ielm*")))))
+        (switch-to-buffer-other-window (get-buffer "*ielm*")))))
 
 (add-hook 'emacs-lisp-mode-hook
           '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
 
 ;; smartparens
-(defun load-smartparens() 
+;; C-u M-x sp-cheat-sheet
+(defun load-smartparens()
   (load "smartparens-init"))
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
     nrepl-mode-hook
-    emacs-lisp-mode-hook 
+    emacs-lisp-mode-hook
     ielm-mode-hook
     lisp-mode-hook
     lisp-interaction-mode-hook
@@ -93,12 +94,12 @@
 
 (setq current-t43m3 nil)
 
-(defun enab-theme (theme) 
+(defun enab-theme (theme)
   (if current-t43m3 (disable-theme current-t43m3))
-  (setq current-t43m3 theme) 
-  (load-theme theme t)) 
+  (setq current-t43m3 theme)
+  (load-theme theme t))
 
-(defun disab-current-theme () 
+(defun disab-current-theme ()
   (if current-t43m3 (disable-theme current-t43m3))
   (setq current-t43m3 nil))
 
@@ -116,11 +117,11 @@
 
 (global-set-key (kbd "C-c dct") '(lambda () (interactive) (disab-current-theme)))
 
-(defun l0ad-theme (name) 
+(defun l0ad-theme (name)
   (interactive
    (list
     (intern (completing-read "Load custom theme: "
-			     (mapcar 'symbol-name (custom-available-themes))))))
+                             (mapcar 'symbol-name (custom-available-themes))))))
   (enab-theme name))
 
 (setq d3fault-theme (getenv "EMACS_DEFAULT_THEME"))
@@ -135,11 +136,11 @@
 (setq framemove-hook-into-windmove t)
 
 ;; customizations
-(menu-bar-mode -1) 
+(menu-bar-mode -1)
 
 (if (and window-system (boundp 'tool-bar-mode))
     (tool-bar-mode -1))
-(if 
+(if
     (boundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
@@ -166,19 +167,19 @@
 
 (add-to-list 'completion-ignored-extensions ".hi")
 
- ;; duplicate current line
+;; duplicate current line
 (defun duplicate-current-line (&optional n)
   "duplicate current line, make more than 1 copy given a numeric argument"
   (interactive "p")
   (save-excursion
     (let ((nb (or n 1))
-	  (current-line (thing-at-point 'line)))
+          (current-line (thing-at-point 'line)))
       (when (or (= 1 (forward-line 1)) (eq (point) (point-max)))
-	(insert "\n"))
+        (insert "\n"))
       (while (> n 0)
-	(insert current-line)
-	(decf n)))))
-    
+        (insert current-line)
+        (decf n)))))
+
 (global-set-key (kbd "C-c C-d") 'duplicate-current-line)
 
 ;; font & hash
@@ -215,6 +216,9 @@
 ;; mark
 (require 'mark)
 
+;; reformat
+(require 'reformat)
+
 ;; sudoku
 (add-to-list 'load-path "~/.emacs.d/sudoku")
 (require 'sudoku)
@@ -245,7 +249,7 @@
 (global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
 
 ;; yasnippet
-(require 'yasnippet) 
+(require 'yasnippet)
 (yas--initialize)
 (setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.8.0/snippets"
                            "~/.emacs.d/snippets"))
@@ -253,7 +257,7 @@
 (mapc 'yas/load-directory yas/root-directory)
 
 ;; ensime
-(defun l0ad-ensime () 
+(defun l0ad-ensime ()
   (interactive)
   (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
   (require 'ensime)
@@ -267,7 +271,7 @@
 (add-hook 'nrepl-mode-hook 'subword-mode)
 
 ;; exec-path-from-shell
-(when (memq window-system '(mac ns)) 
+(when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
 ;; ac-nrepl
@@ -279,7 +283,7 @@
 ;; ido
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
-(ido-mode 1) 
+(ido-mode 1)
 (setq ido-create-new-buffer 'always)
 (setq ido-file-extensions-order '(".clj" ".js" ".java" ".html" ".xml" ".sh" ".el"))
 

@@ -37,7 +37,7 @@
 (define-key sp-keymap (kbd "C-<delete>") 'sp-kill-symbol)
 (define-key sp-keymap (kbd "C-<backspace>") 'sp-backward-kill-symbol)
 (define-key sp-keymap (kbd "M-d") 'sp-kill-symbol)
-(define-key sp-keymap (kbd "C-d") 'sp-backward-kill-symbol)
+(define-key sp-keymap (kbd "C-d") 'sp-kill-symbol)
 
 (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
 
