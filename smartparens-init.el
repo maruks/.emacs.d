@@ -62,17 +62,17 @@
 
 (define-key sp-keymap (kbd "M-s") 'sp-splice-sexp)
 (define-key sp-keymap (kbd "M-S") 'sp-split-sexp)
-(define-key sp-keymap (kbd "M-J") 'sp-join-sexp)
+(define-key sp-keymap (kbd "M-j") 'sp-join-sexp)
 
 (define-key sp-keymap (kbd "C-M-T") 'sp-transpose-sexp)
+
+(define-key sp-keymap (kbd "C-M-r") 'sp-rewrap-sexp)
 
 ;;(define-key sp-keymap (kbd "") 'sp-convolute-sexp)
 ;;(define-key sp-keymap (kbd "") 'sp-absorb-sexp) 
 ;;(define-key sp-keymap (kbd "") 'sp-emit-sexp) 
 ;;(define-key sp-keymap (kbd "") 'sp-extract-before-sexp)
 ;;(define-key sp-keymap (kbd "") 'sp-extract-after-sexp) 
-;;(define-key sp-keymap (kbd "") 'sp-rewrap-sexp)
-;;(define-key sp-keymap (kbd "") 'sp-swap-enclosing-sexp)
 ;;(define-key sp-keymap (kbd "") 'sp-add-to-next-sexp) 
 ;;(define-key sp-keymap (kbd "") 'sp-add-to-previous-sexp)
 
