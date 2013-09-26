@@ -1,15 +1,16 @@
 (require 'smartparens-config)
+
 (smartparens-mode t)
 (show-smartparens-mode t)
 
-;; disable highlightning
+(setq sp-autoinsert-if-followed-by-word 1)
 
+;; disable highlightning
 (setq sp-highlight-pair-overlay nil)
 (setq sp-highlight-wrap-overlay nil)
 (setq sp-highlight-wrap-tag-overlay nil)
 
 ;; navigation
-
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
 
@@ -25,7 +26,6 @@
 (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
 
 ;; manipulation
-
 (define-key sp-keymap (kbd "C-k") 'sp-kill-sexp)
 (define-key sp-keymap (kbd "C-M-k") 'kill-line)
 
@@ -77,7 +77,6 @@
 ;;(define-key sp-keymap (kbd "") 'sp-add-to-previous-sexp)
 
 ;; pair management
-
 (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
 
 ;; html-mode
