@@ -180,7 +180,7 @@
         (insert current-line)
         (decf n)))))
 
-(global-set-key (kbd "C-c C-d") 'duplicate-current-line)
+(global-set-key (kbd "C-c C-u") 'duplicate-current-line)
 
 ;; font & hash
 (setq font (getenv "EMACS_DEFAULT_FONT"))
