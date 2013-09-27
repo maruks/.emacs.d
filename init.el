@@ -1,5 +1,9 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
+;; user details
+(setq user-full-name "Maris Orbidans")
+(setq user-mail-address "maris.orbidans@gmail.com")
+
 ;; repo
 (progn
   (require 'package)
@@ -25,6 +29,7 @@
                         zenburn-theme
                         solarized-theme
                         magit
+			org
                         haskell-mode
                         nrepl
                         ac-nrepl
