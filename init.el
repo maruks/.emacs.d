@@ -67,7 +67,7 @@
 (global-set-key (kbd "C-c ji") 'nrepl-jack-in)
 (global-set-key (kbd "\e\en") 'nrepl-jack-in)
 
-(eval-after-load 'clojure-mode-hook
+(eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl))
 
 ;; emacs lisp
@@ -77,7 +77,7 @@
     (if (get-buffer "*ielm*")
         (switch-to-buffer-other-window (get-buffer "*ielm*")))))
 
-(eval-after-load 'emacs-lisp-mode-hook
+(eval-after-load 'emacs-lisp-mode
           '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
 
 ;; smartparens
@@ -279,7 +279,7 @@
 (setq nrepl-popup-stacktraces nil)
 (add-hook 'nrepl-repl-mode-hook 'subword-mode)
 
-(eval-after-load 'nrepl-repl-mode-hook
+(eval-after-load 'nrepl-repl-mode
   '(define-key nrepl-repl-mode-map (kbd "s-p") 'nrepl-previous-input))
 
 ;; exec-path-from-shell
