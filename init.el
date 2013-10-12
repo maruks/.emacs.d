@@ -50,13 +50,14 @@
 ;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
 ;; "M-`"                                     Jump back
 
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "\e\ej") 'ace-jump-mode)
 
 (add-hook 'ace-jump-mode-before-jump-hook
           (lambda () (push-mark (point) t)))
 
 ;; magit
 (global-set-key (kbd "<f6>") 'magit-status)
+(global-set-key (kbd "\e\eg") 'magit-status)
 
 ;; clojure-mode
 (require 'clojure-mode)
@@ -64,9 +65,10 @@
 (fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
 
 (global-set-key (kbd "C-c ji") 'nrepl-jack-in)
+(global-set-key (kbd "\e\en") 'nrepl-jack-in)
 
-(add-hook 'clojure-mode-hook
-          '(lambda () (define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl)))
+(eval-after-load 'clojure-mode-hook
+  '(define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl))
 
 ;; emacs lisp
 (defun eval-buff-go-to-repl () (interactive)
@@ -75,8 +77,8 @@
     (if (get-buffer "*ielm*")
         (switch-to-buffer-other-window (get-buffer "*ielm*")))))
 
-(add-hook 'emacs-lisp-mode-hook
-          '(lambda () (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)))
+(eval-after-load 'emacs-lisp-mode-hook
+          '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
 
 ;; smartparens
 ;; C-u M-x sp-cheat-sheet
@@ -186,7 +188,8 @@
         (insert current-line)
         (decf n)))))
 
-(global-set-key (kbd "C-c C-u") 'duplicate-current-line)
+;; ESC ESC d
+(global-set-key (kbd "\e\ed") 'duplicate-current-line)
 
 ;; font & hash
 (setq font (getenv "EMACS_DEFAULT_FONT"))
@@ -275,6 +278,9 @@
 (setq nrepl-tab-command 'indent-for-tab-command)
 (setq nrepl-popup-stacktraces nil)
 (add-hook 'nrepl-repl-mode-hook 'subword-mode)
+
+(eval-after-load 'nrepl-repl-mode-hook
+  '(define-key nrepl-repl-mode-map (kbd "s-p") 'nrepl-previous-input))
 
 ;; exec-path-from-shell
 (when (memq window-system '(mac ns))

@@ -84,9 +84,12 @@
 (sp-with-modes '(html-mode sgml-mode)
   (sp-local-pair "<" ">"))
 
+(add-to-list 'sp--lisp-modes 'nrepl-repl-mode)
+
 ;; lisp modes
 (sp-with-modes sp--lisp-modes
-  (sp-local-pair "(" nil :bind "C-("))
+  (sp-local-pair "(" nil :bind "C-(")
+  (sp-local-pair "'" nil :actions nil))
 
 ;; disable closing parens
 (define-key sp-keymap (kbd ")") 'sp-up-sexp)

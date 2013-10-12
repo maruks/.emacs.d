@@ -6,5 +6,6 @@ elpa
 swank
 ensime
 url
+.nrepl-port
 *.cache
 *.*~
