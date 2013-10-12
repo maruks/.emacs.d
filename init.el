@@ -14,6 +14,7 @@
     (package-refresh-contents))
   (defvar my-packages '(clojure-mode
                         scala-mode
+			sml-mode
                         ace-jump-mode
                         exec-path-from-shell
                         yasnippet
@@ -84,7 +85,7 @@
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
-    nrepl-mode-hook
+    nrepl-repl-mode-hook
     emacs-lisp-mode-hook
     ielm-mode-hook
     lisp-mode-hook
@@ -273,7 +274,7 @@
 (setq nrepl-hide-special-buffers t)
 (setq nrepl-tab-command 'indent-for-tab-command)
 (setq nrepl-popup-stacktraces nil)
-(add-hook 'nrepl-mode-hook 'subword-mode)
+(add-hook 'nrepl-repl-mode-hook 'subword-mode)
 
 ;; exec-path-from-shell
 (when (memq window-system '(mac ns))
@@ -281,9 +282,9 @@
 
 ;; ac-nrepl
 (require 'ac-nrepl)
-(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'nrepl-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
+(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-repl-mode))
 
 ;; ido
 (setq ido-enable-flex-matching t)

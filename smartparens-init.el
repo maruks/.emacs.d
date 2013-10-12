@@ -30,6 +30,7 @@
 (define-key sp-keymap (kbd "C-M-k") 'kill-line)
 
 (define-key sp-keymap (kbd "<delete>") 'sp-delete-char)
+(define-key sp-keymap (kbd "<kp-delete>") 'sp-delete-char)
 (define-key sp-keymap (kbd "<backspace>") 'sp-backward-delete-char)
 
 (define-key sp-keymap (kbd "M-<delete>") 'sp-kill-word)
