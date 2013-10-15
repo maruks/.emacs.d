@@ -7,5 +7,6 @@ swank
 ensime
 url
 .nrepl-port
+eshell
 *.cache
 *.*~
