@@ -161,6 +161,8 @@
 (setq tab-width 2
       indent-tabs-mode nil)
 
+(column-number-mode 1)
+
 ;; shell fix
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
