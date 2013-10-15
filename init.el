@@ -44,31 +44,32 @@
 (require 'projectile)
 (projectile-global-mode)
 
-;; ace jump mode
-;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
-;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
-;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
-;; "M-`"                                     Jump back
-
-(define-key global-map (kbd "\e\ej") 'ace-jump-mode)
-
-(add-hook 'ace-jump-mode-before-jump-hook
-          (lambda () (push-mark (point) t)))
-
-;; magit
-(global-set-key (kbd "<f6>") 'magit-status)
-(global-set-key (kbd "\e\eg") 'magit-status)
-
 ;; clojure-mode
 (require 'clojure-mode)
 
-(fset 'compile-and-goto-repl "\C-x\C-s\C-c\C-k\C-c\C-z")
+(defun compile-buffer (arg) 
+  (interactive "P")
+  (save-buffer)
+  (nrepl-load-current-buffer)
+  (when arg
+    (nrepl-switch-to-relevant-repl-buffer nil)))
 
-(global-set-key (kbd "C-c ji") 'nrepl-jack-in)
-(global-set-key (kbd "\e\en") 'nrepl-jack-in)
+(defun compile-run-tests (arg) 
+  (interactive "P")
+  (let ((oldbuf (current-buffer)))
+    (save-buffer)
+    (nrepl-load-current-buffer)
+    (nrepl-switch-to-relevant-repl-buffer nil)
+    (insert "(run-specs)")
+    (nrepl-return)
+    (unless arg 
+      (switch-to-buffer-other-window oldbuf))))
 
 (eval-after-load 'clojure-mode
-  '(define-key clojure-mode-map (kbd "<f5>") 'compile-and-goto-repl))
+  '(progn  
+     (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
+     (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
+     (define-key clojure-mode-map (kbd "\e\er") 'nrepl-switch-to-relevant-repl-buffer)))
 
 ;; emacs lisp
 (defun eval-buff-go-to-repl () (interactive)
@@ -78,7 +79,7 @@
         (switch-to-buffer-other-window (get-buffer "*ielm*")))))
 
 (eval-after-load 'emacs-lisp-mode
-          '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
+  '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
 
 ;; smartparens
 ;; C-u M-x sp-cheat-sheet
@@ -145,6 +146,7 @@
 
 ;; customizations
 (menu-bar-mode -1)
+(setq inhibit-startup-screen 1)
 
 (if (and window-system (boundp 'tool-bar-mode))
     (tool-bar-mode -1))
@@ -190,9 +192,6 @@
         (insert current-line)
         (decf n)))))
 
-;; ESC ESC d
-(global-set-key (kbd "\e\ed") 'duplicate-current-line)
-
 ;; font & hash
 (setq font (getenv "EMACS_DEFAULT_FONT"))
 
@@ -216,13 +215,9 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
-(global-set-key (kbd "C-c tf") 'toggle-fullscreen)
-
 ;; maxframe
 (add-to-list 'load-path "~/.emacs.d/maxframe")
 (require 'maxframe)
-(global-set-key (kbd "C-c mf") 'maximize-frame)
-(global-set-key (kbd "C-c rf") 'restore-frame)
 
 ;; mark
 (require 'mark)
@@ -247,7 +242,6 @@
 (ac-config-default)
 (setq ac-auto-show-menu nil)
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-(global-set-key (kbd "C-c acm") 'auto-complete-mode)
 
 ;; configure auto complete to work in slime
 (require 'ac-slime)
@@ -256,8 +250,6 @@
 
 ;; fuzzy search
 (require 'fuzzy)
-(global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
-(global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
 
 ;; yasnippet
 (require 'yasnippet)
@@ -307,4 +299,33 @@
 ;; server
 (load "server")
 (unless (server-running-p) (server-start))
-(setq inhibit-startup-screen 1)
+
+;; global keys
+
+(global-set-key (kbd "<f8>") 'magit-status)
+(global-set-key (kbd "\e\eg") 'magit-status)
+
+(global-set-key (kbd "C-c ji") 'nrepl-jack-in)
+(global-set-key (kbd "\e\en") 'nrepl-jack-in)
+
+(global-set-key (kbd "\e\el") 'goto-line)
+(global-set-key (kbd "\e\ed") 'duplicate-current-line)
+
+(global-set-key (kbd "C-c tf") 'toggle-fullscreen)
+(global-set-key (kbd "C-c mf") 'maximize-frame)
+(global-set-key (kbd "C-c rf") 'restore-frame)
+
+(global-set-key (kbd "C-c acm") 'auto-complete-mode)
+(global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
+(global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
+
+;; ace jump mode
+;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
+;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
+;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
+;; "M-`"                                     Jump back
+
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+(add-hook 'ace-jump-mode-before-jump-hook
+          (lambda () (push-mark (point) t)))
