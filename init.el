@@ -65,10 +65,19 @@
     (unless arg 
       (switch-to-buffer-other-window oldbuf))))
 
+(defun eval-popup (arg) 
+  (interactive "P")  
+  (let* ((result (nrepl-eval (nrepl-last-expression)))
+	 (val (plist-get result :value))
+	 (err (plist-get result :stderr)))
+    (pos-tip-show 
+     (or val err))))
+
 (eval-after-load 'clojure-mode
   '(progn  
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
+     (define-key clojure-mode-map (kbd "\e\ee") 'eval-popup)
      (define-key clojure-mode-map (kbd "\e\er") 'nrepl-switch-to-relevant-repl-buffer)))
 
 ;; emacs lisp
