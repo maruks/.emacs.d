@@ -103,6 +103,7 @@
     ielm-mode-hook
     lisp-mode-hook
     lisp-interaction-mode-hook
+    geiser-repl-mode-hook
     scheme-mode-hook))
 
 (dolist (h lisp-mode-hooks)
