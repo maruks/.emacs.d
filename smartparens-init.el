@@ -84,7 +84,7 @@
 (sp-with-modes '(html-mode sgml-mode)
   (sp-local-pair "<" ">"))
 
-(add-to-list 'sp--lisp-modes 'nrepl-repl-mode)
+(add-to-list 'sp--lisp-modes 'cider-repl-mode)
 (add-to-list 'sp--lisp-modes 'geiser-repl-mode)
 
 ;; lisp modes

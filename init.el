@@ -32,7 +32,7 @@
                         magit
 			org
                         haskell-mode
-                        nrepl
+                        cider
                         ac-nrepl
                         quack
                         geiser
@@ -51,24 +51,24 @@
 (defun compile-buffer (arg) 
   (interactive "P")
   (save-buffer)
-  (nrepl-load-current-buffer)
+  (cider-load-current-buffer)
   (when arg
-    (nrepl-switch-to-relevant-repl-buffer nil)))
+    (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun compile-run-tests (arg) 
   (interactive "P")
   (let ((oldbuf (current-buffer)))
     (save-buffer)
-    (nrepl-load-current-buffer)
-    (nrepl-switch-to-relevant-repl-buffer nil)
+    (cider-load-current-buffer)
+    (cider-switch-to-relevant-repl-buffer nil)
     (insert "(run-specs)")
-    (nrepl-return)
+    (cider-return)
     (unless arg 
       (switch-to-buffer-other-window oldbuf))))
 
 (defun eval-popup (arg) 
   (interactive "P")  
-  (let* ((result (nrepl-eval (nrepl-last-expression)))
+  (let* ((result (cider-eval (cider-last-expression)))
 	 (val (plist-get result :value))
 	 (err (plist-get result :stderr)))
     (pos-tip-show 
@@ -79,7 +79,7 @@
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
      (define-key clojure-mode-map (kbd "\e\ee") 'eval-popup)
-     (define-key clojure-mode-map (kbd "\e\er") 'nrepl-switch-to-relevant-repl-buffer)))
+     (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)))
 
 ;; emacs lisp
 (defun eval-buff-go-to-repl () (interactive)
@@ -98,7 +98,7 @@
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
-    nrepl-repl-mode-hook
+    cider-repl-mode-hook
     emacs-lisp-mode-hook
     ielm-mode-hook
     lisp-mode-hook
@@ -277,15 +277,15 @@
   (require 'ensime)
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
-;; nrepl
-(add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
-(setq nrepl-hide-special-buffers t)
-(setq nrepl-tab-command 'indent-for-tab-command)
-(setq nrepl-popup-stacktraces nil)
-(add-hook 'nrepl-repl-mode-hook 'subword-mode)
+;; cider
+(add-hook 'cider-interaction-mode-hook 'cider-turn-on-eldoc-mode)
+(setq cider-hide-special-buffers t)
+(setq cider-tab-command 'indent-for-tab-command)
+(setq cider-popup-stacktraces nil)
+(add-hook 'cider-repl-mode-hook 'subword-mode)
 
-(eval-after-load 'nrepl-repl-mode
-  '(define-key nrepl-repl-mode-map (kbd "s-p") 'nrepl-previous-input))
+(eval-after-load 'cider-repl-mode
+  '(define-key cider-repl-mode-map (kbd "s-p") 'cider-previous-input))
 
 ;; exec-path-from-shell
 (when (memq window-system '(mac ns))
@@ -293,9 +293,9 @@
 
 ;; ac-nrepl
 (require 'ac-nrepl)
-(add-hook 'nrepl-repl-mode-hook 'ac-nrepl-setup)
-(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-repl-mode))
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'cider-repl-mode))
 
 ;; ido
 (setq ido-enable-flex-matching t)
@@ -316,8 +316,8 @@
 (global-set-key (kbd "<f8>") 'magit-status)
 (global-set-key (kbd "\e\eg") 'magit-status)
 
-(global-set-key (kbd "C-c ji") 'nrepl-jack-in)
-(global-set-key (kbd "\e\en") 'nrepl-jack-in)
+(global-set-key (kbd "C-c ji") 'cider-jack-in)
+(global-set-key (kbd "\e\en") 'cider-jack-in)
 
 (global-set-key (kbd "\e\el") 'goto-line)
 (global-set-key (kbd "\e\ed") 'duplicate-current-line)
