@@ -57,21 +57,18 @@
 
 (defun compile-run-tests (arg) 
   (interactive "P")
-  (let ((oldbuf (current-buffer)))
-    (save-buffer)
-    (cider-load-current-buffer)
-    (cider-switch-to-relevant-repl-buffer nil)
-    (insert "(run-specs)")
-    (cider-return)
-    (unless arg 
-      (switch-to-buffer-other-window oldbuf))))
+  (save-buffer)
+  (cider-load-current-buffer)  
+  (cider-interactive-eval "(speclj.core/run-specs)")
+  (when arg 
+    (cider-switch-to-relevant-repl-buffer nil)))
 
-(defun eval-popup (arg) 
-  (interactive "P")  
-  (let* ((result (cider-eval (cider-last-expression)))
+(defun eval-popup () 
+  (interactive)  
+  (let* ((result (cider-eval-sync (cider-last-sexp) (cider-find-ns)))
 	 (val (plist-get result :value))
 	 (err (plist-get result :stderr)))
-    (pos-tip-show 
+    (popup-tip
      (or val err))))
 
 (eval-after-load 'clojure-mode
