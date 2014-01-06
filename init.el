@@ -71,12 +71,18 @@
     (popup-tip
      (or val err))))
 
+(defun clj-insert-fn ()  
+  (interactive)  
+  (insert "(fn [])")
+  (backward-char 2))
+
 (eval-after-load 'clojure-mode
   '(progn  
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
      (define-key clojure-mode-map (kbd "\e\ee") 'eval-popup)
-     (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)))
+     (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
+     (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)))
 
 ;; emacs lisp
 (defun eval-buff-go-to-repl () (interactive)
@@ -303,6 +309,19 @@
 
 ;; geiser
 (setq geiser-active-implementations '(racket))
+
+(defun compile-racket-buffer (arg)
+  (interactive "P")
+  (save-buffer)
+  (geiser-compile-current-buffer)
+  (when arg
+    (geiser-mode-switch-to-repl nil)))
+
+(eval-after-load 'scheme
+  '(progn  
+     (define-key scheme-mode-map (kbd "<f5>") 'compile-racket-buffer)     
+     (define-key scheme-mode-map (kbd "\e\er") 'geiser-mode-switch-to-repl)
+     (define-key scheme-mode-map (kbd "\e\el") (lambda () (interactive) (geiser-insert-lambda t)))))
 
 ;; server
 (load "server")
