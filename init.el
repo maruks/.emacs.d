@@ -329,14 +329,13 @@
 
 ;; global keys
 
-(global-set-key (kbd "<f8>") 'magit-status)
-(global-set-key (kbd "\e\eg") 'magit-status)
-
-(global-set-key (kbd "C-c ji") 'cider-jack-in)
-(global-set-key (kbd "\e\en") 'cider-jack-in)
-
-(global-set-key (kbd "\e\el") 'goto-line)
+(global-set-key (kbd "\e\em") 'magit-status)
+(global-set-key (kbd "\e\ec") 'cider-jack-in)
+(global-set-key (kbd "\e\eg") 'goto-line)
 (global-set-key (kbd "\e\ed") 'duplicate-current-line)
+
+(global-set-key (kbd "<f8>") 'magit-status)
+(global-set-key (kbd "C-c ji") 'cider-jack-in)
 
 (global-set-key (kbd "C-c tf") 'toggle-fullscreen)
 (global-set-key (kbd "C-c mf") 'maximize-frame)
