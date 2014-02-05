@@ -282,6 +282,7 @@
 
 ;; cider
 (add-hook 'cider-interaction-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (setq cider-hide-special-buffers t)
 (setq cider-tab-command 'indent-for-tab-command)
 (setq cider-popup-stacktraces nil)
