@@ -25,7 +25,7 @@
                         pos-tip
                         ac-slime
                         fuzzy
-                        smartparens
+			paredit
                         load-theme-buffer-local
                         zenburn-theme
                         solarized-theme
@@ -94,10 +94,8 @@
 (eval-after-load 'emacs-lisp-mode
   '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
 
-;; smartparens
-;; C-u M-x sp-cheat-sheet
-(defun load-smartparens()
-  (load "smartparens-init"))
+(defun enable-paredit () 
+  (paredit-mode 1))
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
@@ -110,7 +108,7 @@
     scheme-mode-hook))
 
 (dolist (h lisp-mode-hooks)
-  (add-hook h #'load-smartparens))
+  (add-hook h 'enable-paredit))
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -210,7 +208,7 @@
 (setq font (getenv "EMACS_DEFAULT_FONT"))
 
 (when (eq system-type 'darwin)
-  (setq font (or font "Menlo-14"))
+  (setq font (or font "Menlo-15"))
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
 
 (when (eq system-type 'gnu/linux)
