@@ -94,6 +94,8 @@
 (eval-after-load 'emacs-lisp-mode
   '(define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl))
 
+(show-paren-mode 1)
+
 (defun enable-paredit () 
   (paredit-mode 1))
 
