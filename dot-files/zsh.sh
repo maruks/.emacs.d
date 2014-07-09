@@ -49,5 +49,3 @@ alias mci='maven clean install'
 
 alias tma='tmux attach -t'
 alias tml='tmux list-sessions'
-
-[[ -z "$TMUX" ]] && exec tmux
