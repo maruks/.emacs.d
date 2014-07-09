@@ -1,0 +1,14 @@
+export CLICOLOR=1
+
+export M2_HOME=/Applications/DevTools/apache-maven
+
+export PATH="/Applications/Racket v5.3.6/bin":/usr/local/smlnj-110.75/bin:/opt/local/bin:~/bin:$M2_HOME/bin:.:/Applications/DevTools/llvm-3.4/Release+Asserts/bin:$PATH
+
+export SBT_HOME=/Applications/DevTools/sbt/bin
+export SCALA_HOME=/Applications/DevTools/scala-2.9
+export CLOJURE_HOME=/Applications/DevTools/clojure
+
+export PATH=$PATH:$SBT_HOME:$CLOJURE_HOME:$SCALA_HOME/bin
+
+alias light="java -jar ~/.lighttable/launcher.jar&"
+alias idea="open '/Applications/IntelliJ IDEA 12.app'"
