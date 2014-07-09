@@ -1,0 +1,12 @@
+
+export PATH=/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:"/Applications/Racket v5.3.4/bin":$PATH
+
+export ANT_HOME=/Applications/DevTools/apache-ant
+export M2_HOME=/Applications/DevTools/apache-maven
+export MAVEN_HOME=/Applications/DevTools/apache-maven
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_07.jdk/Contents/Home
+
+alias light="java -jar ~/.lighttable/launcher.jar&"
+
+# OPAM configuration
+. /Users/maris/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

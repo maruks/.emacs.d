@@ -20,6 +20,7 @@
                         yasnippet
                         projectile
                         perspective
+			exec-path-from-shell
                         popup
                         auto-complete
                         pos-tip
@@ -376,3 +377,7 @@
 ;; M-x re-builder
 (require 're-builder)
 (setq reb-re-syntax 'string)
+
+;; exec-path-from-shell
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
