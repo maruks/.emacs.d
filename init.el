@@ -1,4 +1,5 @@
 (add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/slime")
 
 ;; user details
 (setq user-full-name "Maris Orbidans")
@@ -8,7 +9,7 @@
 (progn
   (require 'package)
   (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/") t)
+               '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize)
   (when (not package-archive-contents)
     (package-refresh-contents))
@@ -267,8 +268,9 @@
 ;; yasnippet
 (require 'yasnippet)
 (yas--initialize)
-(setq yas/root-directory '("~/.emacs.d/elpa/yasnippet-0.8.0/snippets"
-                           "~/.emacs.d/snippets"))
+
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("~/.emacs.d/snippets")))
 
 (mapc 'yas/load-directory yas/root-directory)
 
@@ -351,3 +353,12 @@
 
 (add-hook 'ace-jump-mode-before-jump-hook
           (lambda () (push-mark (point) t)))
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; change to home directory
+(setq default-directory (concat (getenv "HOME") "/"))
