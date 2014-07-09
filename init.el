@@ -362,3 +362,7 @@
 
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
+
+;; M-x re-builder
+(require 're-builder)
+(setq reb-re-syntax 'string)
