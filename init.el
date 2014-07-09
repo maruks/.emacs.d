@@ -16,7 +16,6 @@
                         scala-mode
 			sml-mode
                         ace-jump-mode
-                        exec-path-from-shell
                         yasnippet
                         projectile
                         perspective
@@ -290,10 +289,6 @@
 
 (eval-after-load 'cider-repl-mode
   '(define-key cider-repl-mode-map (kbd "s-p") 'cider-previous-input))
-
-;; exec-path-from-shell
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 ;; ac-nrepl
 (require 'ac-nrepl)
