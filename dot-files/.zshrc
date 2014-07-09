@@ -7,10 +7,6 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="clean"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -26,8 +22,8 @@ ZSH_THEME="clean"
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment the following line to disable command auto-correction.
-# DISABLE_CORRECTION="true"
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -48,14 +44,14 @@ ZSH_THEME="clean"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-
+# Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/Users/maris/bin/protobuf/bin:/usr/local/git/libexec/git-core:/Users/maris/bin:/opt/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -72,33 +68,20 @@ export PATH="/Users/maris/bin/protobuf/bin:/usr/local/git/libexec/git-core:/User
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export M2_HOME=/Users/maris/bin/apache-maven
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7/Contents/Home
-
-export PATH=$JAVA_HOME/Contents/Home/bin:$M2_HOME/bin:$PATH
-
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-
-alias em="/Applications/Emacs.app/Contents/MacOS/Emacs"
-
-# git
-
-alias gst='git status'
-alias gl='git pull'
-alias gp='git push'
-alias gd='git diff | kaleidoscope'
-alias gau='git add --update'
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gb='git branch'
-alias gba='git branch -a'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcot='git checkout -t'
-alias gcotb='git checkout --track -b'
-alias glog='git log'
-alias glogp='git log --pretty=format:"%h %s" --graph'
+if [ -f ~/.emacs.d/dot-files/zsh.sh ]; then
+    source ~/.emacs.d/dot-files/zsh.sh
+else
+    print "~/.emacs.d/dot-files/zsh.sh not found."
+fi
