@@ -25,6 +25,7 @@
                         auto-complete
                         pos-tip
                         ac-slime
+			ac-cider
                         fuzzy
 			paredit
                         load-theme-buffer-local
@@ -34,7 +35,6 @@
 			org
                         haskell-mode
                         cider
-                        ac-nrepl
                         quack
                         geiser
 			ag))
@@ -268,12 +268,14 @@
 
 ;; yasnippet
 (require 'yasnippet)
-(yas--initialize)
 
-(setq yas-snippet-dirs (append yas-snippet-dirs
-                               '("~/.emacs.d/snippets")))
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 
-(mapc 'yas/load-directory yas/root-directory)
+(yas-reload-all)
+
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (yas-minor-mode)))
 
 ;; ensime
 (defun l0ad-ensime ()
@@ -293,11 +295,13 @@
 (eval-after-load 'cider-repl-mode
   '(define-key cider-repl-mode-map (kbd "s-p") 'cider-previous-input))
 
-;; ac-nrepl
-(require 'ac-nrepl)
-(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
-(add-hook 'cider-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'cider-repl-mode))
+;; ac-cider
+(require 'ac-cider)
+(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'cider-mode))
 
 ;; ido
 (setq ido-enable-flex-matching t)
