@@ -1,0 +1,7 @@
+IdentityFile ~/.ssh/id_rsa.ghub
+IdentityFile ~/.ssh/id_rsa.home
+
+Host home
+    HostName maruks.homelinux.org
+    Port 22
+    User maris
