@@ -11,7 +11,7 @@ ZSH_THEME="clean"
 # CASE_SENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -41,17 +41,8 @@ ZSH_THEME="clean"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git lein macports osx)
-
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -79,9 +70,8 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
-if [ -f ~/.emacs.d/dot-files/zsh.sh ]; then
-    source ~/.emacs.d/dot-files/zsh.sh
+if [ -f ~/zsh.sh ]; then
+    source ~/zsh.sh
 else
-    print "~/.emacs.d/dot-files/zsh.sh not found."
+    print "~/zsh.sh not found."
 fi

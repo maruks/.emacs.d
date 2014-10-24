@@ -1,18 +1,13 @@
-# emacs
+# plugins
 
-export EMACS_DEFAULT_FONT="Menlo-15"
-export EMACS_DEFAULT_THEME="tomorrow-night-eighties"
-
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-alias em="/Applications/Emacs.app/Contents/MacOS/Emacs"
-alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+plugins=(git command-not-found lein)
 
 # git
 
 alias gst='git status'
 alias gl='git pull'
 alias gp='git push'
-alias gd='git diff | kaleidoscope'
+alias gd='git diff'
 alias gau='git add --update'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
