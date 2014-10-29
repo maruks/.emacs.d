@@ -388,18 +388,19 @@
 
 ;; smart mode line
 
-(require 'smart-mode-line)
-(require 'rich-minority)
+;;(require 'smart-mode-line)
+;;(require 'rich-minority)
 
-(setq sml/no-confirm-load-theme t)
+;;(setq sml/no-confirm-load-theme t)
 
-(sml/setup)
+;;(sml/setup)
 
-(sml/apply-theme 'respectful)
+;;(sml/apply-theme 'respectful)
 
-(setq sml/shorten-directory t)
-(setq sml/shorten-modes t)
-(setq sml/name-width 25)
-(setq sml/mode-width 'full)
+;;(setq sml/shorten-directory t)
+;;(setq sml/shorten-modes t)
+;;(setq sml/name-width 25)
+;;(setq sml/mode-width 'full)
 
-(setq rm-blacklist '(" AC" " ElDoc" " yas" " Paredit"))
+;;(setq rm-blacklist '(" AC" " ElDoc" " yas" " Paredit"))
+
