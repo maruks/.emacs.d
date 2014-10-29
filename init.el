@@ -37,8 +37,6 @@
                         cider
                         quack
                         geiser
-			smart-mode-line
-			rich-minority
 			ag))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
