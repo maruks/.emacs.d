@@ -1,12 +1,11 @@
-ac-comphist.dat
+*.dat
 auto-save-list
-projectile-bookmarks.eld
-bookmarks
+*.eld
 elpa
 swank
 ensime
 url
-.nrepl-port
+.*
 eshell
 *.cache
-*.*~
+*~

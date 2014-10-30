@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/slime")
 
 ;; user details
@@ -253,7 +253,7 @@
 ;; auto complete
 (require 'auto-complete-config)
 (require 'pos-tip)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-1.4/dict")
+;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-1.4/dict")
 (ac-config-default)
 (setq ac-auto-show-menu nil)
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
@@ -385,20 +385,16 @@
   (exec-path-from-shell-initialize))
 
 ;; smart mode line
+(require 'mode-line)
 
-;;(require 'smart-mode-line)
-;;(require 'rich-minority)
+(setq prev-mode-line nil)
 
-;;(setq sml/no-confirm-load-theme t)
-
-;;(sml/setup)
-
-;;(sml/apply-theme 'respectful)
-
-;;(setq sml/shorten-directory t)
-;;(setq sml/shorten-modes t)
-;;(setq sml/name-width 25)
-;;(setq sml/mode-width 'full)
-
-;;(setq rm-blacklist '(" AC" " ElDoc" " yas" " Paredit"))
-
+(defun change-mode-line ()
+  (interactive)
+  (if prev-mode-line
+      (progn
+	(setq-default mode-line-format prev-mode-line)
+	(setq prev-mode-line nil))
+      (progn
+        (setq prev-mode-line mode-line-format)
+        (setq-default mode-line-format (better-mode-line)))))
