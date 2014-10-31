@@ -211,28 +211,14 @@
 (setq font (getenv "EMACS_DEFAULT_FONT"))
 
 (when (eq system-type 'darwin)
-  (setq font (or font "Menlo-15"))
+  (setq font (or font "Menlo-15")) ;; Source Code Pro-15
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
 
 (when (eq system-type 'gnu/linux)
   (setq font (or font "DejaVu Sans Mono-10")))
 
 (when font
-  (set-default-font font)
-  (add-to-list 'default-frame-alist (cons 'font font)))
-
-;; fullscreen on x11
-(defun toggle-fullscreen ()
-  "Toggle full screen on X11"
-  (interactive)
-  (when (eq window-system 'x)
-    (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
-
-;; maxframe
-(add-to-list 'load-path "~/.emacs.d/maxframe")
-(require 'maxframe)
+  (set-frame-font font nil t))
 
 ;; mark
 (require 'mark)
@@ -348,9 +334,8 @@
 (global-set-key (kbd "<f8>") 'magit-status)
 (global-set-key (kbd "C-c ji") 'cider-jack-in)
 
-(global-set-key (kbd "C-c tf") 'toggle-fullscreen)
-(global-set-key (kbd "C-c mf") 'maximize-frame)
-(global-set-key (kbd "C-c rf") 'restore-frame)
+(global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
 
 (global-set-key (kbd "C-c acm") 'auto-complete-mode)
 (global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
@@ -398,3 +383,13 @@
       (progn
         (setq prev-mode-line mode-line-format)
         (setq-default mode-line-format (better-mode-line)))))
+
+(change-mode-line)
+
+;; erlang
+(defun l0ad-erlang ()
+  (interactive)
+  (setq load-path (cons "/usr/local/lib/erlang/lib/tools-2.7/emacs" load-path))
+  (setq erlang-root-dir "/usr/local/lib/erlang")
+  (setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path))
+  (require 'erlang-start))
