@@ -387,9 +387,18 @@
 (change-mode-line)
 
 ;; erlang
+(defun compile-erlang-buffer ()
+  (interactive)
+  (save-buffer)
+  (erlang-compile))
+
+(add-hook 'erlang-mode-hook
+  (lambda ()
+     (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)))
+
 (defun l0ad-erlang ()
   (interactive)
   (setq load-path (cons "/usr/local/lib/erlang/lib/tools-2.7/emacs" load-path))
   (setq erlang-root-dir "/usr/local/lib/erlang")
-  (setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path))
+  (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path))
   (require 'erlang-start))
