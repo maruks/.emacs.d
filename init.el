@@ -1,5 +1,4 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'load-path "~/.emacs.d/slime")
 
 ;; user details
 (setq user-full-name "Maris Orbidans")
@@ -24,6 +23,7 @@
                         popup
                         auto-complete
                         pos-tip
+			slime
                         ac-slime
 			ac-cider
                         fuzzy
@@ -103,6 +103,7 @@
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
     cider-repl-mode-hook
+    slime-repl-mode-hook
     emacs-lisp-mode-hook
     ielm-mode-hook
     lisp-mode-hook
@@ -231,7 +232,7 @@
 (require 'sudoku)
 
 ;; slime
-(add-to-list 'load-path "~/.emacs.d/slime")
+;; (add-to-list 'load-path "~/.emacs.d/slime")
 (setq inferior-lisp-program "sbcl")
 (require 'slime)
 (slime-setup '(slime-fancy))
