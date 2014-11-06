@@ -8,7 +8,7 @@
 (progn
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/") t)
+               '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
   (when (not package-archive-contents)
     (package-refresh-contents))
@@ -98,7 +98,8 @@
 (show-paren-mode 1)
 
 (defun enable-paredit () 
-  (paredit-mode 1))
+  (paredit-mode 1)
+  (prettify-symbols-mode 1))
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
@@ -232,10 +233,9 @@
 (require 'sudoku)
 
 ;; slime
-;; (add-to-list 'load-path "~/.emacs.d/slime")
 (setq inferior-lisp-program "sbcl")
 (require 'slime)
-(slime-setup '(slime-fancy))
+(slime-setup '(slime-fancy slime-asdf slime-sbcl-exts))
 
 ;; auto complete
 (require 'auto-complete-config)
