@@ -403,3 +403,7 @@
   (setq erlang-root-dir "/usr/local/lib/erlang")
   (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path))
   (require 'erlang-start))
+
+;; mit-scheme
+(setq scheme-program-name "/Applications/mit-scheme/Contents/Resources/mit-scheme")
+(require 'xscheme)
