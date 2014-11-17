@@ -393,16 +393,46 @@
   (save-buffer)
   (erlang-compile))
 
+(defun erlang-paredit ()
+  (progn
+    (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
+    (define-key erlang-mode-map [?\[] 'paredit-open-square)
+    (define-key erlang-mode-map [?\{] 'paredit-open-curly)
+    (define-key erlang-mode-map [?\)] 'paredit-close-parenthesis)
+    (define-key erlang-mode-map [?\}] 'paredit-close-curly)
+    (define-key erlang-mode-map [?\]] 'paredit-close-square)))
+
 (add-hook 'erlang-mode-hook
-  (lambda ()
-     (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)))
+	  (lambda ()
+	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
+	    (enable-paredit)
+	    (erlang-paredit)))
 
 (defun l0ad-erlang ()
   (interactive)
-  (setq load-path (cons "/usr/local/lib/erlang/lib/tools-2.7/emacs" load-path))
-  (setq erlang-root-dir "/usr/local/lib/erlang")
-  (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path))
-  (require 'erlang-start))
+  (let ((erlang-tools (or (getenv "EMACS_ERLANG_TOOLS")  "/usr/local/lib/erlang/lib/tools-2.7/emacs" ))
+	(erlang-root (or (getenv "ERLANG_ROOT")  "/usr/local/lib/erlang")))
+    (setq load-path (cons erlang-tools load-path))
+    (setq erlang-root-dir erlang-root)    
+    (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
+  (require 'erlang-start)
+  (setq inferior-erlang-machine-options '("-sname" "emacs")))
+
+;; distel
+
+(defun l0ad-distel ()
+  (interactive)
+  (add-to-list 'load-path "~/.emacs.d/distel/elisp")
+  (require 'distel)
+  (distel-setup)
+
+  (defvar inferior-erlang-prompt-timeout t)
+  (setq inferior-erlang-machine-options '("-sname" "emacs"))
+  (setq erl-nodename-cache
+	(make-symbol
+	 (concat
+	  "emacs@"
+	  (car (split-string (shell-command-to-string "hostname")))))))
 
 ;; mit-scheme
 (setq scheme-program-name "/Applications/mit-scheme/Contents/Resources/mit-scheme")
