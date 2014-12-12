@@ -35,6 +35,7 @@
 			org
                         haskell-mode
                         cider
+			clj-refactor
                         quack
                         geiser
 			ag))
@@ -52,14 +53,14 @@
 (defun compile-buffer (arg) 
   (interactive "P")
   (save-buffer)
-  (cider-load-current-buffer)
+  (cider-load-buffer)
   (when arg
     (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun compile-run-tests (arg) 
   (interactive "P")
   (save-buffer)
-  (cider-load-current-buffer)  
+  (cider-load-buffer)  
   (cider-interactive-eval "(speclj.core/run-specs)")
   (when arg 
     (cider-switch-to-relevant-repl-buffer nil)))
@@ -264,6 +265,14 @@
           '(lambda ()
              (yas-minor-mode)))
 
+;; clj-refactor
+(require 'clj-refactor)
+
+(add-hook 'clojure-mode-hook
+          (lambda ()
+	    (clj-refactor-mode 1)
+	    (cljr-add-keybindings-with-prefix "C-c C-a")))
+
 ;; ensime
 (defun l0ad-ensime ()
   (interactive)
@@ -341,6 +350,9 @@
 (global-set-key (kbd "C-c acm") 'auto-complete-mode)
 (global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
 (global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
+
+(global-set-key [C-prior] 'previous-buffer)
+(global-set-key [C-next] 'next-buffer)
 
 ;; ace jump mode
 ;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
