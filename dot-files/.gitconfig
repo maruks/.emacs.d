@@ -8,11 +8,11 @@
     bv = branch -vv
     ba = branch -ra
     bd = branch -d
-    ca = commit --amend
+    ca = commit -a -v
+    co = commit -v
     cb = checkout -b
     cm = commit -a --amend -C HEAD
-    ci = commit -a -v
-    co = checkout
+    ch = checkout
     di = diff
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
@@ -24,6 +24,7 @@
     uh = reset --hard HEAD^
     cl = clone
     pu = push origin master
+    pr = pull --rebase
 
 
 [mergetool "Kaleidoscope"]
