@@ -1,7 +1,22 @@
-IdentityFile ~/.ssh/id_rsa.ghub
-IdentityFile ~/.ssh/id_rsa.home
+IdentityFile ~/.ssh/id_rsa
 
 Host home
     HostName maruks.homelinux.org
     Port 22
     User maris
+
+Host lhome
+    HostName 192.168.1.8
+    Port 22
+    User maris
+
+VisualHostKey=yes 
+
+Host *
+    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
+
+Host *
+    Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+
+Host *
+    MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
