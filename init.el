@@ -54,7 +54,7 @@
   (interactive "P")
   (save-buffer)
   (cider-load-buffer)
-  (when arg
+  (when (not arg)
     (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun compile-run-tests (arg) 
@@ -62,7 +62,7 @@
   (save-buffer)
   (cider-load-buffer)  
   (cider-interactive-eval "(speclj.core/run-specs)")
-  (when arg 
+  (when (not arg) 
     (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun eval-popup () 
@@ -86,8 +86,19 @@
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
      (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)))
 
+;; sml
+(defun save-and-load-file (arg)
+  (interactive "P")
+  (save-buffer)
+  (sml-prog-proc-load-file (buffer-file-name) (not arg)))
+
+(eval-after-load 'sml-mode
+  '(progn  
+     (define-key sml-mode-map (kbd "<f5>") 'save-and-load-file)))
+
 ;; emacs lisp
-(defun eval-buff-go-to-repl () (interactive)
+(defun eval-buff-go-to-repl ()
+  (interactive)
   (progn
     (eval-buffer)
     (if (get-buffer "*ielm*")
