@@ -4,9 +4,6 @@ plugins=(git lein macports osx)
 
 # emacs
 
-export EMACS_DEFAULT_FONT="Menlo-15"
-export EMACS_DEFAULT_THEME="tomorrow-night-eighties"
-
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias em="/Applications/Emacs.app/Contents/MacOS/Emacs"
 alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
