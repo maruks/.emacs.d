@@ -62,14 +62,6 @@
   (when (not arg) 
     (cider-switch-to-relevant-repl-buffer nil)))
 
-(defun eval-popup () 
-  (interactive)  
-  (let* ((result (cider-eval-sync (cider-last-sexp) (cider-find-ns)))
-	 (val (plist-get result :value))
-	 (err (plist-get result :stderr)))
-    (popup-tip
-     (or val err))))
-
 (defun clj-insert-fn ()  
   (interactive)  
   (insert "(fn [])")
@@ -276,15 +268,11 @@
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
 ;; cider
-(add-hook 'cider-interaction-mode-hook 'cider-turn-on-eldoc-mode)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-(setq cider-hide-special-buffers t)
-(setq cider-tab-command 'indent-for-tab-command)
-(setq cider-popup-stacktraces nil)
-(add-hook 'cider-repl-mode-hook 'subword-mode)
-
-(eval-after-load 'cider-repl-mode
-  '(define-key cider-repl-mode-map (kbd "s-p") 'cider-previous-input))
+(add-hook 'cider-mode-hook #'eldoc-mode)
+(setq nrepl-hide-special-buffers t)
+(setq cider-repl-pop-to-buffer-on-connect nil)
+(setq cider-show-error-buffer 'except-in-repl)
+(add-hook 'cider-repl-mode-hook #'subword-mode)
 
 ;; company mode
 (add-hook 'cider-repl-mode-hook #'company-mode)
