@@ -25,7 +25,7 @@
                         pos-tip
 			slime
                         ac-slime
-			ac-cider
+			company
                         fuzzy
 			paredit
                         load-theme-buffer-local
@@ -252,7 +252,6 @@
 ;; auto complete
 (require 'auto-complete-config)
 (require 'pos-tip)
-;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-1.4/dict")
 (ac-config-default)
 (setq ac-auto-show-menu nil)
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
@@ -302,13 +301,9 @@
 (eval-after-load 'cider-repl-mode
   '(define-key cider-repl-mode-map (kbd "s-p") 'cider-previous-input))
 
-;; ac-cider
-(require 'ac-cider)
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'cider-mode))
+;; company mode
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
 
 ;; ido
 (setq ido-enable-flex-matching t)
