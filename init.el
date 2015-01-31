@@ -20,11 +20,8 @@
                         projectile
                         perspective
 			exec-path-from-shell
-                        popup
-                        auto-complete
-                        pos-tip
 			slime
-                        ac-slime
+                        slime-company
 			company
                         fuzzy
 			paredit
@@ -82,7 +79,6 @@
   '(progn  
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
-     (define-key clojure-mode-map (kbd "\e\ee") 'eval-popup)
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
      (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)))
 
@@ -245,21 +241,10 @@
 (require 'sudoku)
 
 ;; slime
-(setq inferior-lisp-program "sbcl")
 (require 'slime)
-(slime-setup '(slime-fancy slime-asdf slime-sbcl-exts))
-
-;; auto complete
-(require 'auto-complete-config)
-(require 'pos-tip)
-(ac-config-default)
-(setq ac-auto-show-menu nil)
-(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-
-;; configure auto complete to work in slime
-(require 'ac-slime)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(require 'slime-company)
+(setq inferior-lisp-program "sbcl")
+(slime-setup '(slime-fancy slime-asdf slime-sbcl-exts slime-company))
 
 ;; fuzzy search
 (require 'fuzzy)
@@ -353,7 +338,6 @@
 (global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
 (global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
 
-(global-set-key (kbd "C-c acm") 'auto-complete-mode)
 (global-set-key (kbd "C-c fie") 'turn-on-fuzzy-isearch)
 (global-set-key (kbd "C-c fid") 'turn-off-fuzzy-isearch)
 
