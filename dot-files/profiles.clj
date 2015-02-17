@@ -14,6 +14,8 @@
                  [io.aviso/pretty "0.1.8"]
                  [org.clojure/tools.namespace "0.2.4"]]
 
+  :signing {:gpg-key "D4FF9261"}  ; clojars signing key
+  
 ;; Reflection macros: .> .? .* .% .%> 
   
 ;; criterium

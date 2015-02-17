@@ -51,7 +51,7 @@
   (interactive "P")
   (save-buffer)
   (cider-load-buffer)
-  (when (not arg)
+  (when arg
     (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun compile-run-tests (arg) 
@@ -59,7 +59,7 @@
   (save-buffer)
   (cider-load-buffer)  
   (cider-interactive-eval "(speclj.core/run-specs)")
-  (when (not arg) 
+  (when arg 
     (cider-switch-to-relevant-repl-buffer nil)))
 
 (defun clj-insert-fn ()  
