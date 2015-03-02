@@ -400,8 +400,8 @@
 
 (defun l0ad-erlang ()
   (interactive)
-  (let ((erlang-tools (or (getenv "EMACS_ERLANG_TOOLS")  "/usr/local/lib/erlang/lib/tools-2.7/emacs" ))
-	(erlang-root (or (getenv "ERLANG_ROOT")  "/usr/local/lib/erlang")))
+  (let* ((erlang-root (or (getenv "_KERL_ACTIVE_DIR")  "/usr/local/lib/erlang"))
+	 (erlang-tools (concat erlang-root "/lib/tools-2.7.1/emacs")))
     (setq load-path (cons erlang-tools load-path))
     (setq erlang-root-dir erlang-root)    
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
