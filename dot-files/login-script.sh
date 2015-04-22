@@ -10,3 +10,5 @@ launchctl setenv SCALA_HOME /Applications/DevTools/scala-2.9
 launchctl setenv SBT_HOME /Applications/DevTools/sbt
 
 launchctl setenv SMLROOT /usr/local/sml
+
+launchctl setenv _KERL_ACTIVE_DIR /Users/maris/erlang_17_4

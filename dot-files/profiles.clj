@@ -15,6 +15,8 @@
                  [org.clojure/tools.namespace "0.2.4"]
                  [org.clojure/tools.nrepl "0.2.7"]]
 
+  :signing {:gpg-key "D4FF9261"}        ; clojars signing key
+  
 ;; Reflection macros: .> .? .* .% .%> 
   
 ;; criterium
