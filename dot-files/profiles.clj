@@ -1,7 +1,7 @@
 {:user 
  {:plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]                  
             [speclj "2.5.0"]
-            [refactor-nrepl "0.2.2"]
+            [refactor-nrepl "1.0.1"]
             [lein-exec "0.3.4"]]
 
   :dependencies [[im.chit/iroh "0.1.11"]                                  
@@ -12,7 +12,8 @@
                  [criterium "0.4.3"]
                  [org.clojars.gjahad/debug-repl "0.3.3"]
                  [io.aviso/pretty "0.1.8"]
-                 [org.clojure/tools.namespace "0.2.4"]]
+                 [org.clojure/tools.namespace "0.2.4"]
+                 [org.clojure/tools.nrepl "0.2.7"]]
 
   :signing {:gpg-key "D4FF9261"}        ; clojars signing key
   
