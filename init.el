@@ -378,10 +378,12 @@
 (change-mode-line)
 
 ;; erlang
-(defun compile-erlang-buffer ()
-  (interactive)
+(defun compile-erlang-buffer (arg)
+  (interactive "P")
   (save-buffer)
-  (erlang-compile))
+  (erlang-compile)
+  (when arg 
+    (switch-to-buffer-other-window "*erlang*")))
 
 (defun erlang-paredit ()
   (progn
@@ -395,6 +397,7 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
+	    (define-key erlang-mode-map (kbd "<f6>") 'erlang-eunit-compile-and-run-module-tests)	    
 	    (enable-paredit)
 	    (erlang-paredit)))
 
@@ -406,6 +409,7 @@
     (setq erlang-root-dir erlang-root)    
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
   (require 'erlang-start)
+  (require 'erlang-eunit)
   (setq inferior-erlang-machine-options '("-sname" "emacs")))
 
 ;; distel
