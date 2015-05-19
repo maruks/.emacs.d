@@ -385,6 +385,13 @@
   (when arg 
     (switch-to-buffer-other-window "*erlang*")))
 
+(defun compile-erlang-buffer-and-test (arg)
+  (interactive "P")
+  (save-buffer)
+  (erlang-eunit-compile-and-run-module-tests)
+  (when arg 
+    (switch-to-buffer-other-window "*erlang*")))
+
 (defun erlang-paredit ()
   (progn
     (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
@@ -397,7 +404,7 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
-	    (define-key erlang-mode-map (kbd "<f6>") 'erlang-eunit-compile-and-run-module-tests)	    
+	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)	    
 	    (enable-paredit)
 	    (erlang-paredit)))
 
