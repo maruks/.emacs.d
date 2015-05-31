@@ -4,10 +4,10 @@ auto-save-list
 elpa
 notes
 swank
-ensime
 url
 .*
 eshell
 *.cache
 *~
-distel
+vendor/distel
+vendor/ensime
