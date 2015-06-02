@@ -22,4 +22,5 @@
 (require 'racket-module)
 (require 'snippets-module)
 (require 'themes-module)
+(require 'flycheck-module)
 (require 'user-module)

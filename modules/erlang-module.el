@@ -27,22 +27,10 @@
   (when arg 
     (switch-to-buffer-other-window "*erlang*")))
 
-(defun erlang-paredit ()
-  (progn
-    (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
-    (define-key erlang-mode-map [?\[] 'paredit-open-square)
-    (define-key erlang-mode-map [?\{] 'paredit-open-curly)
-    (define-key erlang-mode-map [?\)] 'paredit-close-parenthesis)
-    (define-key erlang-mode-map [?\}] 'paredit-close-curly)
-    (define-key erlang-mode-map [?\]] 'paredit-close-square)
-    (set (make-local-variable 'paredit-space-for-delimiter-predicates) '((lambda (endp delimiter) nil)))))
-
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
-	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)	    
-	    (enable-paredit)
-	    (erlang-paredit)))
+	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)))
 
 (eval-after-load 'erlang
   '(message "Erlang root is %s." erlang-root-dir))
