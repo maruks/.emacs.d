@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir -p ~/.lein
+mkdir -p ~/.ssh
 
 cp ~/.emacs.d/dot-files/.zshrc ~
 cp ~/.emacs.d/dot-files/.gitconfig ~
