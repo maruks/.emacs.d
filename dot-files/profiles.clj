@@ -1,7 +1,7 @@
 {:user 
  {:plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]                  
             [speclj "2.5.0"]
-            [refactor-nrepl "1.0.1"]
+            [refactor-nrepl "1.1.0-SNAPSHOT"]
             [lein-exec "0.3.4"]]
 
   :dependencies [[im.chit/iroh "0.1.11"]                                  

@@ -1,5 +1,5 @@
 [user]
-	email = MarisOrbidans@thisisnoble.com
+	email = maris.orbidans@agentsmutual.co.uk
 	name = Maris Orbidans
 [core]
 	editor = emacs
@@ -14,6 +14,7 @@
     cm = commit -a --amend -C HEAD
     ch = checkout
     di = diff
+    dt = difftool
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
     ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
@@ -25,6 +26,7 @@
     cl = clone
     pu = push origin master
     pr = pull --rebase
+    sh = show
 
 
 [mergetool "Kaleidoscope"]
