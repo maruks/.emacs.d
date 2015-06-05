@@ -11,3 +11,6 @@ export M2_HOME=/Users/maris/bin/apache-maven
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7/Contents/Home
 
 export PATH=$JAVA_HOME/Contents/Home/bin:$M2_HOME/bin:$PATH
+
+# lein
+export HTTP_CLIENT="curl --insecure -f -L -o"
