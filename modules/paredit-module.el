@@ -5,8 +5,7 @@
 (package-require 'paredit)
 
 (defun enable-paredit () 
-  (paredit-mode 1)
-  (prettify-symbols-mode 1))
+  (paredit-mode 1))
 
 (defvar lisp-mode-hooks
   '(clojure-mode-hook
