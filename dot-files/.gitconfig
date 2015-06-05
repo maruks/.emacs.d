@@ -26,6 +26,7 @@
     cl = clone
     pu = push origin master
     pr = pull --rebase
+    sh = show
 
 
 [mergetool "Kaleidoscope"]
