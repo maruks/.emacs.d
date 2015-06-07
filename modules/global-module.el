@@ -101,4 +101,11 @@
 (global-set-key [C-prior] 'previous-buffer)
 (global-set-key [C-next] 'next-buffer)
 
+;; xah-find-text
+;; xah-find-text-regex
+;; xah-find-count
+;; xah-find-replace-text
+;; xah-find-replace-text-regex
+(package-require 'xah-find)
+
 (provide 'global-module)
