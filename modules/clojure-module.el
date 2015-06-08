@@ -5,11 +5,12 @@
 (package-require 'clojure-mode)
 (package-require 'cider)
 (package-require 'clj-refactor)
+(package-require 'align-cljlet)
 
 (require 'clojure-mode)
 (require 'clj-refactor)
 
-(defun compile-buffer (arg) 
+(defun compile-buffer (arg)
   (interactive "P")
   (save-buffer)
   (cider-load-buffer)
@@ -17,21 +18,21 @@
     (cider-switch-to-relevant-repl-buffer nil)))
 
 ; speclj runner
-(defun compile-run-tests (arg) 
+(defun compile-run-tests (arg)
   (interactive "P")
   (save-buffer)
-  (cider-load-buffer)  
+  (cider-load-buffer)
   (cider-interactive-eval "(speclj.core/run-specs)")
-  (when arg 
+  (when arg
     (cider-switch-to-relevant-repl-buffer nil)))
 
-(defun clj-insert-fn ()  
-  (interactive)  
+(defun clj-insert-fn ()
+  (interactive)
   (insert "(fn [])")
   (backward-char 2))
 
 (eval-after-load 'clojure-mode
-  '(progn  
+  '(progn
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)

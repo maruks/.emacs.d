@@ -108,4 +108,6 @@
 ;; xah-find-replace-text-regex
 (package-require 'xah-find)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (provide 'global-module)
