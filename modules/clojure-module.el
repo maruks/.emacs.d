@@ -46,14 +46,16 @@
 
 ;; cider
 (add-hook 'cider-mode-hook #'eldoc-mode)
+(add-hook 'cider-repl-mode-hook #'subword-mode)
+
 (setq nrepl-hide-special-buffers t)
 (setq cider-repl-pop-to-buffer-on-connect nil)
 (setq cider-show-error-buffer 'except-in-repl)
-(add-hook 'cider-repl-mode-hook #'subword-mode)
+(setq cider-prompt-for-symbol nil)
 
 ;; company mode
-(add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
+(add-hook 'cider-repl-mode-hook #'company-mode)
 
 (global-set-key (kbd "\e\ec") 'cider-jack-in)
 (global-set-key (kbd "C-c ji") 'cider-jack-in)
