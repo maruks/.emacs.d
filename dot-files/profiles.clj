@@ -1,10 +1,9 @@
-{:user 
- {:plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]                  
-            [speclj "2.5.0"]
+{:user
+ {:plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]
             [refactor-nrepl "1.1.0-SNAPSHOT"]
             [lein-exec "0.3.4"]]
 
-  :dependencies [[im.chit/iroh "0.1.11"]                                  
+  :dependencies [[im.chit/iroh "0.1.11"]
                  [im.chit/vinyasa "0.2.2"]
                  [leiningen "2.5.0"]
                  [spyscope "0.1.4"]
@@ -16,9 +15,9 @@
                  [org.clojure/tools.nrepl "0.2.7"]]
 
   :signing {:gpg-key "D4FF9261"}        ; clojars signing key
-  
-;; Reflection macros: .> .? .* .% .%> 
-  
+
+;; Reflection macros: .> .? .* .% .%>
+
 ;; criterium
 ;; (bench (Thread/sleep 1000) :verbose)
 ;; (with-progress-reporting (bench (Thread/sleep 1000) :verbose))
@@ -28,25 +27,25 @@
 ;; spyscope
 ;; #spy/p #spy/d #spy/t
 
-  :injections [(require '[vinyasa.inject :as inject] 
+  :injections [(require '[vinyasa.inject :as inject]
                         'spyscope.core
                         'criterium.core
                         'alex-and-georges.debug-repl
                         'com.georgejahad.difform
                         'io.aviso.repl)
 
-               (inject/in 
+               (inject/in
 
-                ;; the default injected namespace is `.` 
-             
+                ;; the default injected namespace is `.`
+
                 [vinyasa.inject inject]
                 [vinyasa.pull pull]
                 [vinyasa.lein lein]
                 [vinyasa.reimport reimport]
                 [criterium.core with-progress-reporting report-result bench quick-bench benchmark]
-                            
+
                 clojure.core
-                [iroh.core .> .? .* .% .%>]        
+                [iroh.core .> .? .* .% .%>]
                 [alex-and-georges.debug-repl debug-repl]
 
                 clojure.core >
