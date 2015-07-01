@@ -24,3 +24,6 @@
 (require 'themes-module)
 (require 'flycheck-module)
 (require 'user-module)
+
+
+(setq cider-known-endpoints '(("localhost" "41055")))

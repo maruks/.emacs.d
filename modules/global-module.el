@@ -4,7 +4,6 @@
 
 (package-require 'ace-jump-mode)
 (package-require 'projectile)
-(package-require 'perspective)
 
 (package-require 'exec-path-from-shell)
 (package-require 'company)

@@ -6,6 +6,34 @@
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
 
+(add-to-list 'package-archives
+	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+(when (boundp 'package-pinned-packages)
+  (setq package-pinned-packages
+	'((clojure-mode . "melpa-stable")
+	  (clojure-mode-extra-font-locking . "melpa-stable")
+	  (cider . "melpa-stable")
+	  (clj-refactor . "melpa-stable")
+	  (flycheck . "melpa-stable")
+	  (ace-jump-mode . "melpa-stable")
+	  (projectile . "melpa-stable")
+	  (perspective . "melpa-stable")
+	  (exec-path-from-shell . "melpa-stable")
+	  (company . "melpa-stable")
+	  (ag . "melpa-stable")
+	  (haskell-mode . "melpa-stable")
+	  (slime . "melpa-stable")
+	  (slime-company . "melpa-stable")
+	  (paredit . "melpa-stable")
+	  (inf-ruby . "melpa-stable")
+	  (flymake-ruby . "melpa-stable")
+	  (yasnippet . "melpa-stable")
+	  (solarized-theme . "melpa-stable")
+ 	  (geiser . "melpa-stable")
+	  (org . "gnu")
+	  (sml-mode . "gnu"))))
+
 (package-initialize)
 
 (defun online? ()
