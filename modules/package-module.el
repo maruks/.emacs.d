@@ -26,6 +26,7 @@
 	  (slime . "melpa-stable")
 	  (slime-company . "melpa-stable")
 	  (paredit . "melpa-stable")
+	  (magit . "melpa-stable")
 	  (inf-ruby . "melpa-stable")
 	  (flymake-ruby . "melpa-stable")
 	  (yasnippet . "melpa-stable")
