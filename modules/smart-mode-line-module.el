@@ -5,18 +5,27 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/mode-line")
 (require 'mode-line)
 
-(setq prev-mode-line nil)
+(defvar smart-mode-lines `((default . ,mode-line-format)
+			   (line-1 . ,(mode-line-1))
+			   (line-2 . ,(mode-line-2))))
 
-(defun change-mode-line ()
-  (interactive)
-  (if prev-mode-line
-      (progn
-	(setq-default mode-line-format prev-mode-line)
-	(setq prev-mode-line nil))
-      (progn
-        (setq prev-mode-line mode-line-format)
-        (setq-default mode-line-format (better-mode-line)))))
+(defun smart-mode-line (name)
+  (interactive
+   (list
+    (intern (completing-read "Set custom mode line: "
+                             (mapcar 'car smart-mode-lines)))))
+  (smart-mode-line-set name))
 
-(change-mode-line)
+(defun smart-mode-line-set (name)
+  (setq-default mode-line-format (cdr (assoc name smart-mode-lines))))
+
+(defun smart-mode-line-init ()
+  (let ((m (getenv "EMACS_DEFAULT_MODE_LINE")))
+    (when m
+      (smart-mode-line-set (intern m)))))
+
+;; init
+
+(smart-mode-line-init)
 
 (provide 'smart-mode-line-module)

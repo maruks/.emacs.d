@@ -1,48 +1,80 @@
+;; -*- lexical-binding: t -*-
 ;; themes-module
 
 (require 'package-module)
 
+(package-require 'sublime-themes)
+
 (package-require 'zenburn-theme)
 (package-require 'solarized-theme)
+(package-require 'darcula-theme)
+(package-require 'bliss-theme)
+(package-require 'smyx-theme)
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(setq current-t43m3 nil)
+(defvar theme-current-theme nil)
+(defvar theme-key-prefix "C-c C-t")
+(defvar theme-key-disable "C-d")
+(defvar theme-set-keys #s(hash-table size 30 data (br brin
+						   db deeper-blue
+						   do dorsey
+						   dr dream
+						   di dichromacy
+						   er erosiond
+      						   gi github
+						   gr granger
+						   fo fogus
+						   hi hickey
+						   mc mccarthy
+						   ne tomorrow-night-eighties
+						   ni tomorrow-night
+						   nb tomorrow-night-bright
+						   od odersky
+   						   ra radiance
+						   sd solarized-dark
+						   sl solarized-light
+						   ta tango
+						   to tomorrow
+						   vi vim-colors
+						   ze zenburn
+						   wo wombat)))
 
-(defun enab-theme (theme)
-  (if current-t43m3 (disable-theme current-t43m3))
-  (setq current-t43m3 theme)
-  (load-theme theme t))
+(defun theme-enable (theme)
+  (if theme-current-theme (disable-theme theme-current-theme))
+  (setq theme-current-theme theme)
+  (load-theme theme t)
+  (message "theme loaded: %s" (symbol-name theme)))
 
-(defun disab-current-theme ()
-  (if current-t43m3 (disable-theme current-t43m3))
-  (setq current-t43m3 nil))
+(defun theme-disable-current ()
+  (if theme-current-theme (disable-theme theme-current-theme))
+  (setq theme-current-theme nil))
 
-(global-set-key (kbd "C-c ltwo") '(lambda () (interactive) (enab-theme 'wombat)))
-(global-set-key (kbd "C-c ltze") '(lambda () (interactive) (enab-theme 'zenburn)))
-(global-set-key (kbd "C-c ltsd") '(lambda () (interactive) (enab-theme 'solarized-dark)))
-(global-set-key (kbd "C-c ltsl") '(lambda () (interactive) (enab-theme 'solarized-light)))
-(global-set-key (kbd "C-c ltne") '(lambda () (interactive) (enab-theme 'tomorrow-night-eighties)))
-(global-set-key (kbd "C-c ltni") '(lambda () (interactive) (enab-theme 'tomorrow-night)))
-(global-set-key (kbd "C-c ltnb") '(lambda () (interactive) (enab-theme 'tomorrow-night-bright)))
-(global-set-key (kbd "C-c ltto") '(lambda () (interactive) (enab-theme 'tomorrow)))
-(global-set-key (kbd "C-c ltta") '(lambda () (interactive) (enab-theme 'tango)))
-(global-set-key (kbd "C-c ltdb") '(lambda () (interactive) (enab-theme 'deeper-blue)))
-(global-set-key (kbd "C-c ltdi") '(lambda () (interactive) (enab-theme 'dichromacy)))
+(defun theme-init-keys ()
+  (global-set-key
+   (kbd (concat theme-key-prefix " " theme-key-disable))
+   '(lambda () (interactive) (theme-disable-current)))
+  (maphash  (lambda (k v)
+	      (global-set-key
+	       (kbd (concat theme-key-prefix " " (symbol-name k)))
+	       (lambda () (interactive) (theme-enable v)))) theme-set-keys))
 
-(global-set-key (kbd "C-c dct") '(lambda () (interactive) (disab-current-theme)))
-
-(defun l0ad-theme (name)
+(defun theme-load (name)
   (interactive
    (list
     (intern (completing-read "Load custom theme: "
                              (mapcar 'symbol-name (custom-available-themes))))))
-  (enab-theme name))
+  (theme-enable name))
 
-(setq d3fault-theme (getenv "EMACS_DEFAULT_THEME"))
+(defun theme-load-default ()
+  (let ((default-theme (getenv "EMACS_DEFAULT_THEME")))
+    (when default-theme
+      (theme-enable (intern default-theme)))))
 
-(when d3fault-theme
-  (enab-theme (intern d3fault-theme)))
+;;  init
+
+(theme-init-keys)
+(theme-load-default)
 
 (provide 'themes-module)
