@@ -1,14 +1,30 @@
-#! /usr/bin/bash
+#!/bin/bash
 
-FILE_FULL=$1
-REMOTE_HOST=$2
+if [ "$#" -ne 3 ]; then
+    echo "Usage: <host> <filename> <target folder>"
+    exit 1
+fi
 
-FILE_DIR=$(dirname $FILE_FULL)
-FILE_NAME=$(basename $FILE_FULL)
-LOCALHOST=$(hostname)
+REMOTE_HOST=$1
+FILE_FULL=$2
+TARGET=$3
 
 ZIP_TOOL=pigz
 NC_PORT=8080
 
-tar -cf - -C $FILE_DIR $FILE_NAME | pv -s `du -sb $FILE_FULL | awk '{s += $1} END {printf "%d", s}'` | $ZIP_TOOL | nc -l $NC_PORT &
-ssh $REMOTE_HOST "nc $LOCALHOST $NC_PORT | $ZIP_TOOL -d | tar xf - -C $FILE_DIR"
+FILE_DIR=$(dirname $FILE_FULL)
+FILE_NAME=$(basename $FILE_FULL)
+
+SIZE=$(ssh $REMOTE_HOST "du -sb $FILE_FULL" | awk '{s += $1} END {print s}')
+
+RE='^[0-9]+$'
+if ! [[ $SIZE =~ $RE ]] ; then
+    echo "error"
+    exit 1
+fi
+
+ssh -f -n $REMOTE_HOST "bash -c '( ( tar -cf - -C \$1 \$2 | pigz | nc -l \$3 ) & )' -- \"$FILE_DIR\" \"$FILE_NAME\" \"$NC_PORT\""
+
+sleep 2
+
+nc $REMOTE_HOST $NC_PORT  | pigz -d | pv -s $SIZE | tar xf - -C $TARGET
