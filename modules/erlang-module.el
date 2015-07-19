@@ -5,7 +5,7 @@
 (defun load-erlang ()
   (add-to-list 'load-path "~/.emacs.d/vendor/erlang")
   (let ((erlang-root (or (getenv "_KERL_ACTIVE_DIR") "/usr/local/lib/erlang")))
-    (setq erlang-root-dir erlang-root)    
+    (setq erlang-root-dir erlang-root)
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
   (require 'erlang-start)
   (require 'erlang-eunit)
@@ -17,16 +17,16 @@
   (interactive "P")
   (save-buffer)
   (erlang-compile)
-  (when arg 
+  (when arg
     (switch-to-buffer-other-window "*erlang*")))
 
 (defun compile-erlang-buffer-and-test (arg)
   (interactive "P")
   (save-buffer)
-  (erlang-eunit-compile-and-run-module-tests)
-  (when arg 
-    (switch-to-buffer-other-window "*erlang*")))
+  (erlang-eunit-compile-and-run-module-tests))
 
+;; [C-u] C-c C-e k
+;; C-c C-e c
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
@@ -41,7 +41,7 @@
   (interactive)
   (let ((location "~/.emacs.d/vendor/distel/elisp"))
     (if (file-exists-p location)
-	(do-load-distel)   
+	(do-load-distel)
       (message "distel not installed in %s" location))))
 
 (defun do-load-distel (location)
