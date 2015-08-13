@@ -5,11 +5,11 @@
 (package-require 'clojure-mode)
 (package-require 'clojure-mode-extra-font-locking)
 (package-require 'cider)
-(package-require 'clj-refactor)
+;;(package-require 'clj-refactor)
 (package-require 'align-cljlet)
 
 (require 'clojure-mode)
-(require 'clj-refactor)
+;;(require 'clj-refactor)
 
 (defun compile-buffer (arg)
   (interactive "P")
@@ -32,18 +32,24 @@
   (insert "(fn [])")
   (backward-char 2))
 
+(defun stop-clj-process (arg)
+  (interactive "P")
+  (cider-interactive-eval "(System/exit 0)"))
+
 (eval-after-load 'clojure-mode
   '(progn
      (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
+     (define-key clojure-mode-map (kbd "<f12>") 'stop-clj-process)
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
-     (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)))
+     (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)
+     (define-key clojure-mode-map (kbd "C-c C-a") 'align-cljlet)))
 
 ;; clj-refactor
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (clj-refactor-mode 1)
-	    (cljr-add-keybindings-with-prefix "C-c C-a")))
+;; (add-hook 'clojure-mode-hook
+;; 	  (lambda ()
+;; 	    (clj-refactor-mode 1)
+;; 	    (cljr-add-keybindings-with-prefix "C-c C-a")))
 
 ;; cider
 (add-hook 'cider-mode-hook #'eldoc-mode)

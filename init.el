@@ -19,6 +19,7 @@
 (require 'haskell-module)
 (require 'elisp-module)
 (require 'lisp-module)
+(require 'xml-module)
 (require 'racket-module)
 (require 'snippets-module)
 (require 'themes-module)
