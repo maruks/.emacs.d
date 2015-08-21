@@ -19,12 +19,10 @@
 (require 'haskell-module)
 (require 'elisp-module)
 (require 'lisp-module)
+(require 'lua-module)
 (require 'xml-module)
 (require 'racket-module)
 (require 'snippets-module)
 (require 'themes-module)
 (require 'flycheck-module)
 (require 'user-module)
-
-
-(setq cider-known-endpoints '(("localhost" "41055")))

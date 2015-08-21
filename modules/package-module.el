@@ -23,6 +23,7 @@
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
 	  (haskell-mode . "melpa-stable")
+	  (lua-mode . "melpa-stable")
 	  (slime . "melpa-stable")
 	  (slime-company . "melpa-stable")
 	  (paredit . "melpa-stable")
