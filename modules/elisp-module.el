@@ -14,6 +14,12 @@
 
 (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)
 
+(defun elisp-run-ert ()
+  (interactive)
+  (ert t))
+
+(define-key emacs-lisp-mode-map (kbd "<f6>") 'elisp-run-ert)
+
 (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
 
 (provide 'elisp-module)
