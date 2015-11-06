@@ -23,6 +23,7 @@
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
 	  (haskell-mode . "melpa-stable")
+	  (ghc . "melpa-stable")
 	  (lua-mode . "melpa-stable")
 	  (slime . "melpa-stable")
 	  (slime-company . "melpa-stable")
@@ -35,6 +36,9 @@
  	  (geiser . "melpa-stable")
 	  (org . "gnu")
 	  (sml-mode . "gnu"))))
+
+
+
 
 (package-initialize)
 
