@@ -112,6 +112,13 @@
 ;; xah-find-replace-text-regex
 (package-require 'xah-find)
 
+;; guide key
+(package-require 'guide-key)
+(setq guide-key/guide-key-sequence '("C-x r"))
+(guide-key-mode 1)
+(setq guide-key/highlight-command-regexp "rectangle")
+
+;;
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (provide 'global-module)
