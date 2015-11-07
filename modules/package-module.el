@@ -27,6 +27,7 @@
 	  (lua-mode . "melpa-stable")
 	  (slime . "melpa-stable")
 	  (slime-company . "melpa-stable")
+	  (company-ghc . "melpa-stable")
 	  (paredit . "melpa-stable")
 	  (magit . "melpa-stable")
 	  (inf-ruby . "melpa-stable")
