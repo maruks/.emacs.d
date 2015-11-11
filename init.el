@@ -20,6 +20,7 @@
 (require 'clojure-module)
 (require 'sml-module)
 (require 'haskell-module)
+(require 'elm-module)
 (require 'elisp-module)
 (require 'lisp-module)
 (require 'lua-module)
