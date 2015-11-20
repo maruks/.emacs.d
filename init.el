@@ -11,9 +11,7 @@
 (require 'appearance-module)
 (require 'git-module)
 (require 'paredit-module)
-
 (require 'electric-pair-module)
-
 (require 'smart-mode-line-module)
 (require 'scheme-module)
 (require 'erlang-module)
@@ -24,6 +22,7 @@
 (require 'elisp-module)
 (require 'lisp-module)
 (require 'lua-module)
+(require 'javascript-module)
 (require 'xml-module)
 (require 'racket-module)
 (require 'snippets-module)
