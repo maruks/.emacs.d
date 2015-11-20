@@ -3,6 +3,12 @@
 (package-require 'js2-mode)
 (package-require 'moz)  ;; requires MozRepl firefox plugin
 
+;; C-c C-s: open a MozRepl interaction buffer and switch to it
+;; C-c C-l: save the current buffer and load it in MozRepl
+;; C-M-x: send the current function (as recognized by c-mark-function) to MozRepl
+;; C-c C-c: send the current function to MozRepl and switch to the interaction buffer
+;; C-c C-r: send the current region to MozRepl
+
 (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
