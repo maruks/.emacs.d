@@ -90,9 +90,13 @@
 (require 'projectile)
 (projectile-global-mode)
 
+;; port install the_silver_searcher
+(define-key projectile-mode-map [?\s-a] 'projectile-ag)
 (define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
 (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
+(define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
 (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
+(define-key projectile-mode-map [?\s-t] 'projectile-find-test-file)
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
 
 ;; global keys
@@ -114,7 +118,7 @@
 
 ;; guide key
 (package-require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r"))
+(setq guide-key/guide-key-sequence '("C-x r" "C-c p"))
 (guide-key-mode 1)
 (setq guide-key/highlight-command-regexp "rectangle")
 
