@@ -75,3 +75,5 @@ if [ -f ~/zsh.sh ]; then
 else
     print "~/zsh.sh not found."
 fi
+
+export RPROMPT=""

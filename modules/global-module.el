@@ -96,7 +96,7 @@
 (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
 (define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
 (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-(define-key projectile-mode-map [?\s-t] 'projectile-find-test-file)
+(define-key projectile-mode-map [?\s-t] 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
 
 ;; global keys
