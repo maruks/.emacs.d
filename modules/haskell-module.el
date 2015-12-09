@@ -3,9 +3,11 @@
 (require 'package-module)
 
 ;; cabal update
-;; cabal install happy hasktags stylish-haskell present ghc-mod hlint hoogle structured-haskell-mode hindent
+;; cabal install happy hasktags stylish-haskell ghc-mod hlint hoogle structured-haskell-mode hindent
+;; present
 
 (package-require 'haskell-mode)
+(package-require 'hindent)
 (package-require 'ghc)
 (package-require 'company-ghc)
 
@@ -13,7 +15,7 @@
 (autoload 'ghc-debug "ghc" nil t)
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'hindent-mode)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook 'company-mode)
 
