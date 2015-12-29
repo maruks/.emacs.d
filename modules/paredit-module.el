@@ -21,20 +21,20 @@
 (dolist (h lisp-mode-hooks)
   (add-hook h 'enable-paredit))
 
-;; (defun erlang-paredit ()
-;;   (progn
-;;     (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
-;;     (define-key erlang-mode-map [?\[] 'paredit-open-square)
-;;     (define-key erlang-mode-map [?\{] 'paredit-open-curly)
-;;     (define-key erlang-mode-map [?\)] 'paredit-close-parenthesis)
-;;     (define-key erlang-mode-map [?\}] 'paredit-close-curly)
-;;     (define-key erlang-mode-map [?\]] 'paredit-close-square)
-;;     (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-;; 	 '((lambda (endp delimiter) nil)))))
+(defun erlang-paredit ()
+  (progn
+    (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
+    (define-key erlang-mode-map [?\[] 'paredit-open-square)
+    (define-key erlang-mode-map [?\{] 'paredit-open-curly)
+    (define-key erlang-mode-map [?\)] 'paredit-close-parenthesis)
+    (define-key erlang-mode-map [?\}] 'paredit-close-curly)
+    (define-key erlang-mode-map [?\]] 'paredit-close-square)
+    (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+	 '((lambda (endp delimiter) nil)))))
 
-;; (add-hook 'erlang-mode-hook
-;; 	  (lambda ()
-;; 	    (enable-paredit)
-;; 	    (erlang-paredit)))
+(add-hook 'erlang-mode-hook
+	  (lambda ()
+	    (enable-paredit)
+	    (erlang-paredit)))
 
 (provide 'paredit-module)
