@@ -33,7 +33,7 @@
 
 (eval-after-load 'haskell-mode '(progn
 				  (define-key haskell-mode-map (kbd "<f9>") 'haskell-navigate-imports)
-				  (define-key haskell-mode-map (kbd "<f5>") 'haskell-process-reload)
+				  (define-key haskell-mode-map (kbd "<f5>") 'haskell-process-reload-file)
 				  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
 				  (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
 				  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
