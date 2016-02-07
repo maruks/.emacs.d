@@ -1,7 +1,7 @@
 {:user
- {:plugins [[cider/cider-nrepl "0.9.1"]
+ {:plugins [[cider/cider-nrepl "0.10.2"]
             [speclj "3.3.0"]
-            [refactor-nrepl "1.0.5"]
+            [refactor-nrepl "2.0.0"]
             [lein-exec "0.3.5"]]
 
   :dependencies [[leiningen #=(leiningen.core.main/leiningen-version)]
