@@ -98,6 +98,7 @@
 (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
 (define-key projectile-mode-map [?\s-t] 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
+(define-key projectile-mode-map [?\s-r] 'projectile-replace)
 
 ;; global keys
 
