@@ -17,6 +17,11 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
+
+Plugin 'ctrlp.vim'
+Plugin 'The-NERD-tree'
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
 " Plugin 'git://git.wincent.com/command-t.git'
@@ -45,9 +50,14 @@ filetype plugin indent on    " required
 
 
 " colors
-set guifont=Source\ Code\ Pro:h15
+set guifont=Sauce\ Code\ Powerline:h15
+set laststatus=2
+set guioptions-=L
+set guioptions-=r
 
 syntax on
 colorscheme Tomorrow-Night-Eighties
 
 set number
+
+map <C-n> :NERDTreeToggle<CR>

@@ -2,10 +2,6 @@
 
 plugins=(git command-not-found lein)
 
-# docker
-
-export DOCKER_HOST=tcp://127.0.0.1:4243
-
 # git
 
 alias gst='git status'
