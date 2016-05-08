@@ -90,6 +90,9 @@
 (require 'projectile)
 (projectile-global-mode)
 
+;; prefix
+(setq projectile-keymap-prefix (kbd "C-c C-p"))
+
 ;; port install the_silver_searcher
 (define-key projectile-mode-map [?\s-a] 'projectile-ag)
 (define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
@@ -119,11 +122,14 @@
 
 ;; guide key
 (package-require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-c p"))
+(setq guide-key/guide-key-sequence '("C-x r"))
 (guide-key-mode 1)
 (setq guide-key/highlight-command-regexp "rectangle")
 
-;;
+;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; disable bell
+(setq ring-bell-function 'ignore)
 
 (provide 'global-module)
