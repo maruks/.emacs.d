@@ -11,7 +11,7 @@
 (require 'clojure-mode)
 (require 'clj-refactor)
 
-(defun compile-buffer (arg)
+(defun compile-clj-buffer (arg)
   (interactive "P")
   (save-buffer)
   (cider-load-buffer)
@@ -38,8 +38,8 @@
 
 (eval-after-load 'clojure-mode
   '(progn
-     (define-key clojure-mode-map [?\s-c] 'compile-buffer)
-     (define-key clojure-mode-map (kbd "<f5>") 'compile-buffer)
+     (define-key clojure-mode-map [?\s-c] 'compile-clj-buffer)
+     (define-key clojure-mode-map (kbd "<f5>") 'compile-clj-buffer)
      (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
      (define-key clojure-mode-map (kbd "<f12>") 'stop-clj-process)
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
