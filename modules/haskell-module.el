@@ -34,8 +34,7 @@
 (defun compile-hs-buffer (arg)
   (interactive "P")
   (save-buffer)
-  (haskell-compile)
-  (haskell-process-load-or-reload))
+  (haskell-compile))
 
 (eval-after-load 'haskell-mode '(progn
 				  (define-key haskell-mode-map (kbd "<f9>") 'haskell-navigate-imports)
