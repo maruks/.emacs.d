@@ -2,12 +2,19 @@
 
 (require 'package-module)
 
+(defun use-rebar3-shell ()
+  (interactive)
+  (setq inferior-erlang-machine "rebar3")
+  (setq inferior-erlang-machine-options '("shell"))
+  (setq inferior-erlang-shell-type nil))
+
 (defun load-erlang ()
   (add-to-list 'load-path "~/.emacs.d/vendor/erlang")
   (let ((erlang-root (or (getenv "_KERL_ACTIVE_DIR") "/usr/local/lib/erlang")))
     (setq erlang-root-dir erlang-root)
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
   (require 'erlang-start)
+  (require 'erlang-flymake)
   (require 'erlang-eunit)
   (setq inferior-erlang-machine-options '("-sname" "emacs")))
 
