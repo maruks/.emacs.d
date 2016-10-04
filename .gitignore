@@ -12,4 +12,5 @@ eshell
 vendor/distel
 vendor/ensime
 ido.last
+tramp
 bookmarks
