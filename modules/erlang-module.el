@@ -2,6 +2,8 @@
 
 (require 'package-module)
 
+(package-require 'flycheck-dialyzer)
+
 (defun use-rebar3-shell ()
   (interactive)
   (setq inferior-erlang-machine "rebar3")
@@ -14,7 +16,6 @@
     (setq erlang-root-dir erlang-root)
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
   (require 'erlang-start)
-  (require 'erlang-flymake)
   (require 'erlang-eunit)
   (setq inferior-erlang-machine-options '("-sname" "emacs")))
 
@@ -37,7 +38,8 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
-	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)))
+	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)
+	    (flycheck-mode)))
 
 (eval-after-load 'erlang
   '(message "Erlang root is %s." erlang-root-dir))
