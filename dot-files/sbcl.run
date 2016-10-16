@@ -1,0 +1,2 @@
+#!/bin/bash
+sbcl --noinform --load "$1" --quit --end-toplevel-options "$@"
