@@ -36,6 +36,7 @@
 	  (yasnippet . "melpa-stable")
 	  (solarized-theme . "melpa-stable")
  	  (geiser . "melpa-stable")
+	  (intero . "melpa")
 	  (org . "gnu")
 	  (sml-mode . "gnu"))))
 
