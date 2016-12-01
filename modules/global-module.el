@@ -132,4 +132,12 @@
 ;; disable bell
 (setq ring-bell-function 'ignore)
 
+;; remove custom from init.el
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
+
+;; wheel
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+
 (provide 'global-module)
