@@ -23,6 +23,7 @@
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
 	  (haskell-mode . "melpa-stable")
+  	  (idris-mode . "melpa-stable")
 	  (hindent . "melpa-stable")
 	  (ghc . "melpa-stable")
 	  (lua-mode . "melpa-stable")
@@ -37,6 +38,10 @@
 	  (solarized-theme . "melpa-stable")
  	  (geiser . "melpa-stable")
 	  (intero . "melpa")
+ 	  (alchemist . "melpa")
+  	  (elixir-mode . "melpa")
+  	  (elixir-yasnippets . "melpa")
+  	  (flycheck-credo . "melpa")
 	  (org . "gnu")
 	  (sml-mode . "gnu"))))
 
