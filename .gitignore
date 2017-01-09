@@ -1,6 +1,7 @@
 *.dat
 auto-save-list
 *.eld
+custom.el
 elpa
 notes
 swank
