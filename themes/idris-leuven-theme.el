@@ -1,0 +1,33 @@
+(deftheme idris-leuven-theme
+  "Idris-mode colors compatible with Leuven")
+
+(custom-theme-set-faces
+ 'idris-leuven-theme
+ '(idris-equals-face ((t (:foreground "black"))))
+ '(idris-colon-face ((t (:foreground "black"))))
+ '(idris-hole-face ((t (:underline (:color "#006DAF" :style wave) :slant italic))))
+ '(idris-operator-face ((t (:foreground "black"))))
+ '(idris-repl-output-face ((t (:foreground "#606060"))))
+ '(idris-semantic-function-face ((t (:foreground "darkgreen"))))
+ '(idris-semantic-implicit-face ((t (:slant italic))))
+ '(idris-semantic-data-face ((t (:foreground "red3"))))
+ '(idris-keyword-face ((t (:foreground "black" :weight semi-bold))))
+ '(idris-directive-face ((t (:foreground "dim gray"))))
+ '(idris-directive-face ((t (:foreground "dim gray" :slant italic))))
+ '(idris-directive-face ((t (:foreground "dim gray"))))
+ '(idris-inline-doc-face ((t (:foreground "dim gray"))))
+ '(idris-parameter-face ((t (:inherit idris-semantic-bound-face))))
+ '(idris-module-face ((t (:inherit idris-semantic-module-face))))
+ '(idris-info-title-face ((t (:height 1.8 :weight bold :foreground "cornflower blue" :family "PT Sans Narrow"))))
+ '(idris-quasiquotation-face ((t (:background "light gray"))))
+ '(idris-antiquotation-face ((t (:background "white" :box "light gray"))))
+ '(agda2-highlight-primitive-type-face ((t (:inherit idris-semantic-type-face))))
+ '(agda2-highlight-inductive-constructor-face ((t (:inherit idris-semantic-data-face))))
+ '(agda2-highlight-primitive-face ((t (:inherit idris-semantic-function-face))))
+ '(agda2-highlight-function-face ((t (:inherit idris-semantic-function-face))))
+ '(agda2-highlight-postulate-face ((t (:inherit idris-semantic-function-face))))
+ '(agda2-highlight-bound-variable-face ((t (:inherit idris-semantic-bound-face))))
+ '(agda2-highlight-keyword-face ((t (:inherit idris-keyword-face))))
+ '(agda2-highlight-module-face ((t (:inherit idris-semantic-module-face)))))
+
+(provide-theme 'idris-leuven-theme)

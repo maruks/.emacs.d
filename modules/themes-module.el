@@ -31,6 +31,8 @@
 						   ne tomorrow-night-eighties
 						   ni tomorrow-night
 						   nb tomorrow-night-bright
+						   le leuven
+						   il idris-leuven-theme
 						   od odersky
    						   ra radiance
 						   sd solarized-dark
