@@ -5,13 +5,17 @@
 
 (package-require 'sublime-themes)
 
-(package-require 'zenburn-theme)
+(package-require 'bliss-theme)
+(package-require 'darcula-theme)
 (package-require 'flatland-theme)
+(package-require 'hamburg-theme)
 (package-require 'heroku-theme)
 (package-require 'solarized-theme)
-(package-require 'darcula-theme)
-(package-require 'bliss-theme)
 (package-require 'smyx-theme)
+(package-require 'reykjavik-theme)
+(package-require 'foggy-night-theme)
+(package-require 'yoshi-theme)
+(package-require 'zenburn-theme)
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -26,10 +30,12 @@
 						   do dorsey
 						   dr dream
 						   er erosiond
+						   fn foggy-night
 						   fo fogus
 						   fl flatland
 						   gh graham
 						   gr granger
+						   ha hamburg
 						   he heroku
 						   hi hickey
 						   ju junio
@@ -38,10 +44,12 @@
 						   nb tomorrow-night-bright
 						   mi misterioso
 						   od odersky
+						   re reykjavik
 						   sd solarized-dark
 						   sp spolsky
 						   sm smyx
 						   td tango-dark
+						   yo yoshi
 						   ze zenburn
 						   wi wilson
 						   wo wombat
