@@ -6,6 +6,8 @@
 (package-require 'sublime-themes)
 
 (package-require 'zenburn-theme)
+(package-require 'flatland-theme)
+(package-require 'heroku-theme)
 (package-require 'solarized-theme)
 (package-require 'darcula-theme)
 (package-require 'bliss-theme)
@@ -18,30 +20,43 @@
 (defvar theme-key-prefix "C-c C-t")
 (defvar theme-key-disable "C-d")
 (defvar theme-set-keys #s(hash-table size 30 data (br brin
+						   bl bliss
+						   da darcula
 						   db deeper-blue
 						   do dorsey
 						   dr dream
-						   di dichromacy
 						   er erosiond
-      						   gi github
-						   gr granger
 						   fo fogus
+						   fl flatland
+						   gh graham
+						   gr granger
+						   he heroku
 						   hi hickey
-						   mc mccarthy
+						   ju junio
 						   ne tomorrow-night-eighties
 						   ni tomorrow-night
 						   nb tomorrow-night-bright
-						   le leuven
-						   il idris-leuven-theme
+						   mi misterioso
 						   od odersky
-   						   ra radiance
 						   sd solarized-dark
+						   sp spolsky
+						   sm smyx
+						   td tango-dark
+						   ze zenburn
+						   wi wilson
+						   wo wombat
+						   ;; -------------------------   bright
+						   di dichromacy
+						   gi github
+						   mc mccarthy
 						   sl solarized-light
+						   ra radiance
+						   ri ritchie
 						   ta tango
 						   to tomorrow
 						   vi vim-colors
-						   ze zenburn
-						   wo wombat)))
+						   le leuven
+						   il idris-leuven-theme)))
 
 (defun theme-enable (theme)
   (if theme-current-theme (disable-theme theme-current-theme))
