@@ -5,8 +5,10 @@
 
 (package-require 'sublime-themes)
 
+(package-require 'atom-one-dark-theme)
 (package-require 'bliss-theme)
 (package-require 'darcula-theme)
+(package-require 'dracula-theme)
 (package-require 'flatland-theme)
 (package-require 'hamburg-theme)
 (package-require 'heroku-theme)
@@ -23,25 +25,24 @@
 (defvar theme-current-theme nil)
 (defvar theme-key-prefix "C-c C-t")
 (defvar theme-key-disable "C-d")
-(defvar theme-set-keys #s(hash-table size 30 data (br brin
+(defvar theme-set-keys #s(hash-table size 30 data (at atom-one-dark ;; *
+						   br brin
 						   bl bliss
-						   da darcula
 						   db deeper-blue
 						   do dorsey
+						   da darcula
+						   dc dracula       ;; https://draculatheme.com
 						   dr dream
 						   er erosiond
 						   fn foggy-night
 						   fo fogus
-						   fl flatland
+						   fl flatland  ;; *
 						   gh graham
 						   gr granger
 						   ha hamburg
 						   he heroku
 						   hi hickey
 						   ju junio
-						   ne tomorrow-night-eighties
-						   ni tomorrow-night
-						   nb tomorrow-night-bright
 						   mi misterioso
 						   od odersky
 						   re reykjavik
@@ -49,6 +50,9 @@
 						   sp spolsky
 						   sm smyx
 						   td tango-dark
+						   te tomorrow-night-eighties ;; *
+						   tn tomorrow-night
+						   tb tomorrow-night-bright
 						   yo yoshi
 						   ze zenburn
 						   wi wilson
