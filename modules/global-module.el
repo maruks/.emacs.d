@@ -10,6 +10,8 @@
 (package-require 'org)
 (package-require 'ag)
 
+(package-require 'rainbow-mode)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; store all backup and autosave files in the tmp dir

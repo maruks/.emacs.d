@@ -19,7 +19,7 @@
   (prettify-symbols-mode 1))
 
 (when (fboundp 'prettify-symbols-mode)
-  (add-hook 'clojure-mode-hook 'prettify-symbols-mode)  
+  (add-hook 'clojure-mode-hook 'prettify-symbols-mode)
   (add-hook 'lisp-mode-hook 'prettify-symbols-mode)
   (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
   (add-hook 'erlang-mode-hook 'psm)

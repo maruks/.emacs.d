@@ -67,8 +67,7 @@
 						   ta tango
 						   to tomorrow
 						   vi vim-colors
-						   le leuven
-						   il idris-leuven-theme)))
+						   le leuven)))
 
 (defun theme-enable (theme)
   (if theme-current-theme (disable-theme theme-current-theme))
