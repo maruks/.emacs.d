@@ -37,8 +37,7 @@
      (define-key idris-mode-map (kbd "<f5>") 'idris-load-file)))
 
 (defun idris-theme-tracing-function (&rest args)
-  (idris-apply-font-locks (car args))
-  (message "display-buffer called with args %S" args))
+  (idris-apply-font-locks (car args)))
 
 (advice-add 'theme-enable :after #'idris-theme-tracing-function)
 
