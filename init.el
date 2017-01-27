@@ -27,6 +27,7 @@
 (require 'sml-module)
 ;;(require 'haskell-module)
 (require 'idris-module)
+(require 'ocaml-module)
 (require 'haskell-intero-module)
 (require 'elm-module)
 (require 'elisp-module)
