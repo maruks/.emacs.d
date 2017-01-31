@@ -1,5 +1,13 @@
 #!/bin/bash
 
+platform=`uname`
+
+if [[ $platform == 'Linux' ]]; then
+    ln -s ~/.emacs.d/dot-files/zsh.linux.sh ~/zsh.sh
+elif [[ $platform == 'Darwin' ]]; then
+    ln -s ~/.emacs.d/dot-files/zsh.osx.sh ~/zsh.sh
+fi
+
 mkdir -p ~/.lein
 mkdir -p ~/.ssh
 

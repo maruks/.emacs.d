@@ -1,34 +1,8 @@
-# plugins 
-
-plugins=(git lein macports osx)
-
 # emacs
 
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias em="/Applications/Emacs.app/Contents/MacOS/Emacs"
 alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
-
-# git
-
-alias gst='git status'
-alias gl='git pull'
-alias gp='git push'
-alias gd='git diff | kaleidoscope'
-alias gau='git add --update'
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gb='git branch'
-alias gba='git branch -a'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcot='git checkout -t'
-alias gcotb='git checkout --track -b'
-alias glog='git log'
-alias glogp='git log --pretty=format:"%h %s" --graph'
-
-# leiningen
-
-alias luj='lein uberjar'
 
 # maven
 
