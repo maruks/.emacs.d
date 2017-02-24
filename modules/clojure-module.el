@@ -68,4 +68,6 @@
 (global-set-key (kbd "\e\ec") 'cider-jack-in)
 (global-set-key (kbd "C-c ji") 'cider-jack-in)
 
+(setq cider-inject-dependencies-at-jack-in nil)
+
 (provide 'clojure-module)

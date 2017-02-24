@@ -39,6 +39,8 @@
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
 	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)
+	    (setq flycheck-erlang-include-path (list "../include/"))
+	    (setq erlang-compile-extra-opts '((i . \"../include\")) )
 	    (flycheck-mode)))
 
 (eval-after-load 'erlang
