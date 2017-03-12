@@ -23,13 +23,7 @@
 
 (defun erlang-paredit ()
   (progn
-    (define-key erlang-mode-map [?\(] 'paredit-open-parenthesis)
-    (define-key erlang-mode-map [?\[] 'paredit-open-square)
-    (define-key erlang-mode-map [?\{] 'paredit-open-curly)
-    (define-key erlang-mode-map [?\)] 'paredit-close-parenthesis)
-    (define-key erlang-mode-map [?\}] 'paredit-close-curly)
-    (define-key erlang-mode-map [?\]] 'paredit-close-square)
-    (define-key erlang-mode-map [?\;] 'erlang-electric-semicolon)
+    (define-key paredit-mode-map [?\;] 'erlang-electric-semicolon)
     (set (make-local-variable 'paredit-space-for-delimiter-predicates)
 	 '((lambda (endp delimiter) nil)))))
 

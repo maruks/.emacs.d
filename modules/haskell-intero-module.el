@@ -4,10 +4,13 @@
 
 ;; stack install stylish-haskell hlint hasktags ghc-mod hoogle hindent happy
 
+;; stack install structured-haskell-mode
+;; (lts-3.8)
+
 (add-to-list 'exec-path "~/.local/bin/")
 
 (package-require 'haskell-mode)
-(package-require 'hindent)
+(package-require 'shm)
 (package-require 'intero)
 
 (custom-set-variables
@@ -23,7 +26,8 @@
 (defun haskell-m0de-hook ()
   (interactive)
   (intero-mode)
-  (hindent-mode))
+  (structured-haskell-mode)
+  )
 
 (add-hook 'haskell-mode-hook 'haskell-m0de-hook)
 
