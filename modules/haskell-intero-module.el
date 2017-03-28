@@ -10,7 +10,8 @@
 (add-to-list 'exec-path "~/.local/bin/")
 
 (package-require 'haskell-mode)
-(package-require 'shm)
+(package-require 'hindent)
+;(package-require 'shm)
 (package-require 'intero)
 
 (custom-set-variables
@@ -26,7 +27,8 @@
 (defun haskell-m0de-hook ()
   (interactive)
   (intero-mode)
-  (structured-haskell-mode)
+  ;(structured-haskell-mode)
+  (hindent-mode)
   )
 
 (add-hook 'haskell-mode-hook 'haskell-m0de-hook)
