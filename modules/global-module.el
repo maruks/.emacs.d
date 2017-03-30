@@ -142,4 +142,12 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
+(global-set-key (kbd "M-[") 'backward-paragraph)
+(global-set-key (kbd "M-]") 'forward-paragraph)
+
+(global-set-key (kbd "M-{") 'backward-sentence)
+(global-set-key (kbd "M-}") 'forward-sentence)
+
+(setq next-line-add-newlines t)
+
 (provide 'global-module)

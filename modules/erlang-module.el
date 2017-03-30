@@ -3,6 +3,9 @@
 (require 'package-module)
 
 (package-require 'flycheck-dialyzer)
+(package-require 'flycheck-rebar3)
+
+(flycheck-rebar3-setup)
 
 (defun use-rebar3-shell ()
   (interactive)
@@ -38,9 +41,10 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
+	    (define-key erlang-mode-map [?\s-c] 'compile-erlang-buffer)
 	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)
 	    (setq flycheck-erlang-include-path (list "../include/"))
-	    (setq erlang-compile-extra-opts '((i . \"../include\")) )
+	    (setq erlang-compile-extra-opts '((i . \"../include\")))
 	    (flycheck-mode)))
 
 (eval-after-load 'erlang
