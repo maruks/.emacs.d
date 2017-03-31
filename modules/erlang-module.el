@@ -4,6 +4,7 @@
 
 (package-require 'flycheck-dialyzer)
 (package-require 'flycheck-rebar3)
+(package-require 'company-distel)
 
 (flycheck-rebar3-setup)
 
@@ -22,7 +23,35 @@
   (require 'erlang-eunit)
   (setq inferior-erlang-machine-options '("-sname" "emacs")))
 
+;; distel
+
+(defun load-distel ()
+  (interactive)
+  (let ((location "~/.emacs.d/vendor/distel/elisp"))
+    (if (file-exists-p location)
+	(do-load-distel location)
+      (message "distel not installed in %s" location))))
+
+(defun do-load-distel (location)
+  (add-to-list 'load-path location)
+  (require 'distel)
+  (distel-setup)
+
+  (defvar inferior-erlang-prompt-timeout t)
+  (setq inferior-erlang-machine-options '("-sname" "emacs"))
+  (setq erl-nodename-cache
+	(make-symbol
+	 (concat
+	  "emacs@"
+	  (car (split-string (shell-command-to-string "hostname"))))))
+
+  (add-hook 'erlang-mode-hook
+	    (lambda ()
+	      (setq company-backends '(company-distel))
+	      (company-mode))))
+
 (load-erlang)
+(load-distel)
 
 (defun compile-erlang-buffer (arg)
   (interactive "P")
@@ -49,27 +78,5 @@
 
 (eval-after-load 'erlang
   '(message "Erlang root is %s." erlang-root-dir))
-
-;; distel
-
-(defun load-distel ()
-  (interactive)
-  (let ((location "~/.emacs.d/vendor/distel/elisp"))
-    (if (file-exists-p location)
-	(do-load-distel)
-      (message "distel not installed in %s" location))))
-
-(defun do-load-distel (location)
-  (add-to-list 'load-path location)
-  (require 'distel)
-  (distel-setup)
-
-  (defvar inferior-erlang-prompt-timeout t)
-  (setq inferior-erlang-machine-options '("-sname" "emacs"))
-  (setq erl-nodename-cache
-	(make-symbol
-	 (concat
-	  "emacs@"
-	  (car (split-string (shell-command-to-string "hostname")))))))
 
 (provide 'erlang-module)
