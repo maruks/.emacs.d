@@ -4,7 +4,6 @@
 
 (package-require 'flycheck-dialyzer)
 (package-require 'flycheck-rebar3)
-(package-require 'company-distel)
 
 (flycheck-rebar3-setup)
 
@@ -30,11 +29,12 @@
   (let ((location "~/.emacs.d/vendor/distel/elisp"))
     (if (file-exists-p location)
 	(do-load-distel location)
-      (message "distel not installed in %s" location))))
+        (message "distel not installed in %s" location))))
 
 (defun do-load-distel (location)
   (add-to-list 'load-path location)
   (require 'distel)
+  (package-require 'company-distel)
   (distel-setup)
 
   (defvar inferior-erlang-prompt-timeout t)
