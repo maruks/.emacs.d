@@ -20,7 +20,7 @@
     (setq exec-path (cons (concat erlang-root-dir "/bin") exec-path)))
   (require 'erlang-start)
   (require 'erlang-eunit)
-  (setq inferior-erlang-machine-options '("-sname" "emacs")))
+  (setq inferior-erlang-machine-options '("-sname" "emacs@localhost")))
 
 ;; distel
 
