@@ -28,6 +28,7 @@
 ;;(require 'haskell-module)
 (require 'idris-module)
 (require 'ocaml-module)
+(require 'rust-module)
 (require 'haskell-intero-module)
 (require 'elm-module)
 (require 'elisp-module)
