@@ -38,4 +38,7 @@
 (define-key smartparens-mode-map (kbd "s-]") 'sp-select-next-thing)
 (define-key smartparens-mode-map (kbd "s-}") 'sp-select-next-thing-exchange)
 
+;;
+(setq sp-highlight-pair-overlay nil)
+
 (provide 'smartparens-module)
