@@ -17,7 +17,10 @@
 (require 'fonts-module)
 (require 'appearance-module)
 (require 'git-module)
-(require 'paredit-module)
+
+(require 'smartparens-module)
+;;(require 'paredit-module)
+
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
 (require 'scheme-module)
@@ -25,11 +28,14 @@
 (require 'elixir-module)
 (require 'clojure-module)
 (require 'sml-module)
-;;(require 'haskell-module)
+
 (require 'idris-module)
 (require 'ocaml-module)
 (require 'rust-module)
+
 (require 'haskell-intero-module)
+;;(require 'haskell-module)
+
 (require 'elm-module)
 (require 'elisp-module)
 (require 'lisp-module)
