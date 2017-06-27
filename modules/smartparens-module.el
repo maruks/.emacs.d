@@ -17,11 +17,25 @@
 (add-hook 'geiser-repl-mode-hook #'smartparens-mode)
 
 (add-hook 'js-mode-hook #'smartparens-mode)
+
+(add-hook 'erlang-mode-hook (lambda ()
+			      (electric-pair-mode -1)
+			      (show-paren-mode -1)
+			      (smartparens-mode 1)
+			      (show-smartparens-mode 1)))
+
+(add-hook 'erlang-shell-mode-hook #'smartparens-mode)
+
 (add-hook 'elixir-mode-hook #'smartparens-mode)
 (add-hook 'html-mode-hook #'smartparens-mode)
 (add-hook 'lua-mode-hook #'smartparens-mode)
 (add-hook 'ruby-mode-hook #'smartparens-mode)
 (add-hook 'rust-mode-hook #'smartparens-mode)
+
+;; erlang
+
+(sp-with-modes '(erlang-mode erlang-shell-mode)
+  (sp-local-pair "<<" ">>"))
 
 ;; keybindings
 
@@ -38,7 +52,11 @@
 (define-key smartparens-mode-map (kbd "s-]") 'sp-select-next-thing)
 (define-key smartparens-mode-map (kbd "s-}") 'sp-select-next-thing-exchange)
 
+(define-key smartparens-mode-map (kbd "M-<backspace>") nil)
+(define-key smartparens-mode-map (kbd "s-<backspace>") 'sp-backward-unwrap-sexp)
+
 ;;
+
 (setq sp-highlight-pair-overlay nil)
 
 (provide 'smartparens-module)
