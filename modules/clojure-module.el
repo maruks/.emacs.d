@@ -57,7 +57,8 @@
 (add-hook 'cider-repl-mode-hook #'subword-mode)
 
 (setq nrepl-hide-special-buffers t)
-(setq cider-repl-pop-to-buffer-on-connect nil)
+;(setq cider-repl-pop-to-buffer-on-connect nil)
+(setq cider-repl-display-in-current-window t)
 (setq cider-show-error-buffer 'except-in-repl)
 (setq cider-prompt-for-symbol nil)
 
