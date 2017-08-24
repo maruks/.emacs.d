@@ -44,8 +44,8 @@
 (define-key smartparens-mode-map (kbd "M-s") 'sp-splice-sexp)
 (define-key smartparens-mode-map (kbd "M-j") 'sp-join-sexp)
 (define-key smartparens-mode-map (kbd "M-D") 'sp-absorb-sexp)
-(define-key smartparens-mode-map (kbd "C-k") 'sp-kill-sexp)
-(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-hybrid-sexp)
+(define-key smartparens-mode-map (kbd "C-k") 'sp-kill-hybrid-sexp)
+(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
 
 (define-key smartparens-mode-map (kbd "s-[") 'sp-select-previous-thing)
 (define-key smartparens-mode-map (kbd "s-{") 'sp-select-previous-thing-exchange)
