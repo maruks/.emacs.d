@@ -168,4 +168,15 @@ T - tag prefix
   (lambda ()
     (define-key dired-mode-map "." 'hydra-dired/body)))
 
+;; goto line
+(defhydra hydra-goto-line (goto-map ""
+				    :pre (linum-mode 1)
+				    :post (linum-mode -1))
+  "goto-line"
+  ("g" goto-line "go")
+  ("m" set-mark-command "mark" :bind nil)
+  ("q" nil "quit"))
+
+(global-set-key (kbd "s-l") 'hydra-goto-line/goto-line)
+
 (provide 'hydra-module)
