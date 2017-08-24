@@ -9,6 +9,7 @@
 (package-require 'company)
 (package-require 'org)
 (package-require 'ag)
+(package-require 'flx-ido)
 
 (package-require 'rainbow-mode)
 
@@ -48,11 +49,16 @@
 (unless (server-running-p) (server-start))
 
 ;; ido
-(setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
-(ido-mode 1)
+(setq ido-enable-flex-matching t)
 (setq ido-create-new-buffer 'always)
-(setq ido-file-extensions-order '(".clj" ".js" ".java" ".html" ".xml" ".sh" ".el" ".erl"))
+(setq ido-file-extensions-order '(".clj" ".cljs" ".erl" ".hs" ".js" ".java" ".html" ".xml" ".sh" ".el" ".erl"))
+
+(setq ido-use-faces nil)
+;(setq flx-ido-use-faces nil)
+
+(ido-mode 1)
+(flx-ido-mode 1)
 
 ;; sudoku
 (add-to-list 'load-path "~/.emacs.d/vendor/sudoku")
