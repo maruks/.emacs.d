@@ -112,8 +112,10 @@
 (global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
 (global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
 
+;; C - pg up / pg down
 (global-set-key [C-prior] 'previous-buffer)
 (global-set-key [C-next] 'next-buffer)
+(global-set-key (kbd "s-i") 'ibuffer)
 
 ;; xah-find-text
 ;; xah-find-text-regex
@@ -121,6 +123,12 @@
 ;; xah-find-replace-text
 ;; xah-find-replace-text-regex
 (package-require 'xah-find)
+
+;; symbol search
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
+
+(global-set-key (kbd "C-c s") 'isearch-forward-symbol)
+(global-set-key (kbd "C-c .") 'isearch-forward-symbol-at-point)
 
 ;; guide key
 (package-require 'guide-key)

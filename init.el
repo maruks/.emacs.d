@@ -13,6 +13,7 @@
 ;; modules
 
 (require 'global-module)
+(require 'hydra-module)
 (require 'fundamental-module)
 (require 'fonts-module)
 (require 'appearance-module)
