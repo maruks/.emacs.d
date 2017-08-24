@@ -115,7 +115,31 @@
 ;; C - pg up / pg down
 (global-set-key [C-prior] 'previous-buffer)
 (global-set-key [C-next] 'next-buffer)
+
+;; ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "s-i") 'ibuffer)
+
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
+
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("org" (mode . org-mode))
+               ("dired" (mode . dired-mode))
+               ("clojure" (mode . clojure-mode))
+               ("clojure script" (mode . clojurescript-mode))
+               ("js" (mode . js2-mode))
+	       ("erlang" (mode . erlang-mode))
+	       ("elixir" (mode . elixir-mode))
+	       ("haskell" (mode . haskell-mode))
+               ("emacs" (or
+                         (name . "^.+\\.el$")
+                         (name . "^\\*.+\\*$")))))))
 
 ;; xah-find-text
 ;; xah-find-text-regex
