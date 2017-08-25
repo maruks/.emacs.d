@@ -137,7 +137,8 @@
       (quote (("default"
                ("org" (mode . org-mode))
                ("dired" (mode . dired-mode))
-               ("clojure" (mode . clojure-mode))
+               ("clojure" (or (mode . clojure-mode)
+			      (mode . clojurec-mode)))
                ("clojure script" (mode . clojurescript-mode))
                ("js" (mode . js2-mode))
 	       ("erlang" (mode . erlang-mode))
