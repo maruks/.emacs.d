@@ -66,8 +66,10 @@
 (add-hook 'cider-mode-hook #'company-mode)
 (add-hook 'cider-repl-mode-hook #'company-mode)
 
-(global-set-key (kbd "\e\ec") 'cider-jack-in)
+(global-set-key (kbd "\e\ei") 'cider-jack-in)
+(global-set-key (kbd "\e\es") 'cider-jack-in-clojurescript)
 (global-set-key (kbd "C-c ji") 'cider-jack-in)
+(global-set-key (kbd "C-c js") 'cider-jack-in-clojurescript)
 
 (setq cider-inject-dependencies-at-jack-in nil)
 
