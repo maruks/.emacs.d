@@ -1,0 +1,12 @@
+[Unit]
+Description=Nginx2 Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a nginx2
+ExecStop=/usr/bin/docker stop nginx2
+
+[Install]
+WantedBy=multi-user.target

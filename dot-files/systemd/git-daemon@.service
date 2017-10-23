@@ -1,0 +1,10 @@
+[Unit]
+Description=GIT daemon
+
+[Service]
+User=git
+ExecStart=-/usr/lib/git-core/git-daemon --inetd --base-path=/home/git/repo /home/git/repo 
+StandardInput=socket 
+
+[Install]
+WantedBy=multi-user.target

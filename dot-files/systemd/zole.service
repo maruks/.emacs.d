@@ -1,0 +1,12 @@
+[Unit]
+Description=Zole Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a zole
+ExecStop=/usr/bin/docker stop zole
+
+[Install]
+WantedBy=multi-user.target
