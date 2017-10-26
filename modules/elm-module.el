@@ -16,9 +16,9 @@
 (with-eval-after-load "company"
   (add-to-list 'company-backends 'company-elm))
 
-
 (defun save-buffer-if-modified (&rest args)
-  (when (and buffer-file-name (buffer-modified-p)) (save-buffer)))
+  (when (and buffer-file-name (buffer-modified-p))
+    (save-buffer)))
 
 (eval-after-load 'elm-mode
   '(progn
