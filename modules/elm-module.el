@@ -16,14 +16,11 @@
 (with-eval-after-load "company"
   (add-to-list 'company-backends 'company-elm))
 
-(defun save-buffer-if-modified (&rest args)
-  (when (and buffer-file-name (buffer-modified-p))
-    (save-buffer)))
-
 (eval-after-load 'elm-mode
   '(progn
      (define-key elm-mode-map [?\s-c] 'elm-compile-buffer)
      (define-key elm-mode-map (kbd "<f5>") 'elm-compile-buffer)
-     (advice-add 'elm-compile-buffer :before  #'save-buffer-if-modified)))
+     (advice-add 'elm-compile-buffer :before #'save-current-buffer-if-modified)
+     (advice-add 'elm-compile-main :before #'save-current-buffer-if-modified)))
 
 (provide 'elm-module)

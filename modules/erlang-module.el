@@ -53,27 +53,17 @@
 (load-erlang)
 (load-distel)
 
-(defun compile-erlang-buffer (arg)
-  (interactive "P")
-  (save-buffer)
-  (erlang-compile)
-  (when arg
-    (switch-to-buffer-other-window "*erlang*")))
-
-(defun compile-erlang-buffer-and-test (arg)
-  (interactive "P")
-  (save-buffer)
-  (erlang-eunit-compile-and-run-module-tests))
-
 ;; [C-u] C-c C-e k
 ;; C-c C-e c
 (add-hook 'erlang-mode-hook
 	  (lambda ()
-	    (define-key erlang-mode-map (kbd "<f5>") 'compile-erlang-buffer)
-	    (define-key erlang-mode-map [?\s-c] 'compile-erlang-buffer)
-	    (define-key erlang-mode-map (kbd "<f6>") 'compile-erlang-buffer-and-test)
+	    (define-key erlang-mode-map (kbd "<f5>") 'erlang-compile)
+	    (define-key erlang-mode-map [?\s-c] 'erlang-compile)
+	    (define-key erlang-mode-map (kbd "<f6>") 'erlang-eunit-compile-and-run-module-tests)
 	    (setq flycheck-erlang-include-path (list "../include/"))
 	    (setq erlang-compile-extra-opts '((i . \"../include\")))
+	    (advice-add 'erlang-compile :before #'save-current-buffer-if-modified)
+	    (advice-add 'erlang-eunit-compile-and-run-module-tests :before #'save-current-buffer-if-modified)
 	    (flycheck-mode)))
 
 (eval-after-load 'erlang

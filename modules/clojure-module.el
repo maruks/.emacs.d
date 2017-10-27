@@ -11,22 +11,6 @@
 (require 'clojure-mode)
 (require 'clj-refactor)
 
-(defun compile-clj-buffer (arg)
-  (interactive "P")
-  (save-buffer)
-  (cider-load-buffer)
-  (when arg
-    (cider-switch-to-relevant-repl-buffer nil)))
-
-; speclj runner
-(defun compile-run-tests (arg)
-  (interactive "P")
-  (save-buffer)
-  (cider-load-buffer)
-  (cider-interactive-eval "(speclj.core/run-specs)")
-  (when arg
-    (cider-switch-to-relevant-repl-buffer nil)))
-
 (defun clj-insert-fn ()
   (interactive)
   (insert "(fn [])")
@@ -38,13 +22,13 @@
 
 (eval-after-load 'clojure-mode
   '(progn
-     (define-key clojure-mode-map [?\s-c] 'compile-clj-buffer)
-     (define-key clojure-mode-map (kbd "<f5>") 'compile-clj-buffer)
-     (define-key clojure-mode-map (kbd "<f6>") 'compile-run-tests)
+     (define-key clojure-mode-map [?\s-c] 'cider-load-buffer)
+     (define-key clojure-mode-map (kbd "<f5>") 'cider-load-buffer)
      (define-key clojure-mode-map (kbd "<f12>") 'stop-clj-process)
      (define-key clojure-mode-map (kbd "\e\er") 'cider-switch-to-relevant-repl-buffer)
      (define-key clojure-mode-map (kbd "\e\ef") 'clj-insert-fn)
-     (define-key clojure-mode-map (kbd "C-c C-a") 'align-cljlet)))
+     (define-key clojure-mode-map (kbd "C-c C-a") 'align-cljlet)
+     (advice-add 'cider-load-buffer :before #'save-current-buffer-if-modified)))
 
 ;; clj-refactor
 (add-hook 'clojure-mode-hook

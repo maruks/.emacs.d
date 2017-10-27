@@ -189,4 +189,9 @@
 
 (setq next-line-add-newlines t)
 
+;; used in advice
+(defun save-current-buffer-if-modified (&rest args)
+  (when (and buffer-file-name (buffer-modified-p))
+    (save-buffer)))
+
 (provide 'global-module)
