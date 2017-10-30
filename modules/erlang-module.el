@@ -62,7 +62,7 @@
             (define-key erlang-mode-map (kbd "<f6>") 'erlang-eunit-compile-and-run-module-tests)
 	    (define-key erlang-mode-map [?\s-e] 'erlang-eunit-compile-and-run-module-tests)
 	    (setq flycheck-erlang-include-path (list "../include/"))
-	    (setq erlang-compile-extra-opts '((i . \"../include\")))
+	    (setq erlang-compile-extra-opts '((i . \"../include\") (d . \'TEST\')))
 	    (advice-add 'erlang-compile :before #'save-current-buffer-if-modified)
 	    (advice-add 'erlang-eunit-compile-and-run-module-tests :before #'save-current-buffer-if-modified)
 	    (flycheck-mode)))
