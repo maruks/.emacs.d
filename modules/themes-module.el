@@ -6,7 +6,6 @@
 (package-require 'sublime-themes)
 
 (package-require 'atom-one-dark-theme)
-(package-require 'bliss-theme)
 (package-require 'darcula-theme)
 (package-require 'dracula-theme)
 (package-require 'flatland-theme)
@@ -15,9 +14,14 @@
 (package-require 'solarized-theme)
 (package-require 'smyx-theme)
 (package-require 'reykjavik-theme)
-(package-require 'foggy-night-theme)
 (package-require 'yoshi-theme)
 (package-require 'zenburn-theme)
+(package-require 'moe-theme)
+(package-require 'ample-theme)
+(package-require 'doom-themes)
+(package-require 'color-theme-sanityinc-tomorrow)
+
+(require 'moe-theme) ;; !
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -25,37 +29,33 @@
 (defvar theme-current-theme nil)
 (defvar theme-key-prefix "C-c C-t")
 (defvar theme-key-disable "C-d")
-(defvar theme-set-keys #s(hash-table size 30 data (at atom-one-dark ;; *
+(defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
+						   at atom-one-dark ;; *
 						   br brin
-						   bl bliss
-						   db deeper-blue
-						   do dorsey
 						   da darcula
-						   dc dracula       ;; https://draculatheme.com
+						   dc dracula   ;; https://draculatheme.com
+						   do doom-one  ;; *
+						   dv doom-vibrant
 						   dr dream
 						   er erosiond
-						   fn foggy-night
 						   fo fogus
 						   fl flatland  ;; *
 						   gh graham
-						   gr granger
-						   ha hamburg
 						   he heroku
 						   hi hickey
 						   ju junio
 						   mi misterioso
+						   md moe-dark ;; *
 						   od odersky
 						   re reykjavik
 						   sd solarized-dark
-						   sp spolsky
-						   sm smyx
-						   td tango-dark
+						   se sanityinc-tomorrow-eighties ;; *
+						   sm smyx  ;; *
+						   td tango-dark ;; *
 						   te tomorrow-night-eighties ;; *
 						   tn tomorrow-night
 						   tb tomorrow-night-bright
-						   yo yoshi
 						   ze zenburn
-						   wi wilson
 						   wo wombat
 						   ;; -------------------------   bright
 						   di dichromacy
