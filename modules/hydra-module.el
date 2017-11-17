@@ -3,13 +3,19 @@
 (require 'package-module)
 
 (package-require 'hydra)
-(package-require 'cider-hydra)
+;(package-require 'cider-hydra)
+
+(add-to-list 'load-path "~/.emacs.d/vendor/hydra")
+(require 'cider-hydra)
 
 ;; (define-key map (kbd "C-c C-d") #'cider-hydra-doc/body)
 ;; (define-key map (kbd "C-c C-t") #'cider-hydra-test/body)
 ;; (define-key map (kbd "C-c M-t") #'cider-hydra-test/body)
 ;; (define-key map (kbd "C-c M-r") #'cider-hydra-repl/body)
-(add-hook 'cider-mode-hook (lambda () (cider-hydra-mode)))
+
+(add-hook 'cider-mode-hook
+	  (lambda ()
+	    (cider-hydra-mode)))
 
 ;; ibuffer
 (defhydra hydra-ibuffer-main (:color pink :hint nil)
