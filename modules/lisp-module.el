@@ -11,8 +11,8 @@
   '(progn
      (slime-setup '(slime-fancy slime-asdf slime-sbcl-exts slime-company))
      (define-key lisp-mode-map [?\s-c] 'slime-compile-and-load-file)
-     (define-key lisp-mode-map (kbd "<f5>") 'slime-compile-and-load-file)
-     (define-key lisp-mode-map (kbd "<f10>") 'slime)
+     (define-key lisp-mode-map (kbd "<f10>") 'slime-compile-and-load-file)
+     (define-key lisp-mode-map (kbd "<f11>") 'slime)
      (define-key lisp-mode-map (kbd "<f12>") 'slime-selector)
      (advice-add 'slime-compile-and-load-file :before #'save-current-buffer-if-modified)))
 
