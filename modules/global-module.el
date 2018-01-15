@@ -4,6 +4,7 @@
 
 (package-require 'ace-jump-mode)
 (package-require 'projectile)
+(package-require 'popup-imenu)
 
 (package-require 'exec-path-from-shell)
 (package-require 'company)

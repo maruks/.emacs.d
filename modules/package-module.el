@@ -37,6 +37,7 @@
 	  (yasnippet . "melpa-stable")
 	  (solarized-theme . "melpa-stable")
  	  (geiser . "melpa-stable")
+	  (ensime . "melpa-stable")
 	  (intero . "melpa")
  	  (alchemist . "melpa")
   	  (elixir-mode . "melpa")

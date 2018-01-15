@@ -32,6 +32,7 @@
 (require 'idris-module)
 (require 'ocaml-module)
 (require 'rust-module)
+(require 'scala-module)
 
 (require 'haskell-intero-module)
 ;;(require 'haskell-module)
