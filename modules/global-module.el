@@ -87,6 +87,10 @@
 (add-hook 'ace-jump-mode-before-jump-hook
           (lambda () (push-mark (point) t)))
 
+;; imenu
+
+(define-key global-map (kbd "M-i") 'popup-imenu)
+
 ;; M-x re-builder
 (require 're-builder)
 (setq reb-re-syntax 'string)
