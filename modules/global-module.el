@@ -199,4 +199,9 @@
   (when (and buffer-file-name (buffer-modified-p))
     (save-buffer)))
 
+(defun print-to-scratch (string)
+  (save-excursion
+   (set-buffer "*scratch*")
+   (insert (format "%s" string))))
+
 (provide 'global-module)

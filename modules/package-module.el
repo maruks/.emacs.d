@@ -17,8 +17,7 @@
 	  (clj-refactor . "melpa-stable")
 	  (flycheck . "melpa-stable")
 	  (ace-jump-mode . "melpa-stable")
-	  (projectile . "melpa-stable")
-	  (perspective . "melpa-stable")
+	 ;; (perspective . "melpa-stable")
 	  (exec-path-from-shell . "melpa-stable")
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
@@ -43,11 +42,9 @@
   	  (elixir-mode . "melpa")
   	  (elixir-yasnippets . "melpa")
   	  (flycheck-credo . "melpa")
+	  (projectile . "melpa")
 	  (org . "gnu")
 	  (sml-mode . "gnu"))))
-
-
-
 
 (package-initialize)
 
