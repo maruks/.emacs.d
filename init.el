@@ -43,7 +43,6 @@
 (require 'lua-module)
 (require 'javascript-module)
 (require 'xml-module)
-(require 'racket-module)
 (require 'snippets-module)
 (require 'themes-module)
 (require 'flycheck-module)
