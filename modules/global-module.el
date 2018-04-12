@@ -116,6 +116,9 @@
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
 (define-key projectile-mode-map [?\s-r] 'projectile-replace)
 
+;; ag
+(setq ag-reuse-buffers 't)
+
 ;; global keys
 
 (global-set-key (kbd "\e\eg") 'goto-line)

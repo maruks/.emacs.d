@@ -6,7 +6,7 @@
 (package-require 'ac-geiser)
 
 (setq geiser-chez-binary "chez")
-(setq geiser-active-implementations '(chez))
+(setq geiser-active-implementations '(chez guile racket))
 
 (defun compile-scheme-buffer (arg)
   (interactive "P")
