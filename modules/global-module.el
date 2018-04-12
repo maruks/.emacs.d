@@ -77,12 +77,12 @@
 (setq default-directory (concat (getenv "HOME") "/"))
 
 ;; ace jump mode
-;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
-;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
-;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
+;; "C-c s-j" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
+;; "C-u C-c s-j" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
+;; "C-u C-u C-c s-j" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
 ;; "M-`"                                     Jump back
 
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "s-j") 'ace-jump-mode)
 
 (add-hook 'ace-jump-mode-before-jump-hook
           (lambda () (push-mark (point) t)))
