@@ -5,11 +5,11 @@
 (package-require 'clojure-mode)
 (package-require 'clojure-mode-extra-font-locking)
 (package-require 'cider)
-(package-require 'clj-refactor)
+;;(package-require 'clj-refactor)
 (package-require 'align-cljlet)
 
 (require 'clojure-mode)
-(require 'clj-refactor)
+;;(require 'clj-refactor)
 
 (defun clj-insert-fn ()
   (interactive)
@@ -31,10 +31,10 @@
      (advice-add 'cider-load-buffer :before #'save-current-buffer-if-modified)))
 
 ;; clj-refactor
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (clj-refactor-mode 1)
-	    (cljr-add-keybindings-with-prefix "C-c C-r")))
+;; (add-hook 'clojure-mode-hook
+;; 	  (lambda ()
+;; 	    (clj-refactor-mode 1)
+;; 	    (cljr-add-keybindings-with-prefix "C-c C-r")))
 
 ;; cider
 (add-hook 'cider-mode-hook #'eldoc-mode)
@@ -55,11 +55,13 @@
 (global-set-key (kbd "C-c ji") 'cider-jack-in)
 (global-set-key (kbd "C-c js") 'cider-jack-in-clojurescript)
 
-(setq cider-inject-dependencies-at-jack-in nil)
+;; (setq cider-inject-dependencies-at-jack-in nil)
 
 (setq cider-cljs-lein-repl
       "(do (require 'figwheel-sidecar.repl-api)
            (figwheel-sidecar.repl-api/start-figwheel!)
            (figwheel-sidecar.repl-api/cljs-repl))")
+
+(setq cider-redirect-server-output-to-repl nil)
 
 (provide 'clojure-module)
