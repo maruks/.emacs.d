@@ -43,7 +43,7 @@
 (require 'javascript-module)
 (require 'xml-module)
 (require 'snippets-module)
-(require 'hydra-module)
 (require 'themes-module)
 (require 'flycheck-module)
+(require 'hydra-module)
 (require 'user-module)

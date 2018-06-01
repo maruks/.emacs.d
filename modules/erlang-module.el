@@ -64,28 +64,9 @@
   (setq inferior-erlang-machine-options '("shell"))
   (setq inferior-erlang-shell-type nil))
 
-(defhydra eunit-hydra-test (:color blue)
-  "
-EUNIT Test
----------------------------------------------------------------------------
-_t_: Toggle source and test file
-_j_: Run current test                   _v_: Cover compile
-_k_: Run module tests                   _c_: Run module tests under cover
-_l_: Run recent tests                   _a_: Analyze coverage
-"
-
-  ("a" erlang-eunit-analyze-coverage nil)
-  ("c" erlang-eunit-compile-and-run-module-tests-under-cover nil)
-  ("j" erlang-eunit-compile-and-run-current-test nil)
-  ("k" erlang-eunit-compile-and-run-module-tests nil)
-  ("l" erlang-eunit-compile-and-run-recent nil)
-  ("t" erlang-eunit-toggle-src-and-test-file-other-window nil)
-  ("v" erlang-eunit-cover-compile nil))
-
 (with-eval-after-load 'erlang
 	    (define-key erlang-mode-map (kbd "<f5>") 'erlang-compile)
 	    (define-key erlang-mode-map [?\s-c] 'erlang-compile)
-	    (define-key erlang-mode-map (kbd "C-c C-t") #'eunit-hydra-test/body)
             (define-key erlang-mode-map (kbd "<f6>") 'erlang-eunit-compile-and-run-module-tests)
 	    (define-key erlang-mode-map [?\s-e] 'erlang-eunit-compile-and-run-module-tests)
 	    (setq flycheck-erlang-include-path (list "../include/"))
