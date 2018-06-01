@@ -104,15 +104,19 @@
 (projectile-global-mode)
 
 ;; prefix
-(setq projectile-keymap-prefix (kbd "C-c C-p"))
+(define-key projectile-mode-map projectile-keymap-prefix nil)
+(define-key projectile-mode-map (kbd "s-p") #'projectile-command-map)
+
+;; create test files
+(setq projectile-create-missing-test-files t)
 
 ;; port install the_silver_searcher
 (define-key projectile-mode-map [?\s-a] 'projectile-ag)
 (define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
-(define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
+;; (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
 (define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
 (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-(define-key projectile-mode-map [?\s-t] 'projectile-find-implementation-or-test-other-window)
+(define-key projectile-mode-map (kbd "\e\et") 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
 (define-key projectile-mode-map [?\s-r] 'projectile-replace)
 

@@ -14,7 +14,7 @@
 	'((clojure-mode . "melpa-stable")
 	  (clojure-mode-extra-font-locking . "melpa-stable")
 	  (cider . "melpa-stable")
-	  (clj-refactor . "melpa-stable")
+	  (clj-refactor . "melpa")
 	  (flycheck . "melpa-stable")
 	  (ace-jump-mode . "melpa-stable")
 	 ;; (perspective . "melpa-stable")

@@ -27,7 +27,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 (defvar theme-current-theme nil)
-(defvar theme-key-prefix "C-c C-t")
+(defvar theme-key-prefix "s-3")
 (defvar theme-key-disable "C-d")
 (defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
 						   at atom-one-dark ;; *
