@@ -36,7 +36,7 @@
 	  (solarized-theme . "melpa-stable")
 	  (ensime . "melpa-stable")
 	  (clj-refactor . "melpa")
-	  (moe-theme . "melpa")
+	 ;; (moe-theme . "melpa")
  	  (geiser . "melpa")
  	  (ac-geiser . "melpa")
 	  (intero . "melpa")
