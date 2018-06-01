@@ -17,7 +17,6 @@
 (require 'fonts-module)
 (require 'appearance-module)
 (require 'git-module)
-(require 'hydra-module)
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
@@ -44,6 +43,7 @@
 (require 'javascript-module)
 (require 'xml-module)
 (require 'snippets-module)
+(require 'hydra-module)
 (require 'themes-module)
 (require 'flycheck-module)
 (require 'user-module)

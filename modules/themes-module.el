@@ -16,12 +16,12 @@
 (package-require 'reykjavik-theme)
 (package-require 'yoshi-theme)
 (package-require 'zenburn-theme)
-(package-require 'moe-theme)
+;; (package-require 'moe-theme)
 (package-require 'ample-theme)
 (package-require 'doom-themes)
 (package-require 'color-theme-sanityinc-tomorrow)
 
-(require 'moe-theme) ;; !
+;; (require 'moe-theme) ;; !
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
