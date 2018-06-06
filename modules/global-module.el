@@ -88,7 +88,6 @@
           (lambda () (push-mark (point) t)))
 
 ;; imenu
-
 (define-key global-map (kbd "M-i") 'popup-imenu)
 
 ;; M-x re-builder
@@ -124,11 +123,16 @@
 (setq ag-reuse-buffers 't)
 
 ;; global keys
-
 (global-set-key (kbd "\e\eg") 'goto-line)
 
 (global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
 (global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
+
+;; line numbers
+(global-set-key (kbd "s-4") 'display-line-numbers-mode )
+
+;; kill-processes
+(setq confirm-kill-processes nil)
 
 ;; C - pg up / pg down
 (global-set-key [C-prior] 'previous-buffer)

@@ -64,4 +64,8 @@
 
 (setq cider-redirect-server-output-to-repl nil)
 
+(setq cljr-eagerly-build-asts-on-startup nil)
+(setq cljr-warn-on-eval t)
+;; (setq cljr--debug-mode t)
+
 (provide 'clojure-module)
