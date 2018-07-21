@@ -3,10 +3,10 @@
 (require 'package-module)
 
 (package-require 'company)
+(package-require 'rustic)
 (package-require 'cargo)
 (package-require 'flycheck)
 (package-require 'flycheck-rust)
-(package-require 'rust-mode)
 (package-require 'racer)
 (package-require 'rust-playground)
 
