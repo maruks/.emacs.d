@@ -21,6 +21,14 @@
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
 	  (haskell-mode . "melpa-stable")
+	  ;; --
+
+	  (cargo . "melpa-stable")
+          (flycheck-rust . "melpa-stable")
+	  (rust-mode . "melpa-stable")
+	  (racer . "melpa-stable")
+	  (rust-playground . "melpa-stable")
+
   	  (idris-mode . "melpa-stable")
 	  (hindent . "melpa-stable")
 	  (ghc . "melpa-stable")
