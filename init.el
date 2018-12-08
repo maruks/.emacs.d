@@ -12,10 +12,11 @@
 
 ;; modules
 
+(require 'appearance-module)
+(require 'mituharu-module)
+(require 'fonts-module)
 (require 'global-module)
 (require 'fundamental-module)
-(require 'fonts-module)
-(require 'appearance-module)
 (require 'git-module)
 (require 'smartparens-module)
 ;;(require 'paredit-module)
