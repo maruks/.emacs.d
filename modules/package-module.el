@@ -24,7 +24,7 @@
 	  ;; --
 
 	  (cargo . "melpa-stable")
-          (flycheck-rust . "melpa-stable")
+;;          (flycheck-rust . "melpa-stable")
 	  (rust-mode . "melpa-stable")
 	  (racer . "melpa-stable")
 	  (rust-playground . "melpa-stable")
