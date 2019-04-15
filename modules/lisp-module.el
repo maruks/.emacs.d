@@ -4,7 +4,9 @@
 
 (package-require 'sly)
 
-(setq inferior-lisp-program "sbcl")
+;; (setq inferior-lisp-program "sbcl")
+
+(defvar sly-lisp-implementations '((sbcl ("ros" "-L" "sbcl-bin" "run"))))
 
 (eval-after-load 'lisp-mode
   '(progn
