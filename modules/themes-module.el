@@ -4,7 +4,7 @@
 (require 'package-module)
 
 (package-require 'sublime-themes)
-
+(package-require 'color-theme-sanityinc-tomorrow)
 (package-require 'atom-one-dark-theme)
 (package-require 'darcula-theme)
 (package-require 'dracula-theme)
@@ -12,13 +12,13 @@
 (package-require 'hamburg-theme)
 (package-require 'heroku-theme)
 (package-require 'solarized-theme)
+(package-require 'night-owl-theme)
 (package-require 'smyx-theme)
 (package-require 'reykjavik-theme)
 (package-require 'yoshi-theme)
 (package-require 'zenburn-theme)
 (package-require 'ample-theme)
 (package-require 'doom-themes)
-(package-require 'color-theme-sanityinc-tomorrow)
 
 ;; moe
 (add-to-list 'load-path "~/.emacs.d/vendor/moe-theme")
@@ -47,6 +47,7 @@
 						   ju junio
 						   mi misterioso
 						   md moe-dark ;; *
+						   no night-owl
 						   od odersky
 						   re reykjavik
 						   sd solarized-dark

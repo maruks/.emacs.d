@@ -6,7 +6,10 @@
 
 ;; (setq inferior-lisp-program "sbcl")
 
-(defvar sly-lisp-implementations '((sbcl ("ros" "-L" "sbcl-bin" "run"))))
+(setf sly-lisp-implementations '((sbcl ("sbcl" "--dynamic-space-size" "1024"))
+				 (roswell ("ros" "-Q" "run"))))
+
+(setf sly-default-lisp 'roswell)
 
 (eval-after-load 'lisp-mode
   '(progn
