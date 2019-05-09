@@ -4,12 +4,10 @@
 
 (package-require 'sly)
 
-;; (setq inferior-lisp-program "sbcl")
-
 (setf sly-lisp-implementations '((sbcl ("sbcl" "--dynamic-space-size" "1024"))
 				 (roswell ("ros" "-Q" "run"))))
 
-(setf sly-default-lisp 'roswell)
+(setf sly-default-lisp 'sbcl)
 
 (eval-after-load 'lisp-mode
   '(progn
