@@ -18,6 +18,7 @@
 (require 'global-module)
 (require 'fundamental-module)
 (require 'git-module)
+(require 'fullframe-module)
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
