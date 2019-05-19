@@ -41,6 +41,7 @@
 (require 'elm-module)
 (require 'elisp-module)
 (require 'lisp-module)
+;; (require 'lisp-slime-module)
 (require 'lua-module)
 (require 'javascript-module)
 (require 'xml-module)
