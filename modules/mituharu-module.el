@@ -1,9 +1,13 @@
 ;; mituharu-module
 
+;; https://github.com/railwaycat/homebrew-emacsmacport
+
 ;; https://bitbucket.org/mituharu/emacs-mac
+
 ;; brew install autoconf automake
 ;; brew install texinfo
 ;; export PATH="/usr/local/opt/texinfo/bin:$PATH"
+
 ;; ./autogen.sh
 ;; ./configure --enable-mac-app
 ;; make && make install
