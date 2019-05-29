@@ -15,6 +15,9 @@
      (define-key lisp-mode-map [?\s-c] 'sly-compile-and-load-file)
      (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)))
 
+(eval-after-load 'sly-mrepl
+  '(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-recent-output))
+
 (defmacro define-sly-lisp (name)
   `(defun ,name ()  (interactive)
 	  (let ((sly-default-lisp ',name))
