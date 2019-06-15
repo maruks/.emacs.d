@@ -2,6 +2,7 @@
 
 (require 'package-module)
 
+(package-require 'company)
 (package-require 'sly)
 (package-require 'sly-quicklisp)
 
@@ -10,8 +11,12 @@
 
 (setf sly-default-lisp 'sbcl)
 
+(add-hook 'lisp-mode-hook #'company-mode)
+(add-hook 'sly-mrepl-hook #'company-mode)
+
 (eval-after-load 'lisp-mode
   '(progn
+     (define-key lisp-mode-map (kbd "TAB") #'company-indent-or-complete-common)
      (define-key lisp-mode-map [?\s-c] 'sly-compile-and-load-file)
      (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)))
 
