@@ -22,6 +22,7 @@
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
+(require 'flycheck-module)
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
 (require 'scheme-module)
@@ -34,6 +35,7 @@
 (require 'ocaml-module)
 (require 'rust-module)
 (require 'scala-module)
+(require 'purescript-module)
 
 (require 'haskell-intero-module)
 ;;(require 'haskell-module)
@@ -47,6 +49,5 @@
 (require 'xml-module)
 (require 'snippets-module)
 (require 'themes-module)
-(require 'flycheck-module)
 (require 'hydra-module)
 (require 'user-module)
