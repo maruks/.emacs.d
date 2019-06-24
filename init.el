@@ -30,6 +30,7 @@
 (require 'elixir-module)
 (require 'clojure-module)
 (require 'sml-module)
+(require 'json-module)
 
 (require 'idris-module)
 (require 'ocaml-module)

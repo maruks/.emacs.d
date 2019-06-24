@@ -11,8 +11,8 @@
 
 (add-hook 'purescript-mode-hook
 	  (lambda ()
-	    (setq default-directory
-                  (locate-dominating-file default-directory "bower.json"))
+	    ;; (setq default-directory
+            ;;       (locate-dominating-file default-directory "bower.json"))
 	    (psc-ide-mode)
 	    (company-mode)
 	    (flycheck-mode)
