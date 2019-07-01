@@ -8,8 +8,12 @@
 ;; brew install texinfo
 ;; export PATH="/usr/local/opt/texinfo/bin:$PATH"
 
+;; brew install gnutls
+;; brew install pkgconfig
+;; pkg-config --cflags gnutls
+
 ;; ./autogen.sh
-;; ./configure --enable-mac-app
+;; ./configure --prefix=$HOME/bin/emacs --enable-mac-app
 ;; make && make install
 
 (require 'package-module)
