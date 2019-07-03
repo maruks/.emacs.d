@@ -1,0 +1,12 @@
+[Unit]
+Description=Brain Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a brain
+ExecStop=/usr/bin/docker stop brain
+
+[Install]
+WantedBy=multi-user.target
