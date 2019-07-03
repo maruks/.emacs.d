@@ -1,22 +1,29 @@
-IdentityFile ~/.ssh/id_rsa
+
+
+IdentityFile ~/.ssh/id_rsa_am
+
+IdentityFile ~/.ssh/id_rsa_am_gh
+
+Identityfile /Users/maris/Projects/puppet/keys/DevelopmentKeyPair.pem
+
+Identityfile /Users/maris/.ssh/eu-west-1-dev17.pem
+
+AddKeysToAgent yes
+UseKeychain yes
+
+Host devbox
+    HostName localhost
+    Port 2222
+    User maris
 
 Host home
-    HostName maruks.homelinux.org
+    IdentityFile /Users/maris/.ssh/id_ed25519
+    HostName maruks.homelinuxserver.org
     Port 22
     User maris
 
 Host lhome
-    HostName 192.168.1.8
+    IdentityFile /Users/maris/.ssh/id_ed25519
+    HostName 192.168.1.3
     Port 22
     User maris
-
-VisualHostKey=yes 
-
-Host *
-    KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
-
-Host *
-    Ciphers aes256-ctr,aes192-ctr,aes128-ctr
-
-Host *
-    MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com

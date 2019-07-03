@@ -1,0 +1,13 @@
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8/Contents/Home
+
+export PATH=$PATH:~/bin:$JAVA_HOME/Contents/Home/bin
+
+export EMACS_DEFAULT_THEME="sanityinc-tomorrow-eighties"
+export EMACS_DEFAULT_FONT="Fira Code Retina-21"
+
+alias em=/Applications/Emacs.app/Contents/MacOS/Emacs
+
+export AM_PROFILE=staging
+
+source /Users/maris/Documents/aws_env
