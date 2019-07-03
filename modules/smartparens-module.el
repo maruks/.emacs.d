@@ -6,13 +6,17 @@
 
 (require 'smartparens-config)
 
-(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+(add-hook 'clojure-mode-hook (lambda ()
+			       (require 'smartparens-clojure)
+			       (smartparens-strict-mode 1)))
+
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
-(add-hook 'scheme-mode-hook #'smartparens-strict-mode)
+(add-hook 'lisp-mode-hook       #'smartparens-strict-mode)
+(add-hook 'scheme-mode-hook     #'smartparens-strict-mode)
+(add-hook 'ielm-mode-hook       #'smartparens-mode)
 
 (add-hook 'cider-repl-mode-hook #'smartparens-mode)
 (add-hook 'slime-repl-mode-hook #'smartparens-mode)
-(add-hook 'ielm-mode-hook #'smartparens-mode)
 (add-hook 'lisp-interaction-mode-hook #'smartparens-mode)
 (add-hook 'geiser-repl-mode-hook #'smartparens-mode)
 
@@ -26,7 +30,10 @@
 
 (add-hook 'erlang-shell-mode-hook #'smartparens-mode)
 
-(add-hook 'elixir-mode-hook #'smartparens-mode)
+(add-hook 'elixir-mode-hook (lambda ()
+			      (require 'smartparens-elixir)
+			      (smartparens-mode 1)))
+
 (add-hook 'html-mode-hook #'smartparens-mode)
 (add-hook 'lua-mode-hook #'smartparens-mode)
 (add-hook 'ruby-mode-hook #'smartparens-mode)
@@ -42,6 +49,7 @@
 (sp-use-smartparens-bindings)
 
 (define-key smartparens-mode-map (kbd "M-s") 'sp-splice-sexp)
+(define-key smartparens-mode-map (kbd "M-r") 'sp-raise-sexp)
 (define-key smartparens-mode-map (kbd "M-j") 'sp-join-sexp)
 (define-key smartparens-mode-map (kbd "M-D") 'sp-absorb-sexp)
 (define-key smartparens-mode-map (kbd "C-k") 'sp-kill-hybrid-sexp)

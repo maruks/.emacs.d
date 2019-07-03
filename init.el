@@ -12,16 +12,17 @@
 
 ;; modules
 
-(require 'global-module)
-(require 'hydra-module)
-(require 'fundamental-module)
-(require 'fonts-module)
 (require 'appearance-module)
+(require 'mituharu-module)
+(require 'fonts-module)
+(require 'global-module)
+(require 'fundamental-module)
 (require 'git-module)
-
+(require 'fullframe-module)
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
+(require 'flycheck-module)
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
 (require 'scheme-module)
@@ -29,10 +30,13 @@
 (require 'elixir-module)
 (require 'clojure-module)
 (require 'sml-module)
+(require 'json-module)
 
 (require 'idris-module)
 (require 'ocaml-module)
 (require 'rust-module)
+(require 'scala-module)
+(require 'purescript-module)
 
 (require 'haskell-intero-module)
 ;;(require 'haskell-module)
@@ -40,11 +44,11 @@
 (require 'elm-module)
 (require 'elisp-module)
 (require 'lisp-module)
+;; (require 'lisp-slime-module)
 (require 'lua-module)
 (require 'javascript-module)
 (require 'xml-module)
-(require 'racket-module)
 (require 'snippets-module)
 (require 'themes-module)
-(require 'flycheck-module)
+(require 'hydra-module)
 (require 'user-module)

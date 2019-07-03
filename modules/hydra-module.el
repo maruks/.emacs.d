@@ -3,13 +3,19 @@
 (require 'package-module)
 
 (package-require 'hydra)
-(package-require 'cider-hydra)
+;(package-require 'cider-hydra)
+
+(add-to-list 'load-path "~/.emacs.d/vendor/hydra")
+(require 'cider-hydra)
 
 ;; (define-key map (kbd "C-c C-d") #'cider-hydra-doc/body)
 ;; (define-key map (kbd "C-c C-t") #'cider-hydra-test/body)
 ;; (define-key map (kbd "C-c M-t") #'cider-hydra-test/body)
 ;; (define-key map (kbd "C-c M-r") #'cider-hydra-repl/body)
-(add-hook 'cider-mode-hook (lambda () (cider-hydra-mode)))
+
+(add-hook 'cider-mode-hook
+	  (lambda ()
+	    (cider-hydra-mode)))
 
 ;; ibuffer
 (defhydra hydra-ibuffer-main (:color pink :hint nil)
@@ -176,6 +182,28 @@ T - tag prefix
   ("g" goto-line "go")
   ("m" set-mark-command "mark" :bind nil)
   ("q" nil "quit"))
+
+;; erlang
+(defhydra eunit-hydra-test (:color blue)
+  "
+EUNIT Test
+---------------------------------------------------------------------------
+_t_: Toggle source and test file
+_j_: Run current test                   _v_: Cover compile
+_k_: Run module tests                   _c_: Run module tests under cover
+_l_: Run recent tests                   _a_: Analyze coverage
+"
+
+  ("a" erlang-eunit-analyze-coverage nil)
+  ("c" erlang-eunit-compile-and-run-module-tests-under-cover nil)
+  ("j" erlang-eunit-compile-and-run-current-test nil)
+  ("k" erlang-eunit-compile-and-run-module-tests nil)
+  ("l" erlang-eunit-compile-and-run-recent nil)
+  ("t" erlang-eunit-toggle-src-and-test-file-other-window nil)
+  ("v" erlang-eunit-cover-compile nil))
+
+(with-eval-after-load 'erlang
+  (define-key erlang-mode-map (kbd "C-c C-t") #'eunit-hydra-test/body))
 
 (global-set-key (kbd "s-l") 'hydra-goto-line/goto-line)
 

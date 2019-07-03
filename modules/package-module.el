@@ -14,15 +14,21 @@
 	'((clojure-mode . "melpa-stable")
 	  (clojure-mode-extra-font-locking . "melpa-stable")
 	  (cider . "melpa-stable")
-	  (clj-refactor . "melpa-stable")
 	  (flycheck . "melpa-stable")
 	  (ace-jump-mode . "melpa-stable")
-	  (projectile . "melpa-stable")
-	  (perspective . "melpa-stable")
+	 ;; (perspective . "melpa-stable")
 	  (exec-path-from-shell . "melpa-stable")
 	  (company . "melpa-stable")
 	  (ag . "melpa-stable")
 	  (haskell-mode . "melpa-stable")
+	  ;; --
+
+	  (cargo . "melpa-stable")
+;;          (flycheck-rust . "melpa-stable")
+	  (rust-mode . "melpa-stable")
+	  (racer . "melpa-stable")
+	  (rust-playground . "melpa-stable")
+
   	  (idris-mode . "melpa-stable")
 	  (hindent . "melpa-stable")
 	  (ghc . "melpa-stable")
@@ -36,17 +42,19 @@
 	  (flymake-ruby . "melpa-stable")
 	  (yasnippet . "melpa-stable")
 	  (solarized-theme . "melpa-stable")
- 	  (geiser . "melpa-stable")
+	  (ensime . "melpa-stable")
+	  (clj-refactor . "melpa")
+	 ;; (moe-theme . "melpa")
+ 	  (geiser . "melpa")
+ 	  (ac-geiser . "melpa")
 	  (intero . "melpa")
  	  (alchemist . "melpa")
   	  (elixir-mode . "melpa")
   	  (elixir-yasnippets . "melpa")
   	  (flycheck-credo . "melpa")
+	  (projectile . "melpa")
 	  (org . "gnu")
 	  (sml-mode . "gnu"))))
-
-
-
 
 (package-initialize)
 

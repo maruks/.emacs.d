@@ -1,4 +1,0 @@
-export JAVA_HOME=/usr/lib/jvm/java-7-oracle
-export MAVEN_HOME=/opt/apache-maven
-
-export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:~/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games

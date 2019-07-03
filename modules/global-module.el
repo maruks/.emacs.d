@@ -4,6 +4,7 @@
 
 (package-require 'ace-jump-mode)
 (package-require 'projectile)
+(package-require 'popup-imenu)
 
 (package-require 'exec-path-from-shell)
 (package-require 'company)
@@ -76,15 +77,18 @@
 (setq default-directory (concat (getenv "HOME") "/"))
 
 ;; ace jump mode
-;; "C-c SPC" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
-;; "C-u C-c SPC" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
-;; "C-u C-u C-c SPC" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
+;; "C-c s-j" => ace-jump-word-mode           Enter first char of a word, select the highlight key to move to.
+;; "C-u C-c s-j" => ace-jump-char-mode       Enter a char for query, select the highlight key to move to.
+;; "C-u C-u C-c s-j" => ace-jump-line-mode   Each non-empty line will be marked, select the highlight key to move to.
 ;; "M-`"                                     Jump back
 
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "s-j") 'ace-jump-mode)
 
 (add-hook 'ace-jump-mode-before-jump-hook
           (lambda () (push-mark (point) t)))
+
+;; imenu
+(define-key global-map (kbd "M-i") 'popup-imenu)
 
 ;; M-x re-builder
 (require 're-builder)
@@ -99,7 +103,10 @@
 (projectile-global-mode)
 
 ;; prefix
-(setq projectile-keymap-prefix (kbd "C-c C-p"))
+(define-key projectile-mode-map (kbd "s-p") #'projectile-command-map)
+
+;; create test files
+(setq projectile-create-missing-test-files t)
 
 ;; port install the_silver_searcher
 (define-key projectile-mode-map [?\s-a] 'projectile-ag)
@@ -107,16 +114,24 @@
 (define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
 (define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
 (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-(define-key projectile-mode-map [?\s-t] 'projectile-find-implementation-or-test-other-window)
+(define-key projectile-mode-map (kbd "\e\et") 'projectile-find-implementation-or-test-other-window)
 (define-key projectile-mode-map [?\s-g] 'projectile-grep)
 (define-key projectile-mode-map [?\s-r] 'projectile-replace)
 
-;; global keys
+;; ag
+(setq ag-reuse-buffers 't)
 
+;; global keys
 (global-set-key (kbd "\e\eg") 'goto-line)
 
 (global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
 (global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
+
+;; line numbers
+(global-set-key (kbd "s-4") 'display-line-numbers-mode )
+
+;; kill-processes
+(setq confirm-kill-processes nil)
 
 ;; C - pg up / pg down
 (global-set-key [C-prior] 'previous-buffer)
@@ -188,5 +203,15 @@
 (global-set-key (kbd "M-}") 'forward-sentence)
 
 (setq next-line-add-newlines t)
+
+;; used in advice
+(defun save-current-buffer-if-modified (&rest args)
+  (when (and buffer-file-name (buffer-modified-p))
+    (save-buffer)))
+
+(defun print-to-scratch (string)
+  (save-excursion
+   (set-buffer "*scratch*")
+   (insert (format "%s" string))))
 
 (provide 'global-module)
