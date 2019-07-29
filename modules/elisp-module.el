@@ -13,6 +13,7 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
 (define-key emacs-lisp-mode-map (kbd "<f5>") 'eval-buff-go-to-repl)
+(define-key emacs-lisp-mode-map [?\s-c] 'eval-buff-go-to-repl)
 
 (defun elisp-run-ert ()
   (interactive)
