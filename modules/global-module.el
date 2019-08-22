@@ -207,6 +207,7 @@
 (global-set-key (kbd "C-c D") #'crux-delete-file-and-buffer)
 (global-set-key (kbd "s-k") #'crux-kill-whole-line)
 (global-set-key (kbd "\e\ed") 'crux-duplicate-current-line-or-region)
+(global-set-key (kbd "C-x 4 t") 'crux-transpose-windows)
 
 (setq next-line-add-newlines t)
 
