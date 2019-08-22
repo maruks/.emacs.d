@@ -11,6 +11,7 @@
 (package-require 'org)
 (package-require 'ag)
 (package-require 'flx-ido)
+(package-require 'crux)
 
 (package-require 'rainbow-mode)
 
@@ -201,6 +202,11 @@
 
 (global-set-key (kbd "M-{") 'backward-sentence)
 (global-set-key (kbd "M-}") 'forward-sentence)
+
+;; crux
+(global-set-key (kbd "C-c D") #'crux-delete-file-and-buffer)
+(global-set-key (kbd "s-k") #'crux-kill-whole-line)
+(global-set-key (kbd "\e\ed") 'crux-duplicate-current-line-or-region)
 
 (setq next-line-add-newlines t)
 

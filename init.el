@@ -16,7 +16,6 @@
 (require 'mituharu-module)
 (require 'fonts-module)
 (require 'global-module)
-(require 'fundamental-module)
 (require 'git-module)
 (require 'fullframe-module)
 (require 'smartparens-module)

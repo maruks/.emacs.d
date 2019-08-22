@@ -43,4 +43,6 @@
 	    (moz-minor-mode 1)
             (js2r-add-keybindings-with-prefix "C-c C-m")))
 
+(setq js-indent-level 2)
+
 (provide 'javascript-module)
