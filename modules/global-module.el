@@ -177,11 +177,10 @@
 (global-set-key (kbd "C-c s") 'isearch-forward-symbol)
 (global-set-key (kbd "C-c .") 'isearch-forward-symbol-at-point)
 
-;; guide key
-(package-require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r"))
-(guide-key-mode 1)
-(setq guide-key/highlight-command-regexp "rectangle")
+;; which key
+(package-require 'which-key)
+(require 'which-key)
+(which-key-mode)
 
 ;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

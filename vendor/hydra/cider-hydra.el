@@ -64,7 +64,6 @@
 (require 'cider-apropos)
 (require 'cider-client)
 (require 'cider-doc)
-(require 'cider-grimoire)
 (require 'cider-eval)
 (require 'cider-macroexpansion)
 (require 'cider-mode)
@@ -91,7 +90,6 @@ CIDER Documentation
 _d_: CiderDoc                           _j_: JavaDoc in browser
 _a_: Search symbols                     _s_: Search symbols & select
 _A_: Search documentation               _e_: Search documentation & select
-_r_: Grimoire                           _h_: Grimoire in browser
 "
   ;; CiderDoc
   ("d" cider-doc nil)
@@ -101,10 +99,7 @@ _r_: Grimoire                           _h_: Grimoire in browser
   ("a" cider-apropos nil)
   ("s" cider-apropos-select nil)
   ("A" cider-apropos-documentation nil)
-  ("e" cider-apropos-documentation-select nil)
-  ;; Grimoire
-  ("r" cider-grimoire nil)
-  ("h" cider-grimoire-web nil))
+  ("e" cider-apropos-documentation-select nil))
 
 
 ;;;; Loading and evaluation

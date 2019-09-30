@@ -6,8 +6,8 @@
 (package-require 'sly)
 (package-require 'sly-quicklisp)
 
-(package-require 'sly-asdf)
-(require 'sly-asdf)
+;; (package-require 'sly-asdf)
+;; (require 'sly-asdf)
 
 (setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
 				 (ccl ("ccl") :coding-system utf-8-unix)))
