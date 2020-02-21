@@ -5,7 +5,6 @@
 (package-require 'purescript-mode)
 (package-require 'psc-ide)
 (package-require 'psci)
-(package-require 'flycheck-purescript)
 
 (require 'psc-ide)
 
@@ -19,8 +18,5 @@
 	    (turn-on-purescript-indentation)
 	    (define-key purescript-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 	    (define-key purescript-mode-map [?\s-c] #'psc-ide-rebuild)))
-
-(eval-after-load 'flycheck
-    '(add-hook 'flycheck-mode-hook #'flycheck-purescript-setup))
 
 (provide 'purescript-module)

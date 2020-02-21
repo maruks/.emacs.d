@@ -5,11 +5,11 @@
 (package-require 'clojure-mode)
 (package-require 'clojure-mode-extra-font-locking)
 (package-require 'cider)
-(package-require 'clj-refactor)
+;; (package-require 'clj-refactor)
 (package-require 'align-cljlet)
 
 (require 'clojure-mode)
-(require 'clj-refactor)
+;; (require 'clj-refactor)
 
 (defun clj-insert-fn ()
   (interactive)

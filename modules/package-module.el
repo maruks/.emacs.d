@@ -3,6 +3,7 @@
 (require 'package)
 (require 'cl)
 
+(setq package-check-signature nil) 
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (add-to-list 'package-archives
