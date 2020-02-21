@@ -13,8 +13,6 @@
 (package-require 'flx-ido)
 (package-require 'crux)
 
-(package-require 'rainbow-mode)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; store all backup and autosave files in the tmp dir

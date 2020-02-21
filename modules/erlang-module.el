@@ -3,9 +3,6 @@
 (require 'package-module)
 
 (package-require 'flycheck-dialyzer)
-(package-require 'flycheck-rebar3)
-
-(flycheck-rebar3-setup)
 
 (defun load-erlang ()
   (add-to-list 'load-path "~/.emacs.d/vendor/erlang")
@@ -52,17 +49,6 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    (flycheck-mode)))
-
-(defun start-shell-in-project-root (orig-fun &rest args)
-  (let ((default-directory (flycheck-rebar3-project-root)))
-    (apply orig-fun args)))
-
-(defun use-rebar-shell ()
-  (interactive)
-  (advice-add 'erlang-shell-display :around #'start-shell-in-project-root)
-  (setq inferior-erlang-machine "rebar3")
-  (setq inferior-erlang-machine-options '("shell"))
-  (setq inferior-erlang-shell-type nil))
 
 (with-eval-after-load 'erlang
 	    (define-key erlang-mode-map (kbd "<f5>") 'erlang-compile)
