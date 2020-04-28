@@ -45,7 +45,7 @@
 (require 'lisp-module)
 ;; (require 'lisp-slime-module)
 (require 'lua-module)
-(require 'javascript-module)
+;; (require 'javascript-module)
 (require 'xml-module)
 (require 'snippets-module)
 (require 'themes-module)
