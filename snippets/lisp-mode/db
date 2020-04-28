@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: db
+# key: db
+# --
+(destructuring-bind (${1:vars}) ${2:value}
+  $0)

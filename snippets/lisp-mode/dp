@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: dp
+# key: dp
+# --
+(defparameter *${1:name}* ${2:nil}${3:})
+$0

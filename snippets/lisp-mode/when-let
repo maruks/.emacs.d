@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: when-let
+# key: whl
+# --
+(when-let (${1:vars} ${2:value})
+$0)

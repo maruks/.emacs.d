@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: lambda
+# key: lam
+# --
+(lambda (${1:vars}) ${2:value} $0)

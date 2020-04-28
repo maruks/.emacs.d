@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: mvb
+# key: mvb
+# --
+(multiple-value-bind (${1:vars}) ${2:value}
+  $0)

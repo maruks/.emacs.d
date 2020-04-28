@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: df
+# key: df
+# --
+(defun ${1:name} (${2:args})${3:}
+  $0)
