@@ -18,6 +18,7 @@
 (require 'mituharu-module)
 (require 'fonts-module)
 (require 'global-module)
+(require 'ace-jump-module)
 (require 'git-module)
 (require 'fullframe-module)
 (require 'smartparens-module)
