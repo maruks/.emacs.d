@@ -32,6 +32,7 @@
 (defconst *lisp-snippets* '((?f . "df")
 			    (?l . "lambda-2")
 			    (?a . "lambda")
+			    (?e . "let")
 			    (?i . "if-let")
 			    (?w . "when-let")
 			    (?b . "db")
