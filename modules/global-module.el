@@ -67,10 +67,6 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/mark")
 (require 'mark)
 
-;; reformat
-(add-to-list 'load-path "~/.emacs.d/vendor/reformat")
-(require 'reformat)
-
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
 
