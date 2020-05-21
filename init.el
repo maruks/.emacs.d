@@ -12,6 +12,8 @@
 
 ;; modules
 
+(require 'use-package-module)
+
 (require 'appearance-module)
 (require 'mituharu-module)
 (require 'fonts-module)
@@ -25,6 +27,7 @@
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
 (require 'scheme-module)
+;; (require 'gerbil-module)
 (require 'erlang-module)
 (require 'elixir-module)
 (require 'clojure-module)
