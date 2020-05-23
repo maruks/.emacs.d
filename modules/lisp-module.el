@@ -5,33 +5,38 @@
 (package-require 'company)
 (package-require 'sly)
 (package-require 'sly-quicklisp)
-
 (package-require 'sly-asdf)
-(require 'sly-asdf)
 
-(setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
-				 (ccl ("ccl") :coding-system utf-8-unix)))
+(use-package sly
+  :mode ("\\.lisp\\'" . lisp-mode)
+  :bind (("TAB" . company-indent-or-complete-common)
+	 ("s-c" . sly-compile-and-load-file))
+  :hook ((lisp-mode . company-mode)
+	 (sly-mrepl . company-mode)
+	 (sly-mrepl . (lambda ()
+			(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-repl))))
+  :init
+  (setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
+				   (ccl ("ccl") :coding-system utf-8-unix)))
+  (setf sly-default-lisp 'sbcl)
 
-(setf sly-default-lisp 'sbcl)
+  (setf sly-complete-symbol-function #'sly-flex-completions)
 
-(add-hook 'lisp-mode-hook #'company-mode)
-(add-hook 'sly-mrepl-hook #'company-mode)
+  :config
+  (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)
 
-(eval-after-load 'lisp-mode
-  '(progn
-     (define-key lisp-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-     (define-key lisp-mode-map [?\s-c] 'sly-compile-and-load-file)
-     (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)))
+  (defmacro define-sly-lisp (name)
+    `(defun ,name ()  (interactive)
+	    (let ((sly-default-lisp ',name))
+	      (sly))))
 
-(eval-after-load 'sly-mrepl
-  '(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-recent-output))
+  (define-sly-lisp sbcl)
+  (define-sly-lisp ccl))
 
-(defmacro define-sly-lisp (name)
-  `(defun ,name ()  (interactive)
-	  (let ((sly-default-lisp ',name))
-	    (sly))))
+(use-package sly-asdf
+  :after sly)
 
-(define-sly-lisp sbcl)
-(define-sly-lisp ccl)
+(use-package sly-quicklisp
+  :after sly)
 
 (provide 'lisp-module)
