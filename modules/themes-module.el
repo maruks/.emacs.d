@@ -9,13 +9,15 @@
 (package-require 'darcula-theme)
 (package-require 'dracula-theme)
 (package-require 'flatland-theme)
-(package-require 'hamburg-theme)
+(package-require 'spacemacs-theme)
+(package-require 'apropospriate-theme)
 (package-require 'heroku-theme)
 (package-require 'solarized-theme)
 (package-require 'night-owl-theme)
 (package-require 'smyx-theme)
 (package-require 'reykjavik-theme)
-(package-require 'yoshi-theme)
+(package-require 'planet-theme)
+(package-require 'inkpot-theme)
 (package-require 'zenburn-theme)
 (package-require 'ample-theme)
 (package-require 'doom-themes)
@@ -31,12 +33,13 @@
 (defvar theme-key-prefix "s-3")
 (defvar theme-key-disable "C-d")
 (defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
-						   at atom-one-dark ;; *
+						   ap apropospriate-dark
+						   at atom-one-dark ;; low contrast
 						   br brin
 						   da darcula
-						   dc dracula   ;; https://draculatheme.com
+						   dc dracula   ;; high contrast, https://draculatheme.com
 						   do doom-one  ;; *
-						   dv doom-vibrant
+						   dv doom-vibrant ;; low contrast
 						   dr dream
 						   er erosiond
 						   fo fogus
@@ -45,19 +48,22 @@
 						   he heroku
 						   hi hickey
 						   ju junio
+						   ip inkpot
 						   mi misterioso
 						   md moe-dark ;; *
 						   no night-owl
 						   od odersky
-						   re reykjavik
+						   pl planet  ;; nice
+						   re reykjavik ;; *
 						   sd solarized-dark
-						   se sanityinc-tomorrow-eighties ;; *
-						   sm smyx  ;; *
+						   se sanityinc-tomorrow-eighties ;; nice
+						   sp spacemacs-dark  ;; *
+						   sm smyx
 						   td tango-dark ;; *
 						   te tomorrow-night-eighties ;; *
 						   tn tomorrow-night
 						   tb tomorrow-night-bright
-						   ze zenburn
+						   ze zenburn ;; nice
 						   wo wombat
 						   ;; -------------------------   bright
 						   di dichromacy
