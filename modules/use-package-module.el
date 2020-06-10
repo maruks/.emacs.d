@@ -2,8 +2,11 @@
 
 (require 'package-module)
 
+(package-require 'diminish)
+
 (add-to-list 'load-path "~/.emacs.d/vendor/use-package")
 
 (require 'use-package)
+(require 'diminish)
 
 (provide 'use-package-module)

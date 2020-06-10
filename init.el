@@ -34,6 +34,7 @@
 (require 'clojure-module)
 (require 'sml-module)
 (require 'json-module)
+(require 'yaml-module)
 
 (require 'idris-module)
 (require 'ocaml-module)

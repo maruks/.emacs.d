@@ -11,6 +11,9 @@
   :mode ("\\.lisp\\'" . lisp-mode)
   :bind (("TAB" . company-indent-or-complete-common)
 	 ("s-c" . sly-compile-and-load-file))
+
+  :diminish (company-mode which-key-mode)
+
   :hook ((lisp-mode . company-mode)
 	 (sly-mrepl . company-mode)
 	 (sly-mrepl . (lambda ()
@@ -37,6 +40,17 @@
   :after sly)
 
 (use-package sly-quicklisp
-  :after sly)
+  :after sly
+
+  :hook ((sly-quicklisp-mode . (lambda ()
+				 (setq sly-extra-mode-line-constructs
+				       '(sly-quicklisp--mode-line-construct--hack)))))
+  :config
+
+  (require 'seq)
+
+  (defun sly-quicklisp--mode-line-construct--hack ()
+    (let ((line (sly-quicklisp--mode-line-construct)))
+      (seq-filter (lambda (x) (not (member x '(face hi-pink)))) line))))
 
 (provide 'lisp-module)
