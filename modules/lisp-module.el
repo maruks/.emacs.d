@@ -9,7 +9,8 @@
 
 (use-package sly
   :mode ("\\.lisp\\'" . lisp-mode)
-  :bind (("TAB" . company-indent-or-complete-common)
+  :bind (:map lisp-mode-map
+	 ("TAB" . company-indent-or-complete-common)
 	 ("s-c" . sly-compile-and-load-file))
 
   :diminish (company-mode which-key-mode)
