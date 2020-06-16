@@ -1,4 +1,4 @@
-;; haskell-module
+;; haskell-lsp-module
 
 (require 'package-module)
 
@@ -25,4 +25,4 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-sideline-show-diagnostics nil))
 
-(provide 'haskell-module)
+(provide 'haskell-lsp-module)

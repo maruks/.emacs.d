@@ -42,7 +42,7 @@
 (require 'scala-module)
 (require 'purescript-module)
 
-(require 'haskell-intero-module)
+(require 'haskell-eglot-module)
 ;;(require 'haskell-module)
 
 (require 'elm-module)

@@ -1,4 +1,4 @@
-;; haskell-module
+;; haskell-dante-module
 
 (require 'package-module)
 
@@ -30,4 +30,4 @@
   (flycheck-add-next-checker 'haskell-dante
 			     '(warning . haskell-hlint)))
 
-(provide 'haskell-module)
+(provide 'haskell-dante-module)
