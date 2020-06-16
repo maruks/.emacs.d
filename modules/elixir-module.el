@@ -4,7 +4,6 @@
 
 (package-require 'alchemist)
 (package-require 'flycheck-credo)
-(package-require 'flycheck-mix)
 
 (defun alchemist-iex-reload (&optional arg)
   (interactive "P")
@@ -31,6 +30,6 @@
 (eval-after-load 'flycheck
   (lambda ()
     (flycheck-credo-setup)
-    (flycheck-mix-setup)))
+ ))
 
 (provide 'elixir-module)
