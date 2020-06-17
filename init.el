@@ -17,16 +17,16 @@
 (require 'appearance-module)
 (require 'mituharu-module)
 (require 'fonts-module)
-(require 'global-module)
-;;(require 'ido-module)
 (require 'ivy-module)
+(require 'global-module)
+(require 'projectile-module)
 (require 'ace-jump-module)
 (require 'git-module)
 (require 'fullframe-module)
+
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
-;; (require 'flycheck-module)
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
 (require 'scheme-module)
@@ -45,7 +45,7 @@
 ;; (require 'purescript-module)
 
 ;;(require 'haskell-intero-module)
-;;(require 'haskell-lsp-module)
+(require 'haskell-lsp-module)
 
 ;;(require 'elm-module)
 ;;(require 'elisp-module)

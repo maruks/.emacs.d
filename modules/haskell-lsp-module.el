@@ -7,6 +7,9 @@
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-haskell-process-path-hie "hie-wrapper"))
 
+(use-package flycheck
+  :after haskell-mode)
+
 (use-package lsp-mode
   :hook ((haskell-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))

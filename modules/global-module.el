@@ -2,12 +2,8 @@
 
 (require 'package-module)
 
-(package-require 'projectile)
-(package-require 'popup-imenu)
-
 (package-require 'company)
 (package-require 'org)
-(package-require 'ag)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -55,9 +51,6 @@
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
 
-;; imenu
-(define-key global-map (kbd "M-i") 'popup-imenu)
-
 ;; M-x re-builder
 (require 're-builder)
 (setq reb-re-syntax 'string)
@@ -67,29 +60,6 @@
   :if (memq window-system '(mac ns))
   :config
   (exec-path-from-shell-initialize))
-
-;; projectile
-(require 'projectile)
-(projectile-global-mode)
-
-;; prefix
-(define-key projectile-mode-map (kbd "s-p") #'projectile-command-map)
-
-;; create test files
-(setq projectile-create-missing-test-files t)
-
-;; port install the_silver_searcher
-(define-key projectile-mode-map [?\s-a] 'projectile-ag)
-(define-key projectile-mode-map [?\s-d] 'projectile-find-dir)
-(define-key projectile-mode-map [?\s-p] 'projectile-switch-project)
-(define-key projectile-mode-map [?\s-b] 'projectile-switch-to-buffer)
-(define-key projectile-mode-map [?\s-f] 'projectile-find-file)
-(define-key projectile-mode-map (kbd "\e\et") 'projectile-find-implementation-or-test-other-window)
-(define-key projectile-mode-map [?\s-g] 'projectile-grep)
-(define-key projectile-mode-map [?\s-r] 'projectile-replace)
-
-;; ag
-(setq ag-reuse-buffers 't)
 
 ;; global keys
 (global-set-key (kbd "\e\eg") 'goto-line)
