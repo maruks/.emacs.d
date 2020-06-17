@@ -32,7 +32,9 @@
 (require 'scheme-module)
 ;; (require 'gerbil-module)
 ;; (require 'erlang-module)
-;; (require 'elixir-module)
+
+(require 'elixir-module)
+
 ;; (require 'clojure-module)
 ;; (require 'sml-module)
 ;; (require 'json-module)
