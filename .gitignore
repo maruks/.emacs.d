@@ -2,6 +2,7 @@
 auto-save-list
 *.eld
 custom.el
+recentf
 elpa
 notes
 swank
