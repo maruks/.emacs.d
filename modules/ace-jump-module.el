@@ -2,8 +2,6 @@
 
 (require 'package-module)
 
-(package-require 'ace-jump-mode)
-
 ;; ace jump mode
 ;; "C-c s-j" => ace-jump-char-mode           Enter a char for query, select the highlight key to move to.
 ;;  M-x ace-jump-line-mode                   Each non-empty line will be marked, select the highlight key to move to.

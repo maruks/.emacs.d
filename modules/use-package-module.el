@@ -9,4 +9,6 @@
 (require 'use-package)
 (require 'diminish)
 
+(setq use-package-always-ensure t)
+
 (provide 'use-package-module)

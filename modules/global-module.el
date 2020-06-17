@@ -5,12 +5,10 @@
 (package-require 'projectile)
 (package-require 'popup-imenu)
 
-(package-require 'exec-path-from-shell)
 (package-require 'company)
 (package-require 'org)
 (package-require 'ag)
 (package-require 'flx-ido)
-(package-require 'crux)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -78,7 +76,9 @@
 (setq reb-re-syntax 'string)
 
 ;; exec-path-from-shell
-(when (memq window-system '(mac ns))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :config
   (exec-path-from-shell-initialize))
 
 ;; projectile
@@ -146,12 +146,9 @@
                          (name . "^.+\\.el$")
                          (name . "^\\*.+\\*$")))))))
 
-;; xah-find-text
-;; xah-find-text-regex
-;; xah-find-count
-;; xah-find-replace-text
-;; xah-find-replace-text-regex
-(package-require 'xah-find)
+
+(use-package xah-find
+  :commands (xah-find-text xah-find-text-regex xah-find-count xah-find-replace-text xah-find-replace-text-regex))
 
 ;; symbol search
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
@@ -185,10 +182,12 @@
 (global-set-key (kbd "M-}") 'forward-sentence)
 
 ;; crux
-(global-set-key (kbd "C-c D") #'crux-delete-file-and-buffer)
-(global-set-key (kbd "s-k") #'crux-kill-whole-line)
-(global-set-key (kbd "\e\ed") 'crux-duplicate-current-line-or-region)
-(global-set-key (kbd "C-x 4 t") 'crux-transpose-windows)
+(use-package crux
+  :bind
+  (("C-c D" . crux-delete-file-and-buffer)
+   ("s-k" . crux-kill-whole-line)
+   ("\e\ed" . crux-duplicate-current-line-or-region)
+   ("C-x 4 t" . crux-transpose-windows)))
 
 (setq next-line-add-newlines t)
 

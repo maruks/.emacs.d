@@ -29,7 +29,6 @@
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(defvar theme-current-theme nil)
 (defvar theme-key-prefix "s-3")
 (defvar theme-key-disable "C-d")
 (defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
@@ -78,14 +77,13 @@
 						   le leuven)))
 
 (defun theme-enable (theme)
-  (if theme-current-theme (disable-theme theme-current-theme))
-  (setq theme-current-theme theme)
+  (theme-disable-current)
   (load-theme theme t)
   (message "theme loaded: %s" (symbol-name theme)))
 
 (defun theme-disable-current ()
-  (if theme-current-theme (disable-theme theme-current-theme))
-  (setq theme-current-theme nil))
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
 
 (defun theme-init-keys ()
   (global-set-key

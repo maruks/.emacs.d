@@ -2,7 +2,7 @@
 
 (use-package gerbil
   :when (getenv "GERBIL_HOME")
-  :ensure nil
+ ;; :ensure nil
   :defer t
   :mode (("\\.ss\\'"  . gerbil-mode)
          ("\\.pkg\\'" . gerbil-mode))

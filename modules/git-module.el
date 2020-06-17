@@ -3,13 +3,17 @@
 (require 'package-module)
 
 ;; magit
-(package-require 'magit)
-(package-require 'git-timemachine)
-(package-require 'gitconfig-mode)
 
-(global-set-key (kbd "s-m") 'magit-status)
-(global-set-key (kbd "s-t") 'git-timemachine-toggle)
+(use-package magit
+  :commands (magit-status magit-blame)
+  :bind
+  (("s-m" . magit-status)
+   ("\e\eb" . magit-blame)))
 
-(global-set-key (kbd "\e\eb") 'magit-blame)
+(use-package git-timemachine
+  :bind
+  (("s-t" . git-timemachine-toggle)))
+
+(use-package gitconfig-mode)
 
 (provide 'git-module)

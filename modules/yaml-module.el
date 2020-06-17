@@ -4,6 +4,7 @@
 (package-require 'indent-tools)
 
 (use-package yaml
+  :ensure yaml-mode
   :mode (("\\.yml\\'"  . yaml-mode)
          ("\\.yaml\\'" . yaml-mode))
   :bind

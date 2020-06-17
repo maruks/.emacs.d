@@ -2,22 +2,14 @@
 
 (require 'package-module)
 
-(package-require 'company)
-(package-require 'sly)
-(package-require 'sly-quicklisp)
-(package-require 'sly-asdf)
-
 (use-package sly
   :mode ("\\.lisp\\'" . lisp-mode)
   :bind (:map lisp-mode-map
-	 ("TAB" . company-indent-or-complete-common)
 	 ("s-c" . sly-compile-and-load-file))
 
-  :diminish (company-mode which-key-mode)
+  :diminish (which-key-mode)
 
-  :hook ((lisp-mode . company-mode)
-	 (sly-mrepl . company-mode)
-	 (sly-mrepl . (lambda ()
+  :hook ((sly-mrepl . (lambda ()
 			(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-repl))))
   :init
   (setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
@@ -36,6 +28,13 @@
 
   (define-sly-lisp sbcl)
   (define-sly-lisp ccl))
+
+(use-package company
+  :init
+  (add-hook 'lisp-mode-hook 'company-mode)
+  (add-hook 'sly-mrepl-hook 'company-mode)
+  :bind (:map lisp-mode-map
+	      ("TAB" . company-indent-or-complete-common)))
 
 (use-package sly-asdf
   :after sly)

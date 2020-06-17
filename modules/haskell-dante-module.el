@@ -2,17 +2,10 @@
 
 (require 'package-module)
 
-;; stack install stylish-haskell hlint hasktags ghc-mod hoogle hindent happy
-
-;; (add-to-list 'exec-path "~/.local/bin/")
-
 (package-require 'haskell-mode)
-(package-require 'dante)
-;; (package-require 'ghc)
-;; (package-require 'company-ghc)
-(package-require 'flycheck-haskell)
 
 (use-package dante-mode
+  :ensure dante
   :hook haskell-mode
   :bind (("C-c C-z" . haskell-interactive-bring)
 	 ("C-c b" . haskell-process-cabal-build)
@@ -23,6 +16,7 @@
   (advice-add 'haskell-process-load-file :before #'save-current-buffer-if-modified))
 
 (use-package flycheck-mode
+  :ensure flycheck-haskell
   :after dante
   :hook dante-mode
   :config
