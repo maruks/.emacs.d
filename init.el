@@ -20,6 +20,8 @@
 ;;   :config
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
+(require 'hydra-module)
+
 (require 'appearance-module)
 (require 'mituharu-module)
 (require 'fonts-module)
@@ -64,5 +66,4 @@
 ;;(require 'xml-module)
 (require 'snippets-module)
 (require 'themes-module)
-;; (require 'hydra-module)
 (require 'user-module)
