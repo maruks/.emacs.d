@@ -14,6 +14,12 @@
 
 (require 'use-package-module)
 
+;; benchmark startup time
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 (require 'appearance-module)
 (require 'mituharu-module)
 (require 'fonts-module)

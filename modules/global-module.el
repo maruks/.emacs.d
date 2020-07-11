@@ -58,8 +58,9 @@
 ;; exec-path-from-shell
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
-  :config
-  (exec-path-from-shell-initialize))
+  ;; :config
+  ;; (exec-path-from-shell-initialize)   SLOW
+  )
 
 ;; global keys
 (global-set-key (kbd "\e\eg") 'goto-line)
