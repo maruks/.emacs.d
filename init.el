@@ -20,7 +20,7 @@
 ;;   :config
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(require 'hydra-module)
+;; (require 'hydra-module)
 
 (require 'appearance-module)
 (require 'mituharu-module)
