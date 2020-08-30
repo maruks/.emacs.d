@@ -43,7 +43,8 @@
 
 (require 'elixir-module)
 
-;; (require 'clojure-module)
+(require 'clojure-module)
+
 ;; (require 'sml-module)
 ;; (require 'json-module)
 ;; (require 'yaml-module)
