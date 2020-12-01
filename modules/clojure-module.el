@@ -29,11 +29,6 @@
   (setq cider-show-error-buffer 'except-in-repl)
   (setq cider-prompt-for-symbol nil)
 
-  (setq cider-cljs-lein-repl
-      "(do (require 'figwheel-sidecar.repl-api)
-           (figwheel-sidecar.repl-api/start-figwheel!)
-           (figwheel-sidecar.repl-api/cljs-repl))")
-
   (setq cider-redirect-server-output-to-repl nil)
 
   ;; (setq cider-inject-dependencies-at-jack-in nil)
@@ -52,6 +47,7 @@
 
   (clj-refactor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-r")
+
   ;; (setq cljr-eagerly-build-asts-on-startup nil)
   ;; (setq cljr-warn-on-eval t)
   ;; (setq cljr--debug-mode t)
