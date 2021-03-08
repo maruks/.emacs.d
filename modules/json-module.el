@@ -2,10 +2,17 @@
 
 (require 'package-module)
 
-(package-require 'json-mode)
+(use-package json-mode
+  :mode ("\\.json\\'" . json-mode)
 
-(add-hook 'json-mode-hook
-	  (lambda ()
-	    (flycheck-mode)))
+  :config
+  (use-package json-reformat)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+  (setq-default json-reformat:indent-width 2))
+
+(use-package flycheck-mode
+  :hook json-mode
+  :ensure flycheck)
 
 (provide 'json-module)
