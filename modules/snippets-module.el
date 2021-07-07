@@ -25,6 +25,8 @@
 (add-hook 'clojure-mode-hook #'yas-minor-mode)
 (add-hook 'elixir-mode-hook #'yas-minor-mode)
 
+(add-hook 'rustic-mode-hook #'yas-minor-mode)
+
 (defun expand-yasnippet (name)
   (interactive)
   (yas-expand-snippet (yas-lookup-snippet name)))

@@ -36,14 +36,14 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-sideline-show-diagnostics nil))
 
-(use-package company-lsp
-  :config
-  (push 'company-lsp company-backends))
+;; (use-package company-lsp
+;;   :config
+;;   (push 'company-lsp company-backends))
 
-(use-package company
-  :init
-  (add-hook 'haskell-mode-hook 'company-mode)
-  :bind (:map haskell-mode-map
-	      ("TAB" . company-indent-or-complete-common)))
+;; (use-package company
+;;   :init
+;;   (add-hook 'haskell-mode-hook 'company-mode)
+;;   :bind (:map haskell-mode-map
+;; 	      ("TAB" . company-indent-or-complete-common)))
 
 (provide 'haskell-lsp-module)

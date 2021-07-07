@@ -1,4 +1,4 @@
-;; rust-module
+;; rustic-module
 
 (require 'package-module)
 
@@ -15,14 +15,14 @@
               ("C-c C-c q" . lsp-workspace-restart)
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
-  :config
-  ;; uncomment for less flashiness
-  (setq lsp-eldoc-hook nil)
-  (setq lsp-enable-symbol-highlighting nil)
-  (setq lsp-signature-auto-activate nil)
+  :custom
+  (lsp-eldoc-hook nil)
+  ;; (lsp-enable-symbol-highlighting nil)
+  (lsp-signature-auto-activate nil)
+  ;; (rustic-format-on-save t)
 
-  ;; comment to disable rustfmt on save
-  ;; (setq rustic-format-on-save t)
+  :config
+  (use-package flycheck)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
 (defun rk/rustic-mode-hook ()
@@ -40,23 +40,21 @@
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   ;; rustup component add clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-eldoc-render-all t)
+  ;; (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   ;; (lsp-rust-analyzer-server-display-inlay-hints t)
-  ;; :config
-  ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  )
+  :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-;; (use-package lsp-ui
-;;   :ensure
-;;   :commands lsp-ui-mode
-;;   :custom
-;;   (lsp-ui-peek-always-show t)
-;;   (lsp-ui-sideline-show-hover t)
-;;   (lsp-ui-doc-enable nil))
-
-(use-package flycheck :ensure)
+(use-package lsp-ui
+  :ensure
+  :commands lsp-ui-mode
+  :custom
+  (lsp-ui-flycheck-live-reporting nil)
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-doc-enable nil)
+  (lsp-ui-sideline-show-diagnostics nil))
 
 ; rustup component add rust-src
 
-(provide 'rust-module)
+(provide 'rustic-module)
