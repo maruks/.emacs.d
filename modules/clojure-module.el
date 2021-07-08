@@ -8,7 +8,6 @@
 	 ("C-c js" . cider-jack-in-clj&cljs)
 	 ("\e\es" . cider-jack-in-clj&cljs)
 	 :map clojure-mode-map
-	 ("s-c" . sly-compile-and-load-file)
 	 ("s-c" . cider-load-buffer)
 	 ("<f10>" . cider-load-buffer)
 	 ("<f11>" . cider-jack-in)
