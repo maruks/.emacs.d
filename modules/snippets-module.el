@@ -42,7 +42,7 @@
 (defconst *rust-snippets* '((?o . "for")
 			    (?l . "log")
 			    (?i . "if let")
-			    (?m . "match")
+			    (?m . "match expression { ... }")
 			    (?f . "fn")))
 
 (defun insert-lisp-snippet ()
