@@ -19,6 +19,8 @@
   (setf sly-complete-symbol-function #'sly-flex-completions)
 
   :config
+  (yas-minor-mode-on)
+  (bind-lisp-snippets lisp-mode-map)
   (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)
 
   (defmacro define-sly-lisp (name)

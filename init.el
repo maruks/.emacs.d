@@ -32,6 +32,8 @@
 (require 'git-module)
 (require 'fullframe-module)
 
+(require 'snippets-module)
+
 (require 'smartparens-module)
 ;;(require 'paredit-module)
 
@@ -65,6 +67,5 @@
 ;;(require 'lua-module)
 ;; (require 'javascript-module)
 ;;(require 'xml-module)
-(require 'snippets-module)
 (require 'themes-module)
 (require 'user-module)

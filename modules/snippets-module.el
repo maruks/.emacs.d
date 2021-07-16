@@ -21,11 +21,8 @@
 (define-key yas-minor-mode-map (kbd "s-y") #'yas-expand)
 (define-key yas-minor-mode-map (kbd "C-c C-y") #'yas-expand)
 
-(add-hook 'lisp-mode-hook #'yas-minor-mode)
 (add-hook 'clojure-mode-hook #'yas-minor-mode)
 (add-hook 'elixir-mode-hook #'yas-minor-mode)
-
-(add-hook 'rustic-mode-hook #'yas-minor-mode)
 
 (defun expand-yasnippet (name)
   (interactive)
@@ -42,17 +39,30 @@
 			    (?p . "dp")
 			    (?m . "mvb")))
 
+(defconst *rust-snippets* '((?o . "for")
+			    (?l . "log")
+			    (?i . "if let")
+			    (?m . "match")
+			    (?f . "fn")))
+
 (defun insert-lisp-snippet ()
   (interactive)
   (let ((s (cdr (assoc last-input-event *lisp-snippets*))))
     (expand-yasnippet s)))
 
+(defun insert-rust-snippet ()
+  (interactive)
+  (let ((s (cdr (assoc last-input-event *rust-snippets*))))
+    (expand-yasnippet s)))
+
 (defun bind-snippet-keys (mode-map snippets function)
   (dolist (s (mapcar #'car snippets))
-    (define-key lisp-mode-map (kbd (format "\e\e%c" s)) function)))
+    (define-key mode-map (kbd (format "\e\e%c" s)) function)))
 
-(eval-after-load 'lisp-mode
-  '(progn
-     (bind-snippet-keys lisp-mode-map *lisp-snippets* #'insert-lisp-snippet)))
+(defun bind-lisp-snippets (mode-map)
+  (bind-snippet-keys mode-map *lisp-snippets* #'insert-lisp-snippet))
+
+(defun bind-rust-snippets (mode-map)
+  (bind-snippet-keys mode-map *rust-snippets* #'insert-rust-snippet))
 
 (provide 'snippets-module)
