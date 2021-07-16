@@ -51,7 +51,7 @@
 
 ;; (require 'idris-module)
 ;; (require 'ocaml-module)
-(require 'rustic-module)
+(require 'rustic-eglot-module)
 ;; (require 'scala-module)
 ;; (require 'purescript-module)
 

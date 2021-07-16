@@ -51,6 +51,7 @@
  	  (geiser . "melpa")
  	  (ac-geiser . "melpa")
 	  (intero . "melpa")
+	  (eglot . "melpa")
  	  (alchemist . "melpa")
   	  (elixir-mode . "melpa")
   	  (flycheck-credo . "melpa")
