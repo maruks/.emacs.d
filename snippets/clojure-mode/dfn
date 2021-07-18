@@ -1,0 +1,5 @@
+# name: defn2
+# key: dfn
+# --
+(defn $1 [$3]$>
+  $0)$>

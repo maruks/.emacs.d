@@ -11,18 +11,15 @@
 
 (require 'yasnippet)
 
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
+;; (define-key yas-minor-mode-map (kbd "<tab>") nil)
+;; (define-key yas-minor-mode-map (kbd "TAB") nil)
 
 (yas-reload-all)
 
-(define-key yas-minor-mode-map (kbd "M-SPC") yas-maybe-expand)
-
 (define-key yas-minor-mode-map (kbd "s-y") #'yas-expand)
-(define-key yas-minor-mode-map (kbd "C-c C-y") #'yas-expand)
+(define-key yas-minor-mode-map (kbd "C-c C-y") #'yas-maybe-expand)
 
-(add-hook 'clojure-mode-hook #'yas-minor-mode)
-(add-hook 'elixir-mode-hook #'yas-minor-mode)
+;; (add-hook 'elixir-mode-hook #'yas-minor-mode)
 
 (defun expand-yasnippet (name)
   (interactive)
@@ -45,6 +42,20 @@
 			    (?m . "match expression { ... }")
 			    (?f . "fn")))
 
+(defconst *clojure-snippets* '((?f . "defn2")
+			       (?a . "defmacro2")
+			       (?l . "fn")
+			       (?o . "for")
+			       (?e . "def")
+			       (?t . "let")
+			       (?p . "opts")
+			       (?n . "print")
+			       (?i . "if")
+			       (?w . "when")
+			       (?m . "import")
+			       (?s . "doseq")
+			       (?c . "cond")))
+
 (defun insert-lisp-snippet ()
   (interactive)
   (let ((s (cdr (assoc last-input-event *lisp-snippets*))))
@@ -53,6 +64,11 @@
 (defun insert-rust-snippet ()
   (interactive)
   (let ((s (cdr (assoc last-input-event *rust-snippets*))))
+    (expand-yasnippet s)))
+
+(defun insert-clojure-snippet ()
+  (interactive)
+  (let ((s (cdr (assoc last-input-event *clojure-snippets*))))
     (expand-yasnippet s)))
 
 (defun bind-snippet-keys (mode-map snippets function)
@@ -64,5 +80,8 @@
 
 (defun bind-rust-snippets (mode-map)
   (bind-snippet-keys mode-map *rust-snippets* #'insert-rust-snippet))
+
+(defun bind-clojure-snippets (mode-map)
+  (bind-snippet-keys mode-map *clojure-snippets* #'insert-clojure-snippet))
 
 (provide 'snippets-module)

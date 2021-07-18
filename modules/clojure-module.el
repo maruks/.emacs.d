@@ -6,32 +6,31 @@
   :mode ("\\.clj\\'" . clojure-mode)
   :bind (("C-c ji" . cider-jack-in)
 	 ("C-c js" . cider-jack-in-clj&cljs)
-	 ("\e\es" . cider-jack-in-clj&cljs)
 	 :map clojure-mode-map
 	 ("s-c" . cider-load-buffer)
 	 ("<f10>" . cider-load-buffer)
 	 ("<f11>" . cider-jack-in)
-	 ("\e\er" . cider-switch-to-repl-buffer)
-	 ("\e\ef" . clj-insert-fn)
 	 ("C-c C-a" . align-cljlet))
 
   :diminish (which-key-mode)
 
   :hook ((cider-repl-mode . subword-mode)
 	 (cider-repl-mode . company-mode)
-	 (cider-mode . company-mode))
+	 (cider-mode . company-mode)
+	 (clojure-mode . (lambda () (yas-minor-mode-on)))
+	 (cider-mode . (lambda () (eldoc-mode 1))))
 
-  :init
+  :custom
 
-  (setq nrepl-hide-special-buffers t)
-  (setq cider-repl-display-in-current-window t)
-  (setq cider-show-error-buffer 'except-in-repl)
-  (setq cider-prompt-for-symbol nil)
+  (nrepl-hide-special-buffers t)
+  (cider-repl-display-in-current-window t)
+  (cider-show-error-buffer 'except-in-repl)
+  (cider-prompt-for-symbol nil)
 
-  (setq cider-redirect-server-output-to-repl nil)
+  (cider-redirect-server-output-to-repl nil)
 
-  ;; (setq cider-inject-dependencies-at-jack-in nil)
-  ;; (setq cider-repl-pop-to-buffer-on-connect nil)
+  ;; (cider-inject-dependencies-at-jack-in nil)
+  ;; (cider-repl-pop-to-buffer-on-connect nil)
 
   :config
 
@@ -42,10 +41,10 @@
 
   (advice-add 'cider-load-buffer :before #'save-current-buffer-if-modified)
 
-  (eldoc-mode 1)
-
   (clj-refactor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-r")
+
+  (bind-clojure-snippets clojure-mode-map)
 
   ;; (setq cljr-eagerly-build-asts-on-startup nil)
   ;; (setq cljr-warn-on-eval t)

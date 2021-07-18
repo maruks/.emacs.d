@@ -1,0 +1,5 @@
+# name: defmacro2
+# key: dfm
+# --
+(defmacro $1 [$3]$>
+  $0)$>
