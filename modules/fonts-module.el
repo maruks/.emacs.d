@@ -12,6 +12,7 @@
   (setq font (or font "DejaVu Sans Mono-10")))
 
 (when font
-  (set-frame-font font nil t))
+  (set-frame-font font nil t)
+  (add-to-list 'default-frame-alist (cons 'font font)))
 
 (provide 'fonts-module)
