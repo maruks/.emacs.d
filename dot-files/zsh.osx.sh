@@ -2,7 +2,7 @@
 
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias em="/Applications/Emacs.app/Contents/MacOS/Emacs"
-alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+alias ec="emacsclient -n"
 
 # maven
 
