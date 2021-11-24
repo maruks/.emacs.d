@@ -159,4 +159,6 @@
    (set-buffer "*scratch*")
    (insert (format "%s" string))))
 
+(setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
+
 (provide 'global-module)
