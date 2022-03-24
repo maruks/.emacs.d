@@ -14,6 +14,4 @@
   :bind
   (("s-t" . git-timemachine-toggle)))
 
-(use-package gitconfig-mode)
-
 (provide 'git-module)

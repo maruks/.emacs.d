@@ -5,6 +5,10 @@
 (use-package flycheck-clj-kondo
   :ensure t)
 
+(defun eldoc-hack ()
+  (setq eldoc-documentation-strategy 'eldoc-documentation-default)
+  (eldoc-mode 1))
+
 (use-package clojure-mode
   :mode ("\\.clj\\'" . clojure-mode)
   :bind (("C-c ji" . cider-jack-in)
@@ -22,8 +26,7 @@
 	 (cider-mode . company-mode)
 	 (clojure-mode . (lambda () (yas-minor-mode-on)))
 	 (clojure-mode . flycheck-mode)
-;;	 (cider-mode . (lambda () (eldoc-mode 1)))
-	 )
+	 (cider-mode . eldoc-hack))
 
   :custom
 

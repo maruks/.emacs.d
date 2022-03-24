@@ -105,9 +105,6 @@
                          (name . "^\\*.+\\*$")))))))
 
 
-(use-package xah-find
-  :commands (xah-find-text xah-find-text-regex xah-find-count xah-find-replace-text xah-find-replace-text-regex))
-
 ;; symbol search
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
 
