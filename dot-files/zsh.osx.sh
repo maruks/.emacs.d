@@ -8,8 +8,8 @@ alias ec="emacsclient -n"
 
 export MAVEN_OPTS="-Xms128m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"
 
-alias mcp='maven clean package'
-alias mci='maven clean install'
+alias aws_prod='source ~/bin/aws-prod'
+alias aws_dev='source ~/bin/aws-dev'
 
 # tmux
 

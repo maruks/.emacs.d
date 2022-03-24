@@ -2,6 +2,9 @@
 
 (require 'package-module)
 
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package clojure-mode
   :mode ("\\.clj\\'" . clojure-mode)
   :bind (("C-c ji" . cider-jack-in)
@@ -18,7 +21,9 @@
 	 (cider-repl-mode . company-mode)
 	 (cider-mode . company-mode)
 	 (clojure-mode . (lambda () (yas-minor-mode-on)))
-	 (cider-mode . (lambda () (eldoc-mode 1))))
+	 (clojure-mode . flycheck-mode)
+;;	 (cider-mode . (lambda () (eldoc-mode 1)))
+	 )
 
   :custom
 
@@ -38,6 +43,7 @@
   (use-package cider)
   (use-package clj-refactor)
   (use-package align-cljlet)
+  (require 'flycheck-clj-kondo)
 
   (advice-add 'cider-load-buffer :before #'save-current-buffer-if-modified)
 
