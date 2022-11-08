@@ -8,6 +8,7 @@
 (package-require 'atom-one-dark-theme)
 (package-require 'darcula-theme)
 (package-require 'dracula-theme)
+(package-require 'clues-theme)
 (package-require 'flatland-theme)
 (package-require 'spacemacs-theme)
 (package-require 'apropospriate-theme)
@@ -35,10 +36,17 @@
 						   ap apropospriate-dark
 						   at atom-one-dark ;; low contrast
 						   br brin
+						   cl clues ;; so blue
 						   da darcula
 						   dc dracula   ;; high contrast, https://draculatheme.com
+						   dd doom-dark+
+						   de doom-rouge
+						   dh doom-henna
+						   di doom-horizon
 						   do doom-one  ;; *
+						   dn doom-nord
 						   dv doom-vibrant ;; low contrast
+						   dz doom-zenburn ;; low contrast
 						   dr dream
 						   er erosiond
 						   fo fogus
@@ -100,6 +108,8 @@
     (intern (completing-read "Load custom theme: "
                              (mapcar 'symbol-name (custom-available-themes))))))
   (theme-enable name))
+
+(global-set-key (kbd "s-4") 'theme-load)
 
 (defun theme-load-default ()
   (let ((default-theme (getenv "EMACS_DEFAULT_THEME")))
