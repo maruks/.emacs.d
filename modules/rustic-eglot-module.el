@@ -8,14 +8,18 @@
 	      ("C-c C-c l" . flycheck-list-errors)
 	      ("C-c C-c h" . eldoc-doc-buffer)
 	      ("C-c C-c a" . eglot-code-actions)
+	      ("C-c C-c t" . rustic-cargo-current-test)
 	      ("C-c C-c r" . eglot-rename)
 	      ("C-c C-c i" . xref-find-references))
   :hook ((eglot--managed-mode . company-mode)
+	 (eglot--managed-mode . flycheck-rust-setup)
 	 (eglot--managed-mode . (lambda () (flymake-mode -1)))
 	 (eglot--managed-mode . (lambda () (yas-minor-mode-on))))
   :custom
   (rustic-lsp-client 'eglot)
   :config
+  (use-package flycheck-rust)
+  (add-to-list 'flycheck-checkers 'rustic-clippy)
   (bind-rust-snippets rustic-mode-map)
   (advice-add 'rustic-recompile :before #'save-current-buffer-if-modified)
   (advice-add 'rustic-cargo-current-test :before #'save-current-buffer-if-modified)

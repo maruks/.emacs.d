@@ -10,7 +10,8 @@
   :diminish (which-key-mode)
 
   :hook ((sly-mrepl . (lambda ()
-			(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-repl))))
+			(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-repl)))
+	 (lisp-mode . (lambda () (yas-minor-mode-on))))
   :init
   (setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
 				   (ccl ("ccl") :coding-system utf-8-unix)))
@@ -19,7 +20,6 @@
   (setf sly-complete-symbol-function #'sly-flex-completions)
 
   :config
-  (yas-minor-mode-on)
   (bind-lisp-snippets lisp-mode-map)
   (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)
 

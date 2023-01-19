@@ -41,12 +41,15 @@
 						   dc dracula   ;; high contrast, https://draculatheme.com
 						   dd doom-dark+
 						   de doom-rouge
-						   dh doom-henna
+						   dh doom-henna   ;; much green
 						   di doom-horizon
 						   do doom-one  ;; *
 						   dn doom-nord
+						   du doom-nord-aurora
+						   dm doom-moonlight  ;; nice
 						   dv doom-vibrant ;; low contrast
 						   dz doom-zenburn ;; low contrast
+						   dw doom-wilmersdorf ;; nice
 						   dr dream
 						   er erosiond
 						   fo fogus
@@ -73,7 +76,7 @@
 						   ze zenburn ;; nice
 						   wo wombat
 						   ;; -------------------------   bright
-						   di dichromacy
+						   dy dichromacy
 						   gi github
 						   mc mccarthy
 						   sl solarized-light
