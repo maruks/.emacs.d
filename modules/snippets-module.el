@@ -16,7 +16,7 @@
 
 (yas-reload-all)
 
-(define-key yas-minor-mode-map (kbd "s-y") #'yas-expand)
+;; (define-key yas-minor-mode-map (kbd "s-y") #'yas-expand)
 (define-key yas-minor-mode-map (kbd "C-c C-y") #'yas-maybe-expand)
 
 ;; (add-hook 'elixir-mode-hook #'yas-minor-mode)

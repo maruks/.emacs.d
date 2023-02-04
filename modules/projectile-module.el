@@ -3,25 +3,25 @@
 (require 'package-module)
 
 (package-require 'projectile)
-(package-require 'ag)
 
 ;; projectile
 (use-package projectile
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :bind (:map projectile-mode-map
-	      ("s-a" . projectile-ag)
-	      ("s-d" . projectile-find-dir)
-	      ("s-p" . projectile-switch-project)
-	      ("s-b" . projectile-switch-to-buffer)
-	      ("s-f" . projectile-find-file)
+	      ;; ("s-a" . projectile-ag)
+	      ;; ("s-d" . projectile-find-dir)
+	      ;; ("s-p" . projectile-switch-project)
+	      ;; ("s-b" . projectile-switch-to-buffer)
+	      ;; ("s-f" . projectile-find-file)
 	      ("\e\et" . projectile-find-implementation-or-test-other-window)
-	      ("s-g" . projectile-grep)
-	      ("s-r" . projectile-replace))
+	    ;;  ("s-g" . projectile-grep)
+
+	      ("\e\er" . projectile-replace))
   :init
   (setq projectile-create-missing-test-files t)
   (setq ag-reuse-buffers 't)
-  (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'default)
   (projectile-global-mode))
 
 (provide 'projectile-module)
