@@ -1,0 +1,11 @@
+#!/bin/bash
+
+get_abs_filename() {
+   echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+}
+
+FILENAME=$(get_abs_filename $1)
+
+ECHO $FILENAME
+
+/Applications/Emacs.app/Contents/MacOS/Emacs $FILENAME 2>/dev/null &

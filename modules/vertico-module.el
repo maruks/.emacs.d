@@ -72,4 +72,37 @@
   :init
   (marginalia-mode))
 
+(use-package vertico-reverse
+  :after vertico
+  :ensure nil
+  :config
+  (vertico-reverse-mode 1))
+
+(use-package vertico-buffer
+  :after vertico
+  :ensure nil)
+
+(use-package vertico-flat
+  :after vertico
+  :ensure nil)
+
+(use-package vertico-grid
+  :after vertico
+  :ensure nil)
+
+(use-package vertico-unobtrusive
+  :after vertico
+  :ensure nil)
+
+(use-package vertico-multiform
+  :after vertico
+  :ensure nil
+  :config
+  (setq vertico-multiform-categories
+        '((imenu buffer reverse)
+          (consult-grep buffer reverse)
+          (t reverse)))
+ ;; (vertico-multiform-mode 1)
+  )
+
 (provide 'vertico-module)

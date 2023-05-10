@@ -69,7 +69,7 @@
 (global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
 
 ;; line numbers
-(global-set-key (kbd "s-4") 'display-line-numbers-mode )
+(global-set-key (kbd "s-5") 'display-line-numbers-mode )
 
 ;; kill-processes
 (setq confirm-kill-processes nil)
@@ -143,6 +143,12 @@
    ("s-k" . crux-kill-whole-line)
    ("\e\ed" . crux-duplicate-current-line-or-region)
    ("C-x 4 t" . crux-transpose-windows)))
+
+;; M-w C-w M-; works on single line
+(use-package whole-line-or-region
+  :ensure t
+  :init
+  (whole-line-or-region-global-mode))
 
 (setq next-line-add-newlines t)
 

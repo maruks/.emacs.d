@@ -41,7 +41,7 @@
          ("s-s D" . consult-locate)
          ("s-s g" . consult-grep)
          ("s-s G" . consult-git-grep)
-         ("s-s r" . consult-ripgrep)
+         ("s-a" . consult-ripgrep)
          ("s-s l" . consult-line)
          ("s-s L" . consult-line-multi)
          ("s-s k" . consult-keep-lines)
@@ -127,7 +127,7 @@
 
 (use-package consult-yasnippet
   :ensure t
-  :bind (("s-y" . consult-yasnippet))
+  :bind (("s-n" . consult-yasnippet))
   )
 
 (use-package consult-flycheck
@@ -143,10 +143,10 @@
 (use-package consult-projectile
   :ensure t
   :bind
-  ("s-p" . consult-projectile)
+  ("C-x p p" . consult-projectile)
   ("s-f" . consult-projectile-find-file)
   ("s-d" . consult-projectile-find-dir)
-  ("s-r" . consult-projectile-recentf)
+  ("C-x p r" . consult-projectile-recentf)
   ("s-p" . consult-projectile-switch-project)
   ("s-b" . consult-projectile-switch-to-buffer))
 

@@ -15,9 +15,8 @@
 	      ;; ("s-b" . projectile-switch-to-buffer)
 	      ;; ("s-f" . projectile-find-file)
 	      ("\e\et" . projectile-find-implementation-or-test-other-window)
-	    ;;  ("s-g" . projectile-grep)
-
-	      ("\e\er" . projectile-replace))
+	      ("s-g r" . projectile-grep)
+	      ("s-r" . projectile-replace))
   :init
   (setq projectile-create-missing-test-files t)
   (setq ag-reuse-buffers 't)
