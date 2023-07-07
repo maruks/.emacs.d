@@ -79,8 +79,8 @@
 (global-set-key [C-next] 'next-buffer)
 
 ;; ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "s-i") 'ibuffer)
+;;(global-set-key (kbd "C-x C-b") 'ibuffer)
+;;(global-set-key (kbd "s-i") 'ibuffer)
 
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)

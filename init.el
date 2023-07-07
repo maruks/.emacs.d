@@ -70,6 +70,7 @@
 
 (require 'vertico-module)
 (require 'consult-module)
+(require 'perspective-module)
 
 (require 'themes-module)
 (require 'user-module)
