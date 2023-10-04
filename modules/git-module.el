@@ -9,7 +9,8 @@
 
   :bind
   (("s-m" . magit-status)
-   ("\e\eb" . magit-blame)
+   ("C-x M-b" . magit-blame)
+   :map magit-status-mode-map
    ("*" . th/magit-aux-commands))
 
   :config
@@ -18,6 +19,10 @@
 			   ["Auxiliary commands"
 			    ("d" "Difftastic Diff (dwim)" th/magit-diff-with-difftastic)
 			    ("s" "Difftastic Show" th/magit-show-with-difftastic)])
+
+;; I want my personal commands transient to be bound to * and be shown
+;; in the Magit dispatch transient (which is bound to ? in Magit status
+;; buffers and C-x M-g in any Magit enabled buffer)
 
   (transient-append-suffix 'magit-dispatch "!"
     '("*" "My Magit Cmds" th/magit-aux-commands)))

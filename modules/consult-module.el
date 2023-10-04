@@ -34,14 +34,14 @@
          ("s-g o" . consult-outline)               ;; Alternative: consult-org-heading
          ("s-g m" . consult-mark)
          ("s-g k" . consult-global-mark)
-         ("s-g i" . consult-imenu)
-         ("s-g I" . consult-imenu-multi)
+         ("M-i" . consult-imenu)
+         ("M-I" . consult-imenu-multi)
          ;; M-s bindings (search-map)
          ("s-s d" . consult-find)
          ("s-s D" . consult-locate)
          ("s-s g" . consult-grep)
          ("s-s G" . consult-git-grep)
-         ("s-a" . consult-ripgrep)
+         ("s-a" . consult-ripgrep)     ;;
          ("s-s l" . consult-line)
          ("s-s L" . consult-line-multi)
          ("s-s k" . consult-keep-lines)
@@ -49,7 +49,6 @@
          ;; Isearch integration
          ("s-s e" . consult-isearch-history)
          ;; :map isearch-mode-map
-         ("s-e" . consult-isearch-history)         ;; orig. isearch-edit-string
          ("s-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
          ("s-s l" . consult-line)                  ;; needed by consult-line to detect isearch
          ("s-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
@@ -146,8 +145,8 @@
   :bind
   ("C-x p p" . consult-projectile)
   ("s-f" . consult-projectile-find-file)
-  ("s-d" . consult-projectile-find-dir)
-  ("C-x p r" . consult-projectile-recentf)
+  ("s-g d" . consult-projectile-find-dir)
+  ("s-e" . consult-projectile-recentf)
   ("s-b" . consult-projectile-switch-to-buffer))
 
 (provide 'consult-module)

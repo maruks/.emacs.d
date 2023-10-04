@@ -14,7 +14,7 @@
 	      ;; ("s-p" . projectile-switch-project)
 	      ;; ("s-b" . projectile-switch-to-buffer)
 	      ;; ("s-f" . projectile-find-file)
-	      ("\e\et" . projectile-find-implementation-or-test-other-window)
+	      ("s-g t" . projectile-find-implementation-or-test-other-window)
 	      ("s-g r" . projectile-grep)
 	      ("s-r" . projectile-replace))
   :init

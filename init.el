@@ -52,7 +52,7 @@
 ;; (require 'yaml-module)
 
 ;; (require 'idris-module)
-;; (require 'ocaml-module)
+(require 'ocaml-module)
 (require 'rustic-eglot-module)
 ;; (require 'scala-module)
 ;; (require 'purescript-module)

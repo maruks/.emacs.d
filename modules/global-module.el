@@ -141,7 +141,7 @@
   :bind
   (("C-c D" . crux-delete-file-and-buffer)
    ("s-k" . crux-kill-whole-line)
-   ("\e\ed" . crux-duplicate-current-line-or-region)
+   ("s-d" . crux-duplicate-current-line-or-region)
    ("C-x 4 t" . crux-transpose-windows)))
 
 ;; M-w C-w M-; works on single line
@@ -151,6 +151,15 @@
   (whole-line-or-region-global-mode))
 
 (setq next-line-add-newlines t)
+
+;; brew install coreutils
+(setq insert-directory-program (executable-find "gls"))
+
+;;keep cursor at same position when scrolling
+(setq scroll-preserve-screen-position 1)
+;;scroll window up/down by one line
+(global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
+(global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
 
 ;; used in advice
 (defun save-current-buffer-if-modified (&rest args)
