@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>KeepAlive</key>
+    <true/>
+    <key>Label</key>
+    <string>maris.Emacs</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/opt/homebrew/opt/emacs-mac/bin/emacs</string>
+      <string>--fg-daemon</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>UserName</key>
+    <string>maris</string>
+  </dict>
+</plist>

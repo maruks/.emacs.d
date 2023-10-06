@@ -22,6 +22,7 @@
 (package-require 'zenburn-theme)
 (package-require 'ample-theme)
 (package-require 'doom-themes)
+(package-require 'modus-themes)
 
 ;; moe
 (add-to-list 'load-path "~/.emacs.d/vendor/moe-theme")
@@ -61,6 +62,7 @@
 						   ip inkpot
 						   mi misterioso
 						   md moe-dark ;; *
+						   mv modus-vivendi-tinted
 						   no night-owl
 						   od odersky
 						   pl planet  ;; nice
@@ -79,6 +81,7 @@
 						   dy dichromacy
 						   gi github
 						   mc mccarthy
+						   mo modus-operandi-tinted
 						   sl solarized-light
 						   ra radiance
 						   ri ritchie

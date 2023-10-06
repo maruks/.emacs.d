@@ -1,0 +1,21 @@
+#!/bin/bash
+
+get_abs_filename() {
+   echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+}
+
+FILE=$(get_abs_filename $1)
+
+ECHO $FILE
+
+if [ -d "$FILE" ]; then
+    echo "➖➖➖ 📁 ➖➖➖"
+else
+  if [ -f "$FILE" ]; then
+    echo "➖➖➖ ✅ ➖➖➖"
+  else
+    echo "➖➖➖ 🆕 ➖➖➖"
+  fi
+fi
+
+/opt/homebrew/opt/emacs-mac/bin/emacs $FILE 2>/dev/null &
