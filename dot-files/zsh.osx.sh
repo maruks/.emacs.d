@@ -8,11 +8,11 @@ export ALTERNATE_EDITOR="vim"
 alias em="$HOME/bin/run-emacs"
 alias ec="$HOME/bin/run-emacsclient"
 alias e="$HOME/bin/run-emacsclient-cli"
-alias notes='$HOME/bin/run-emacsclient-cli -e "(deft)"'
+alias notes='$HOME/bin/run-emacsclient -e "(deft)"'
 
 emacs_open_buffer()
 {
-    run-emacsclient-cli -e "(let ((b (find-buffer-by-prefix \"$1\"))) nil)"
+    run-emacsclient -e "(let ((b (find-buffer-by-prefix \"$1\"))) nil)"
 }
 alias eb=emacs_open_buffer
 

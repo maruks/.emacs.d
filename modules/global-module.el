@@ -173,4 +173,14 @@
 
 (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
+(use-package deft
+  :bind ("s-6" . deft)
+  :ensure t
+  :commands (deft)
+  :config
+  (setq deft-recursive t)
+  (setq deft-use-filename-as-title t))
+
+(global-set-key (kbd "s-0") (kbd "C-x #"))
+
 (provide 'global-module)
