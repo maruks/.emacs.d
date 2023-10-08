@@ -5,8 +5,7 @@
 (setq font (getenv "EMACS_DEFAULT_FONT"))
 
 (when (eq system-type 'darwin)
-  (setq font (or font "Menlo-15")) ;; Source Code Pro-15
-  (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#"))))
+  (setq font (or font "Menlo-15")))  ;; Source Code Pro-15
 
 (when (eq system-type 'gnu/linux)
   (setq font (or font "DejaVu Sans Mono-10")))

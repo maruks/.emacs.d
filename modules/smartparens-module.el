@@ -48,21 +48,21 @@
 
 (sp-use-smartparens-bindings)
 
-(define-key smartparens-mode-map (kbd "M-s") 'sp-splice-sexp)
-(define-key smartparens-mode-map (kbd "M-r") 'sp-raise-sexp)
-(define-key smartparens-mode-map (kbd "M-j") 'sp-join-sexp)
-(define-key smartparens-mode-map (kbd "M-D") 'sp-absorb-sexp)
-(define-key smartparens-mode-map (kbd "C-k") 'sp-kill-hybrid-sexp)
-(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+(keymap-set smartparens-mode-map "M-s" 'sp-splice-sexp)
+(keymap-set smartparens-mode-map "M-r" 'sp-raise-sexp)
+(keymap-set smartparens-mode-map "M-j" 'sp-join-sexp)
+(keymap-set smartparens-mode-map "M-D" 'sp-absorb-sexp)
+(keymap-set smartparens-mode-map "C-k" 'sp-kill-hybrid-sexp)
+(keymap-set smartparens-mode-map "C-M-k" 'sp-kill-sexp)
 
-(define-key smartparens-mode-map (kbd "s-[") 'sp-select-previous-thing)
-(define-key smartparens-mode-map (kbd "s-{") 'sp-select-previous-thing-exchange)
+(keymap-set smartparens-mode-map "s-[" 'sp-select-previous-thing)
+(keymap-set smartparens-mode-map "s-{" 'sp-select-previous-thing-exchange)
 
-(define-key smartparens-mode-map (kbd "s-]") 'sp-select-next-thing)
-(define-key smartparens-mode-map (kbd "s-}") 'sp-select-next-thing-exchange)
+(keymap-set smartparens-mode-map "s-]" 'sp-select-next-thing)
+(keymap-set smartparens-mode-map "s-}" 'sp-select-next-thing-exchange)
 
-(define-key smartparens-mode-map (kbd "M-<backspace>") nil)
-(define-key smartparens-mode-map (kbd "s-<backspace>") 'sp-backward-unwrap-sexp)
+(keymap-set smartparens-mode-map "M-<backspace>" nil)
+(keymap-set smartparens-mode-map "s-<backspace>" 'sp-backward-unwrap-sexp)
 
 ;;
 

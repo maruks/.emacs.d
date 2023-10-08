@@ -63,24 +63,27 @@
   )
 
 ;; global keys
-(global-set-key (kbd "\e\eg") 'goto-line)
 
-(global-set-key (kbd "C-c tf") 'toggle-frame-fullscreen)
-(global-set-key (kbd "C-c tm") 'toggle-frame-maximized)
+(keymap-global-set "M-3" "#")
+
+(keymap-global-set "ESC ESC g" 'goto-line)
+
+(keymap-global-set "C-c t f" 'toggle-frame-fullscreen)
+(keymap-global-set "C-c t m" 'toggle-frame-maximized)
 
 ;; line numbers
-(global-set-key (kbd "s-5") 'display-line-numbers-mode )
+(keymap-global-set "s-5" 'display-line-numbers-mode)
 
 ;; kill-processes
 (setq confirm-kill-processes nil)
 
 ;; C - pg up / pg down
-(global-set-key [C-prior] 'previous-buffer)
-(global-set-key [C-next] 'next-buffer)
+(keymap-global-set "C-<prior>" 'previous-buffer)
+(keymap-global-set "C-<next>" 'next-buffer)
 
 ;; ibuffer
-;;(global-set-key (kbd "C-x C-b") 'ibuffer)
-;;(global-set-key (kbd "s-i") 'ibuffer)
+;;(keymap-global-set "C-x C-b" 'ibuffer)
+;;(keymap-global-set "s-i" 'ibuffer)
 
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
@@ -108,8 +111,8 @@
 ;; symbol search
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
 
-(global-set-key (kbd "C-c s") 'isearch-forward-symbol)
-(global-set-key (kbd "C-c .") 'isearch-forward-symbol-at-point)
+(keymap-global-set "C-c s" 'isearch-forward-symbol)
+(keymap-global-set "C-c ." 'isearch-forward-symbol-at-point)
 
 ;; which key
 (package-require 'which-key)
@@ -130,11 +133,11 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
-(global-set-key (kbd "M-[") 'backward-paragraph)
-(global-set-key (kbd "M-]") 'forward-paragraph)
+(keymap-global-set "M-[" 'backward-paragraph)
+(keymap-global-set "M-]" 'forward-paragraph)
 
-(global-set-key (kbd "M-{") 'backward-sentence)
-(global-set-key (kbd "M-}") 'forward-sentence)
+(keymap-global-set "M-{" 'backward-sentence)
+(keymap-global-set "M-}" 'forward-sentence)
 
 ;; crux
 (use-package crux
@@ -158,8 +161,8 @@
 ;;keep cursor at same position when scrolling
 (setq scroll-preserve-screen-position 1)
 ;;scroll window up/down by one line
-(global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
-(global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
+(keymap-global-set "M-n" "C-u 1 C-v")
+(keymap-global-set "M-p" "C-u 1 M-v")
 
 ;; used in advice
 (defun save-current-buffer-if-modified (&rest args)
@@ -181,6 +184,6 @@
   (setq deft-recursive t)
   (setq deft-use-filename-as-title t))
 
-(global-set-key (kbd "s-0") (kbd "C-x #"))
+(keymap-global-set "s-0" 'server-edit)
 
 (provide 'global-module)
