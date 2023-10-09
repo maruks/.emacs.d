@@ -28,7 +28,7 @@
 ;; (require 'ivy-module)
 (require 'global-module)
 (require 'projectile-module)
-(require 'ace-jump-module)
+;;(require 'ace-jump-module)
 (require 'git-module)
 (require 'fullframe-module)
 
