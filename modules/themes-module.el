@@ -23,15 +23,12 @@
 (package-require 'ample-theme)
 (package-require 'doom-themes)
 (package-require 'modus-themes)
+(package-require 'moe-theme)
 
-;; moe
-(add-to-list 'load-path "~/.emacs.d/vendor/moe-theme")
-(require 'moe-theme)
-
-;; color themes
+;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(defvar theme-key-prefix "s-3")
+(defvar theme-key-prefix "s-1")
 (defvar theme-key-disable "C-d")
 (defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
 						   ap apropospriate-dark
@@ -106,7 +103,8 @@
   (maphash  (lambda (k v)
 	      (global-set-key
 	       (kbd (concat theme-key-prefix " " (symbol-name k)))
-	       (lambda () (interactive) (theme-enable v)))) theme-set-keys))
+	       (lambda () (interactive) (theme-enable v))))
+	    theme-set-keys))
 
 (defun theme-load (name)
   (interactive
@@ -115,7 +113,7 @@
                              (mapcar 'symbol-name (custom-available-themes))))))
   (theme-enable name))
 
-(global-set-key (kbd "s-4") 'theme-load)
+(global-set-key (kbd "s-2") 'theme-load)
 
 (defun theme-load-default ()
   (let ((default-theme (getenv "EMACS_DEFAULT_THEME")))

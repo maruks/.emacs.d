@@ -48,6 +48,10 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/mark")
 (require 'mark)
 
+;; mark
+(add-to-list 'load-path "~/.emacs.d/vendor/xah-mark")
+(require 'xah-mark)
+
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
 
@@ -72,7 +76,7 @@
 (keymap-global-set "C-c t m" 'toggle-frame-maximized)
 
 ;; line numbers
-(keymap-global-set "s-5" 'display-line-numbers-mode)
+(keymap-global-set "s-3" 'display-line-numbers-mode)
 
 ;; kill-processes
 (setq confirm-kill-processes nil)
@@ -80,10 +84,6 @@
 ;; C - pg up / pg down
 (keymap-global-set "C-<prior>" 'previous-buffer)
 (keymap-global-set "C-<next>" 'next-buffer)
-
-;; ibuffer
-;;(keymap-global-set "C-x C-b" 'ibuffer)
-;;(keymap-global-set "s-i" 'ibuffer)
 
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
@@ -106,7 +106,6 @@
                ("emacs" (or
                          (name . "^.+\\.el$")
                          (name . "^\\*.+\\*$")))))))
-
 
 ;; symbol search
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
@@ -177,7 +176,7 @@
 (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
 (use-package deft
-  :bind ("s-6" . deft)
+  :bind ("s-4" . deft)
   :ensure t
   :commands (deft)
   :config
