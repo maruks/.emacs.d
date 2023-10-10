@@ -70,8 +70,6 @@
 
 (keymap-global-set "M-3" "#")
 
-(keymap-global-set "ESC ESC g" 'goto-line)
-
 (keymap-global-set "C-c t f" 'toggle-frame-fullscreen)
 (keymap-global-set "C-c t m" 'toggle-frame-maximized)
 
