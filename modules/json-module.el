@@ -10,6 +10,7 @@
   (use-package json-snatcher)
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
+  (setq js-indent-level 2)
   (setq-default json-reformat:indent-width 2))
 
 (use-package flycheck-mode

@@ -17,7 +17,11 @@
 	 ("s-c" . cider-load-buffer)
 	 ("<f10>" . cider-load-buffer)
 	 ("<f11>" . cider-jack-in)
-	 ("C-c C-a" . align-cljlet))
+	 ("C-c C-a" . align-cljlet)
+	 :map cider-mode-map
+	 ("C-h s-f" . clojure-essential-ref-nov)
+	 :map cider-repl-mode-map
+	 ("C-h s-f" . clojure-essential-ref-nov))
 
   :diminish (which-key-mode)
 
@@ -46,12 +50,16 @@
   (use-package cider)
   (use-package clj-refactor)
   (use-package align-cljlet)
+  (use-package clojure-essential-ref-nov)
+
   (require 'flycheck-clj-kondo)
 
   (advice-add 'cider-load-buffer :before #'save-current-buffer-if-modified)
 
   (clj-refactor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-r")
+
+  (setq clojure-essential-ref-nov-epub-path "~/Books/Clojure_The_Essential_Reference_v31.epub")
 
   (bind-clojure-snippets clojure-mode-map)
 
@@ -60,5 +68,7 @@
   ;; (setq cljr--debug-mode t)
 
   )
+
+
 
 (provide 'clojure-module)

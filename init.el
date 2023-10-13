@@ -30,6 +30,7 @@
 (require 'projectile-module)
 ;;(require 'ace-jump-module)
 (require 'git-module)
+(require 'ebooks-module)
 (require 'fullframe-module)
 
 (require 'snippets-module)
