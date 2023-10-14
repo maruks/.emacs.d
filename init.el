@@ -42,7 +42,7 @@
 (require 'smart-mode-line-module)
 (require 'scheme-module)
 ;; (require 'gerbil-module)
-;; (require 'erlang-module)
+(require 'erlang-module)
 
 (require 'elixir-module)
 
