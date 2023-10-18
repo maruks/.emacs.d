@@ -2,8 +2,9 @@
 
 (require 'package-module)
 
-(use-package flycheck-clj-kondo
-  :ensure t)
+(use-package logview)
+
+(use-package flycheck-clj-kondo)
 
 (defun eldoc-hack ()
   (setq eldoc-documentation-strategy 'eldoc-documentation-default)
