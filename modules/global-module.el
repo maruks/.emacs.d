@@ -173,14 +173,6 @@
 
 (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
-(use-package deft
-  :bind ("s-4" . deft)
-  :ensure t
-  :commands (deft)
-  :config
-  (setq deft-recursive t)
-  (setq deft-use-filename-as-title t))
-
 (keymap-global-set "s-0" 'server-edit)
 
 (provide 'global-module)

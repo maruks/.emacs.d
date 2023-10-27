@@ -25,6 +25,7 @@
 (require 'appearance-module)
 (require 'mituharu-module)
 (require 'fonts-module)
+(require 'icons-module)
 ;; (require 'ivy-module)
 (require 'global-module)
 (require 'projectile-module)
@@ -71,6 +72,7 @@
 
 (require 'vertico-module)
 (require 'consult-module)
+(require 'notes-module)
 (require 'perspective-module)
 
 (require 'themes-module)
