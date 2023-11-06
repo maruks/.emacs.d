@@ -2,39 +2,23 @@
 
 (require 'package-module)
 
-;; opam install utop merlin
+;; opam install utop ocaml-lsp-server ocamlformat dune
 
 ;; Major mode for OCaml programming
 (use-package tuareg
-  :ensure t
-  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+  :mode (("\\.ocamlinit\\'" . tuareg-mode))
+  :hook (tuareg-mode . eglot-ensure)
+  )
+
+(add-to-list 'exec-path "~/.opam/default/bin")
 
 ;; Major mode for editing Dune project files
-(use-package dune
-  :ensure t)
+(use-package dune)
 
-;; Merlin provides advanced IDE features
-(use-package merlin
-  :ensure t
-  :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode)
-  (add-hook 'merlin-mode-hook #'company-mode)
-  ;; we're using flycheck instead
-  (setq merlin-error-after-save nil))
-
-(use-package merlin-eldoc
-  :ensure t
-  :hook ((tuareg-mode) . merlin-eldoc-setup))
-
-;; This uses Merlin internally
-(use-package flycheck-ocaml
-  :ensure t
-  :config
-  (flycheck-ocaml-setup))
+(use-package ocamlformat)
 
 ;; utop configuration
 (use-package utop
-  :ensure t
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
