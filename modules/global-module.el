@@ -142,6 +142,7 @@
   (("C-c D" . crux-delete-file-and-buffer)
    ("s-k" . crux-kill-whole-line)
    ("s-d" . crux-duplicate-current-line-or-region)
+   ("M-s-d" . crux-duplicate-and-comment-current-line-or-region)
    ("C-x 4 t" . crux-transpose-windows)))
 
 ;; M-w C-w M-; works on single line
@@ -174,5 +175,7 @@
 (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
 (keymap-global-set "s-0" 'server-edit)
+
+(global-superword-mode)
 
 (provide 'global-module)

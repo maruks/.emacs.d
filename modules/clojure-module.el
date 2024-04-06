@@ -70,6 +70,4 @@
 
   )
 
-
-
 (provide 'clojure-module)

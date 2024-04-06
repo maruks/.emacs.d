@@ -49,7 +49,7 @@
 
 (require 'clojure-module)
 
-;; (require 'sml-module)
+(require 'org-module)
 (require 'json-module)
 ;; (require 'yaml-module)
 

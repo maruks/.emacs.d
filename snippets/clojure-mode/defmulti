@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# name: defmulti
+# key: defmulti
+# --
+
+(defmulti ${1:name} ${2:dispatch-fn})$>
+
+(defmethod $1 ${3:dispatch-value} [${4:args}]$>
+$5)$>
+$0

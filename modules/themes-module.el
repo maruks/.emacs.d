@@ -24,66 +24,119 @@
 (package-require 'doom-themes)
 (package-require 'modus-themes)
 (package-require 'moe-theme)
+(package-require 'catppuccin-theme)
 
 ;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 (defvar theme-key-prefix "s-1")
 (defvar theme-key-disable "C-d")
-(defvar theme-set-keys #s(hash-table size 30 data (af ample-flat    ;; *
+(defvar theme-set-keys #s(hash-table size 30 data (ac doom-acario-dark
+						   af ample-flat    ;; *
 						   ap apropospriate-dark
 						   at atom-one-dark ;; low contrast
+
 						   br brin
-						   cl clues ;; so blue
-						   da darcula
-						   dc dracula   ;; high contrast, https://draculatheme.com
+						   bl doom-bluloco-dark
+
+						   ca catppuccin
+						   ch doom-challenger-deep ;; high contrast
+						   cl clues ;; high contrast blue
+
+						   da doom-ayu-mirage
+						   db doom-badger
+						   dc doom-city-lights
 						   dd doom-dark+
-						   de doom-rouge
-						   dh doom-henna   ;; much green
-						   di doom-horizon
-						   do doom-one  ;; *
-						   dn doom-nord
-						   du doom-nord-aurora
+						   de doom-ephemeral
+						   df doom-feather-dark
+						   dg doom-gruvbox
+						   dh doom-horizon
+						   di doom-Iosvkem
+						   dj darcula
+						   dk doom-ayu-dark
+						   dl doom-lantern
 						   dm doom-moonlight  ;; nice
+						   dn doom-nord  ;; nice
+						   do doom-one  ;; nice
+                                                   dp doom-palenight ;; high contrast
+						   dq doom-dracula
+						   dr doom-rouge
+						   ds doom-sourcerer
+						   dt doom-tokyo-night ;; !
+						   du doom-nord-aurora
 						   dv doom-vibrant ;; low contrast
+						   dw doom-wilmersdorf  ;; nice
+						   dx doom-xcode
 						   dz doom-zenburn ;; low contrast
-						   dw doom-wilmersdorf ;; nice
-						   dr dream
+
 						   er erosiond
+
 						   fo fogus
 						   fl flatland  ;; *
+
 						   gh graham
-						   he heroku
+
+						   he doom-henna
 						   hi hickey
-						   ju junio
+						   ho doom-homage-black
+
 						   ip inkpot
+						   ir doom-ir-black
+
+						   ju junio
+
+						   ma doom-material
+						   mc doom-monokai-classic
+						   md moe-dark
 						   mi misterioso
-						   md moe-dark ;; *
+                                                   mm doom-monokai-machine
+						   mo doom-molokai
+						   mp doom-monokai-pro
+                                                   mr doom-monokai-ristretto
+                                                   ms doom-monokai-spectrum
 						   mv modus-vivendi-tinted
+
 						   no night-owl
+
+						   oc doom-oceanic-next
 						   od odersky
+						   op doom-opera
+						   oh doom-old-hope
+						   ok doom-oksolar-dark  ;; !
+
+						   pe doom-peacock
+						   pi doom-pine
 						   pl planet  ;; nice
+
 						   re reykjavik ;; *
+
 						   sd solarized-dark
+						   sg doom-spacegrey
 						   se sanityinc-tomorrow-eighties ;; nice
-						   sp spacemacs-dark  ;; *
 						   sm smyx
+						   sn doom-snazzy
+						   so doom-solarized-dark-high-contrast
+						   sp spacemacs-dark  ;; *
+
+						   tb tomorrow-night-bright
 						   td tango-dark ;; *
 						   te tomorrow-night-eighties ;; *
+						   to doom-tomorrow-night
 						   tn tomorrow-night
-						   tb tomorrow-night-bright
-						   ze zenburn ;; nice
+
 						   wo wombat
-						   ;; -------------------------   bright
+
+						   ze zenburn ;; nice
+						   ;; -------------------------   light
 						   dy dichromacy
 						   gi github
-						   mc mccarthy
-						   mo modus-operandi-tinted
+						   mh mccarthy
+						   mt modus-operandi-tinted
 						   sl solarized-light
 						   ra radiance
 						   ri ritchie
 						   ta tango
-						   to tomorrow
+						   tm tomorrow
 						   vi vim-colors
 						   le leuven)))
 
