@@ -60,11 +60,11 @@
 (setq reb-re-syntax 'string)
 
 ;; exec-path-from-shell
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  ;; :config
-  ;; (exec-path-from-shell-initialize)   SLOW
-  )
+;; (use-package exec-path-from-shell
+;;   :if (memq window-system '(mac ns))
+;;   :config
+;;   (exec-path-from-shell-initialize)   SLOW
+;;   )
 
 ;; global keys
 
@@ -175,6 +175,9 @@
 (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
 (keymap-global-set "s-0" 'server-edit)
+
+;; C-U C-SPC, SPC, SPC...
+(setq-default set-mark-command-repeat-pop t)
 
 (global-superword-mode)
 
