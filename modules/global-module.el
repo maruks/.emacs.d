@@ -138,6 +138,7 @@
 
 ;; crux
 (use-package crux
+  :ensure t
   :bind
   (("C-c D" . crux-delete-file-and-buffer)
    ("s-k" . crux-kill-whole-line)

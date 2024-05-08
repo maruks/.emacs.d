@@ -27,6 +27,7 @@
          ;; Other custom bindings
          ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ;; M-g bindings (goto-map)
+         ("s-g" . nil)
          ("s-g e" . consult-compile-error)
          ("s-g f" . consult-flycheck)
          ("s-g g" . consult-goto-line)             ;; orig. goto-line
@@ -37,6 +38,7 @@
          ("M-i" . consult-imenu)
          ("M-I" . consult-imenu-multi)
          ;; M-s bindings (search-map)
+         ("s-s" . nil)
          ("s-s d" . consult-find)
          ("s-s D" . consult-locate)
          ("s-s g" . consult-grep)
@@ -145,6 +147,7 @@
   :bind
   ("C-x p p" . consult-projectile)
   ("s-f" . consult-projectile-find-file)
+  ("s-g" . nil)
   ("s-g d" . consult-projectile-find-dir)
   ("s-e" . consult-projectile-recentf)
   ("s-b" . consult-projectile-switch-to-buffer))

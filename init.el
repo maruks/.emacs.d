@@ -15,19 +15,20 @@
 (require 'use-package-module)
 
 ;; benchmark startup time
-;; (use-package benchmark-init
-;;   :ensure t
-;;   :config
-;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+(use-package benchmark-init
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; (require 'hydra-module)
 
 (require 'appearance-module)
-(require 'mituharu-module)
+;; (require 'mituharu-module)
 (require 'fonts-module)
-(require 'icons-module)
+;; (require 'icons-module)
 ;; (require 'ivy-module)
 (require 'global-module)
+(require 'treesitter-module)
 (require 'projectile-module)
 ;;(require 'ace-jump-module)
 (require 'git-module)
@@ -54,13 +55,13 @@
 ;; (require 'yaml-module)
 
 ;; (require 'idris-module)
-(require 'ocaml-module)
-(require 'rustic-eglot-module)
+;; (require 'ocaml-module)
+;; (require 'rustic-eglot-module)
 ;; (require 'scala-module)
 ;; (require 'purescript-module)
 
 ;;(require 'haskell-intero-module)
-(require 'haskell-lsp-module)
+;; (require 'haskell-lsp-module)
 
 ;;(require 'elm-module)
 ;;(require 'elisp-module)

@@ -2,38 +2,30 @@
 
 (require 'package-module)
 
-(use-package elixir-mode)
+(use-package
+ eglot
+ :ensure nil
+ :config (add-to-list 'eglot-server-programs '(elixir-ts-mode "start_lexical.sh")))
 
-(use-package alchemist-mode
-  :ensure alchemist
-  :hook elixir-mode
-  :bind (:map elixir-mode-map
-	      ("s-c" . alchemist-iex-compile-this-buffer)
-	      ("C-c C-l" . alchemist-iex-project-run)
-	      ("C-c a i t" . alchemist-iex-reload))
-  :init
-  (defun alchemist-iex-reload (&optional arg)
-    (interactive "P")
-    (when (buffer-live-p alchemist-iex-buffer)
-      (kill-process (get-buffer-process alchemist-iex-buffer))
-      (sleep-for 1)
-      (if arg
-  	  (call-interactively 'alchemist-iex-project-run)
-        (call-interactively 'alchemist-iex-run))))
+(use-package
+ elixir-ts-mode
+ :hook ((elixir-ts-mode . eglot-ensure)
+;;	(elixir-ts-mode . heex-ts-mode)
+	(elixir-ts-mode . company-mode)
+	))
+
+(use-package inf-elixir
+  :after (elixir-ts-mode)
+  :bind (:map elixir-ts-mode-map
+	 ("C-c i i" . 'inf-elixir)
+         ("C-c i p" . 'inf-elixir-project)
+         ("C-c i l" . 'inf-elixir-send-line)
+         ("C-c i r" . 'inf-elixir-send-region)
+         ("C-c i b" . 'inf-elixir-send-buffer)
+         ("C-c i R" . 'inf-elixir-reload-module)))
+
+(use-package mix
   :config
-  (advice-add 'alchemist-iex-compile-this-buffer :before #'save-current-buffer-if-modified))
-
-(use-package company
-  :init
-  (add-hook 'elixir-mode-hook 'company-mode)
-  :bind (:map elixir-mode-map
-	      ("TAB" . company-indent-or-complete-common)))
-
-(use-package flycheck-mode
-  :hook elixir-mode
-  :ensure flycheck
-  :config
-  (use-package flycheck-credo)
-  (flycheck-credo-setup))
+  (add-hook 'elixir-ts-mode-hook 'mix-minor-mode))
 
 (provide 'elixir-module)
