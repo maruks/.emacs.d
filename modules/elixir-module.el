@@ -5,14 +5,25 @@
 (use-package
  eglot
  :ensure nil
- :config (add-to-list 'eglot-server-programs '(elixir-ts-mode "start_lexical.sh")))
+ :config (add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/maris/Projects/elixir-ls/_build/release/language_server.sh")))
 
 (use-package
- elixir-ts-mode
- :hook ((elixir-ts-mode . eglot-ensure)
-;;	(elixir-ts-mode . heex-ts-mode)
-	(elixir-ts-mode . company-mode)
-	))
+  elixir-ts-mode
+  :hook ((elixir-ts-mode . eglot-ensure)
+	 ;;	(elixir-ts-mode . heex-ts-mode)
+	 (elixir-ts-mode . company-mode)
+	 )
+
+  :config
+
+  (defun elixir/find-mix-project (dir)
+    "Try to locate a Elixir project root by 'mix.exs' above DIR."
+    (let ((mix_root (locate-dominating-file dir "mix.exs")))
+      (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
+      (if (stringp mix_root) `(transient . ,mix_root) nil)))
+
+  (add-hook 'project-find-functions 'elixir/find-mix-project nil nil)
+  )
 
 (use-package inf-elixir
   :after (elixir-ts-mode)
