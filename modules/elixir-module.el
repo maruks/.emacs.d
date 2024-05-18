@@ -33,8 +33,15 @@
          ("C-c i l" . 'inf-elixir-send-line)
          ("C-c i r" . 'inf-elixir-send-region)
          ("C-c i b" . 'inf-elixir-send-buffer)
-         ("C-c i R" . 'inf-elixir-reload-module)))
+         ("C-c i R" . 'inf-elixir-reload-module)
+         ("s-c" . 'inf-elixir-reload-module))
+  :config
+  (advice-add 'inf-elixir-reload-module :before #'save-current-buffer-if-modified)
+  (advice-add 'inf-elixir-send-buffer :before #'save-current-buffer-if-modified))
 
+;; C-c d t - mix-test
+;; C-c d o - mix-test-current-buffer
+;; C-c d f - mix-test-current-test
 (use-package mix
   :config
   (add-hook 'elixir-ts-mode-hook 'mix-minor-mode))

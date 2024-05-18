@@ -173,7 +173,7 @@
    (set-buffer "*scratch*")
    (insert (format "%s" string))))
 
-(setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
+;; (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
 (keymap-global-set "s-0" 'server-edit)
 
