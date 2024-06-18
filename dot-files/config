@@ -1,5 +1,6 @@
 
 IdentityFile /Users/maris/.ssh/id_ed25519
+IdentityFile /Users/maris/.ssh/id_rsa
 
 AddKeysToAgent yes
 UseKeychain yes
