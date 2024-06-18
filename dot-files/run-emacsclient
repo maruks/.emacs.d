@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-if [ -z "$EMACSCLIENT_OPTS" ]; then
-  EMACSCLIENT_OPTS="-nc"
-fi
+get_abs_filename() {
+   echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+}
 
-if [ $# -eq 0 ]; then
-  COMMAND='/usr/local/bin/emacsclient '$EMACSCLIENT_OPTS' -e "(if (display-graphic-p) (x-focus-frame nil))"'
-  else
-  COMMAND='/usr/local/bin/emacsclient '$EMACSCLIENT_OPTS' "$@"'
-fi
+FILENAME=$(get_abs_filename $1)
 
-if [ -z "$(shopt | grep login_shell)" ]; then
-    echo "$COMMAND" | exec bash --login -s "$@"
-  else
-    eval "exec $COMMAND"
-fi
+ECHO $FILENAME
+
+emacsclient $FILENAME &

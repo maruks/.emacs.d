@@ -1,8 +1,8 @@
 [user]
-	email = maris.orbidans@agentsmutual.co.uk
+	email = maris.orbidans@gmail.com
 	name = Maris Orbidans
 [core]
-	editor = emacs
+	editor = vim
 [alias]
     aa = add --all
     bv = branch -vv
@@ -20,8 +20,8 @@
     ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
     mm = merge --no-ff
     st = status --short --branch
-    tg = tag -a 
-    un = reset --hard HEAD  
+    tg = tag -a
+    un = reset --hard HEAD
     uh = reset --hard HEAD^
     cl = clone
     pu = push origin master
@@ -44,3 +44,9 @@
 	trustexitcode = true
 [diff]
 	tool = Kaleidoscope
+	external = difft
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

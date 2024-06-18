@@ -10,6 +10,7 @@ url
 .*
 eshell
 *.cache
+eln-cache
 *~
 vendor/distel
 vendor/ensime
@@ -17,6 +18,7 @@ ido.last
 history
 nov-places
 tramp
+org-persist
 bookmarks
 tree-sitter
 transient

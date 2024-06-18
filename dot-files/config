@@ -1,29 +1,5 @@
 
-
-IdentityFile ~/.ssh/id_rsa_am
-
-IdentityFile ~/.ssh/id_rsa_am_gh
-
-Identityfile /Users/maris/Projects/puppet/keys/DevelopmentKeyPair.pem
-
-Identityfile /Users/maris/.ssh/eu-west-1-dev17.pem
+IdentityFile /Users/maris/.ssh/id_ed25519
 
 AddKeysToAgent yes
 UseKeychain yes
-
-Host devbox
-    HostName localhost
-    Port 2222
-    User maris
-
-Host home
-    IdentityFile /Users/maris/.ssh/id_ed25519
-    HostName maruks.homelinuxserver.org
-    Port 22
-    User maris
-
-Host lhome
-    IdentityFile /Users/maris/.ssh/id_ed25519
-    HostName 192.168.1.3
-    Port 22
-    User maris
