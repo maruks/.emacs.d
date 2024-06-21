@@ -27,14 +27,21 @@
          ;; Other custom bindings
          ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ;; M-g bindings (goto-map)
-         ("s-g" . nil)
-         ("s-g e" . consult-compile-error)
-         ("s-g f" . consult-flycheck)
-         ("s-g g" . consult-goto-line)             ;; orig. goto-line
-         ("s-g s-g" . consult-goto-line)           ;; orig. goto-line
-         ("s-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("s-g m" . consult-mark)
-         ("s-g k" . consult-global-mark)
+         ;; ("s-g" . nil)
+         ;; ("s-g e" . consult-compile-error)
+         ;; ("s-g f" . consult-flycheck)
+         ;; ("s-g g" . consult-goto-line)             ;; orig. goto-line
+         ;; ("s-g s-g" . consult-goto-line)           ;; orig. goto-line
+         ;; ("s-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ;; ("s-g m" . consult-mark)
+         ;; ("s-g k" . consult-global-mark)
+	 ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
          ("M-i" . consult-imenu)
          ("M-I" . consult-imenu-multi)
          ;; M-s bindings (search-map)
