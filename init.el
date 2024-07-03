@@ -78,3 +78,5 @@
 
 (require 'themes-module)
 (require 'user-module)
+
+(require 'macos-module)
