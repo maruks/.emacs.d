@@ -5,7 +5,7 @@
 (use-package
  eglot
  :ensure nil
- :config (add-to-list 'eglot-server-programs '(elixir-ts-mode "/Users/maris/Projects/elixir-ls/_build/release/language_server.sh")))
+ :config (add-to-list 'eglot-server-programs '(elixir-ts-mode "~/bin/elixir-ls/language_server.sh")))
 
 (use-package
   elixir-ts-mode
