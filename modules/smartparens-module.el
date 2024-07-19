@@ -30,9 +30,9 @@
 
 (add-hook 'erlang-shell-mode-hook #'smartparens-mode)
 
-(add-hook 'elixir-mode-hook (lambda ()
-			      (require 'smartparens-elixir)
-			      (smartparens-mode 1)))
+(add-hook 'elixir-ts-mode-hook (lambda ()
+				 (require 'smartparens-elixir)
+				 (smartparens-mode 1)))
 
 (add-hook 'html-mode-hook #'smartparens-mode)
 (add-hook 'lua-mode-hook #'smartparens-mode)
