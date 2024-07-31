@@ -37,7 +37,11 @@
          ("s-c" . 'inf-elixir-reload-module))
   :config
   (advice-add 'inf-elixir-reload-module :before #'save-current-buffer-if-modified)
-  (advice-add 'inf-elixir-send-buffer :before #'save-current-buffer-if-modified))
+  (advice-add 'inf-elixir-send-buffer :before #'save-current-buffer-if-modified)
+
+  (bind-elixir-snippets elixir-ts-mode-map)
+
+  )
 
 ;; C-c d t - mix-test
 ;; C-c d o - mix-test-current-buffer

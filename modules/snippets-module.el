@@ -19,7 +19,7 @@
 ;; (define-key yas-minor-mode-map (kbd "s-y") #'yas-expand)
 (define-key yas-minor-mode-map (kbd "C-c C-y") #'yas-maybe-expand)
 
-;; (add-hook 'elixir-mode-hook #'yas-minor-mode)
+(add-hook 'elixir-ts-mode-hook #'yas-minor-mode)
 
 (defun expand-yasnippet (name)
   (interactive)
@@ -69,6 +69,19 @@
                                (?y . "ifl")
 			       (?z . "try")))
 
+(defconst *elixir-snippets* '((?c . "cond")
+			      (?d . "def")
+			      (?p . "defp")
+			      (?g . "genserver")
+			      (?i . "if")
+			      (?o . "for")
+			      (?l . "unless")
+			      (?n . "fn")
+			      (?r . "receive")
+			      (?v . "case")
+			      (?t . "test")
+			      ))
+
 (defun insert-lisp-snippet ()
   (interactive)
   (let ((s (cdr (assoc last-input-event *lisp-snippets*))))
@@ -84,6 +97,11 @@
   (let ((s (cdr (assoc last-input-event *clojure-snippets*))))
     (expand-yasnippet s)))
 
+(defun insert-elixir-snippet ()
+  (interactive)
+  (let ((s (cdr (assoc last-input-event *elixir-snippets*))))
+    (expand-yasnippet s)))
+
 (defun bind-snippet-keys (mode-map snippets function)
   (dolist (s (mapcar #'car snippets))
     (define-key mode-map (kbd (format "\e\e%c" s)) function)))
@@ -96,5 +114,8 @@
 
 (defun bind-clojure-snippets (mode-map)
   (bind-snippet-keys mode-map *clojure-snippets* #'insert-clojure-snippet))
+
+(defun bind-elixir-snippets (mode-map)
+  (bind-snippet-keys mode-map *elixir-snippets* #'insert-elixir-snippet))
 
 (provide 'snippets-module)
