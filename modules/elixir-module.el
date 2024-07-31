@@ -10,7 +10,7 @@
 (use-package
   elixir-ts-mode
   :hook ((elixir-ts-mode . eglot-ensure)
-	 ;;	(elixir-ts-mode . heex-ts-mode)
+;;  	(elixir-ts-mode . heex-ts-mode)
 	 (elixir-ts-mode . company-mode)
 	 )
 

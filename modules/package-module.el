@@ -20,6 +20,7 @@
 	'((clojure-mode . "melpa-stable")
 	  (clojure-mode-extra-font-locking . "melpa-stable")
 	  (cider . "melpa-stable")
+	  (smartparens . "melpa-stable")
 	  (ace-jump-mode . "melpa-stable")
 	 ;; (perspective . "melpa-stable")
 	  (exec-path-from-shell . "melpa-stable")
