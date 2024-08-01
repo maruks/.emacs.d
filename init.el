@@ -23,6 +23,7 @@
 ;; (require 'hydra-module)
 
 (require 'appearance-module)
+(require 'view-module)
 ;; (require 'mituharu-module)
 (require 'fonts-module)
 ;; (require 'icons-module)
