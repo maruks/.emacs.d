@@ -6,10 +6,10 @@
   :ensure nil
   :bind (("s-9" . view-mode)))
 
-(setq-default cursor-type 'bar)
+(setq-default cursor-type 'box)
 
 (add-hook 'view-mode-hook (lambda ()
-			    (setq cursor-type (if view-mode 'bar 'box ))
+			    (setq cursor-type (if view-mode 'bar 'box))
 			    (hl-line-mode (if view-mode 1 -1))
 
 			    (cond ((derived-mode-p 'org-mode)
