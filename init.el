@@ -48,6 +48,7 @@
 (require 'erlang-module)
 
 (require 'elixir-module)
+(require 'gleam-module)
 
 (require 'clojure-module)
 
