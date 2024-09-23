@@ -43,12 +43,13 @@
 
 (require 'electric-pair-module)
 (require 'smart-mode-line-module)
-(require 'scheme-module)
+;; (require 'scheme-module)
 ;; (require 'gerbil-module)
 (require 'erlang-module)
 
 (require 'elixir-module)
 (require 'gleam-module)
+(require 'racket-module)
 
 (require 'clojure-module)
 

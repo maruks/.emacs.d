@@ -2,6 +2,7 @@
 
 (require 'package-module)
 
+;; M-x re-builder
 (use-package re-builder
   :defer t)
 

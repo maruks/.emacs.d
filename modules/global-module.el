@@ -55,17 +55,6 @@
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
 
-;; M-x re-builder
-(require 're-builder)
-(setq reb-re-syntax 'string)
-
-;; exec-path-from-shell
-;; (use-package exec-path-from-shell
-;;   :if (memq window-system '(mac ns))
-;;   :config
-;;   (exec-path-from-shell-initialize)   SLOW
-;;   )
-
 ;; global keys
 
 (keymap-global-set "M-3" "#")

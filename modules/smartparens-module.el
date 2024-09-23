@@ -12,11 +12,13 @@
 
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
 (add-hook 'lisp-mode-hook       #'smartparens-strict-mode)
+(add-hook 'racket-mode-hook     #'smartparens-strict-mode)
 (add-hook 'scheme-mode-hook     #'smartparens-strict-mode)
 (add-hook 'ielm-mode-hook       #'smartparens-mode)
 
 (add-hook 'cider-repl-mode-hook #'smartparens-mode)
 (add-hook 'slime-repl-mode-hook #'smartparens-mode)
+(add-hook 'racket-repl-mode-hook #'smartparens-mode)
 (add-hook 'lisp-interaction-mode-hook #'smartparens-mode)
 (add-hook 'geiser-repl-mode-hook #'smartparens-mode)
 
