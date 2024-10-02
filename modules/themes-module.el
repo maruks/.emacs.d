@@ -23,6 +23,7 @@
 (package-require 'ample-theme)
 (package-require 'doom-themes)
 (package-require 'modus-themes)
+(package-require 'ef-themes)
 (package-require 'moe-theme)
 (package-require 'catppuccin-theme)
 
@@ -177,5 +178,29 @@
 
 (theme-init-keys)
 (theme-load-default)
+
+;; hook
+(defvar after-enable-theme-hook nil
+   "Normal hook run after enabling a theme.")
+
+(defun run-after-enable-theme-hook (&rest args)
+  "Run `after-enable-theme-hook'."
+  (run-hook-with-args 'after-enable-theme-hook (car args)))
+
+(advice-add 'enable-theme :after #'run-after-enable-theme-hook)
+
+(defun amend-font-faces (theme)
+  (let* ((name (symbol-name theme))
+	 (ef (string-prefix-p "ef-" name)))
+    (if ef
+	(progn
+	  ;; disable bold and italic
+	    (set-face-attribute 'bold nil :weight 'normal :background 'unspecified)
+	    (set-face-attribute 'italic nil :slant 'normal :background 'unspecified))
+      (progn
+	  (set-face-attribute 'bold nil :weight 'bold :background 'unspecified)
+	  (set-face-attribute 'italic nil :slant 'italic :background 'unspecified)))))
+
+(add-hook 'after-enable-theme-hook 'amend-font-faces)
 
 (provide 'themes-module)

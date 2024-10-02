@@ -97,8 +97,14 @@
 ;; symbol search
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Search.html
 
-(keymap-global-set "C-c s" 'isearch-forward-symbol)
+(keymap-global-set "C-c ," 'isearch-forward-symbol)
 (keymap-global-set "C-c ." 'isearch-forward-symbol-at-point)
+
+;; https://protesilaos.com/emacs/substitute
+(use-package substitute
+  :ensure t
+  :config
+  (define-key global-map (kbd "C-c s") #'substitute-prefix-map))
 
 ;; which key
 (package-require 'which-key)
