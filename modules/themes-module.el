@@ -195,11 +195,11 @@
     (if ef
 	(progn
 	  ;; disable bold and italic
-	    (set-face-attribute 'bold nil :weight 'normal :background 'unspecified)
-	    (set-face-attribute 'italic nil :slant 'normal :background 'unspecified))
+	    (set-face-attribute 'bold nil :weight 'normal)
+	    (set-face-attribute 'italic nil :slant 'normal))
       (progn
-	  (set-face-attribute 'bold nil :weight 'bold :background 'unspecified)
-	  (set-face-attribute 'italic nil :slant 'italic :background 'unspecified)))))
+	  (set-face-attribute 'bold nil :weight 'bold)
+	  (set-face-attribute 'italic nil :slant 'italic)))))
 
 (add-hook 'after-enable-theme-hook 'amend-font-faces)
 
