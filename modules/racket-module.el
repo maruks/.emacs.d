@@ -15,7 +15,7 @@
 
   :custom
 
-  (racket-program "/Applications/Racket v8.14/bin/racket")
+  (racket-program "/Applications/Racket v8.14.0.4/bin/racket")
 
   )
 
