@@ -5,7 +5,8 @@
 (use-package sly
   :mode ("\\.lisp\\'" . lisp-mode)
   :bind (:map lisp-mode-map
-	 ("s-c" . sly-compile-and-load-file))
+	      ("s-c" . sly-compile-and-load-file)
+	      ("s-s s-s" . sly-scratch))
 
   :diminish (which-key-mode)
 
@@ -22,6 +23,10 @@
   :config
   (bind-lisp-snippets lisp-mode-map)
   (advice-add 'sly-compile-and-load-file :before #'save-current-buffer-if-modified)
+
+  ;; local hyperspec
+  ;; (ql:quickload "clhs")
+  (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
   (defmacro define-sly-lisp (name)
     `(defun ,name ()  (interactive)
