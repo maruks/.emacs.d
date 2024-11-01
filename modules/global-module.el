@@ -5,6 +5,11 @@
 (package-require 'company)
 (package-require 'org)
 
+(defun print-to-scratch (string)
+  (save-excursion
+   (set-buffer "*scratch*")
+   (insert (format "%s" string))))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; store all backup and autosave files in the tmp dir
@@ -51,6 +56,10 @@
 ;; mark
 (add-to-list 'load-path "~/.emacs.d/vendor/xah-mark")
 (require 'xah-mark)
+
+;; splash-screen
+(add-to-list 'load-path "~/.emacs.d/vendor/splash-screen")
+(require 'splash-screen)
 
 ;; change to home directory
 (setq default-directory (concat (getenv "HOME") "/"))
@@ -162,11 +171,6 @@
 (defun save-current-buffer-if-modified (&rest args)
   (when (and buffer-file-name (buffer-modified-p))
     (save-buffer)))
-
-(defun print-to-scratch (string)
-  (save-excursion
-   (set-buffer "*scratch*")
-   (insert (format "%s" string))))
 
 ;; (setq-default with-editor-emacsclient-executable "/usr/local/bin/emacsclient")
 
