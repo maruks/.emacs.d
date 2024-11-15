@@ -77,7 +77,7 @@
 (require 'vertico-module)
 (require 'consult-module)
 (require 'notes-module)
-(require 'casual-module)
+;;(require 'casual-module)
 (require 'perspective-module)
 
 (require 'themes-module)

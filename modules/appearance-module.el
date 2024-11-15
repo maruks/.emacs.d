@@ -4,6 +4,8 @@
 
 (menu-bar-mode -1)
 
+(setopt tooltip-mode nil) ;; https://github.com/clojure-emacs/cider/issues/3748
+
 (when (and window-system (boundp 'tool-bar-mode))
   (tool-bar-mode -1))
 
