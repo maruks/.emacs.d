@@ -11,6 +11,15 @@
 
 (use-package gleam-ts-mode
   :mode (rx ".gleam" eos)
-  :hook ((elixir-ts-mode . eglot-ensure)))
+  :hook ((gleam-ts-mode . eglot-ensure))
+  :config
+  (projectile-register-project-type 'gleam-ts '("gleam.toml")
+                                    :project-file "gleam.toml"
+				    :compile "gleam build"
+				    :test "gleam test"
+				    :run "gleam run"
+                                    :src-dir "src/"
+                                    :test-dir "test/"
+				    :test-suffix "_test"))
 
 (provide 'gleam-module)
