@@ -179,6 +179,4 @@
 ;; C-U C-SPC, SPC, SPC...
 (setq-default set-mark-command-repeat-pop t)
 
-(global-superword-mode)
-
 (provide 'global-module)
