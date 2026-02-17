@@ -67,8 +67,8 @@
 (use-package marginalia
   :ensure t
   :config
-  (setq marginalia-annotator-registry
-        (assq-delete-all 'file marginalia-annotator-registry))
+  (setq marginalia-annotators
+        (assq-delete-all 'file marginalia-annotators))
   :init
   (marginalia-mode))
 
