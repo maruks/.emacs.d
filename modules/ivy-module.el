@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; ivy-module
 
 (require 'package-module)

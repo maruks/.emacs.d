@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; ruby-module
 
 (require 'package-module)

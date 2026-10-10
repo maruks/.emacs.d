@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; vertico-module
 
 (require 'package-module)

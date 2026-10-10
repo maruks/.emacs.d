@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; lisp-module
 
 (require 'package-module)

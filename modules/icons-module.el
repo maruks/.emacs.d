@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; icons-module
 
 (require 'package-module)

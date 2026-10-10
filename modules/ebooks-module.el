@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; ebooks-module
 
 (require 'package-module)

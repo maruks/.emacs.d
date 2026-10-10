@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; smart-mode-line-module
 
 (require 'package-module)

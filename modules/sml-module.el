@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; sml-module
 
 (require 'package-module)
@@ -10,7 +11,7 @@
   (sml-prog-proc-load-file (buffer-file-name) (not arg)))
 
 (eval-after-load 'sml-mode
-  '(progn  
+  '(progn
      (define-key sml-mode-map (kbd "<f5>") 'save-and-load-file)))
 
 (provide 'sml-module)

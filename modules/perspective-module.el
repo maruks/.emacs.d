@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; perspective-module
 
 (require 'package-module)

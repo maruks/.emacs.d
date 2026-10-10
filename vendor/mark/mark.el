@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; from http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
 
 (provide 'mark)

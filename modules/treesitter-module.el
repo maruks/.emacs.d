@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; treesitter-module
 
 (use-package

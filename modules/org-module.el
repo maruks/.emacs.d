@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; org-module
 
 (require 'package-module)

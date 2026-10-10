@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; hydra-module
 
 (require 'package-module)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; elixir-module
 
 (require 'package-module)

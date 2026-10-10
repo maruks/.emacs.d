@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; http://xahlee.info/emacs/emacs/modernization_mark-word.html
 
 (provide 'xah-mark)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; elm-module
 ;; https://github.com/jcollard/elm-mode
 ;; npm install --global elm elm-live elm-test elm-format@exp elm-oracle create-elm-app

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; macos-module
 
 (require 'package-module)

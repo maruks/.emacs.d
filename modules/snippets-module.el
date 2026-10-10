@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; snippets-module
 
 (require 'package-module)

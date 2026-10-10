@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; notes-module
 
 (require 'package-module)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; fullframe-module
 
 (require 'package-module)

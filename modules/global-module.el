@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; global-module
 
 (require 'package-module)

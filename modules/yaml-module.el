@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; yaml-module
 
 (package-require 'yaml-mode)

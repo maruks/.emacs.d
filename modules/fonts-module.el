@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; fonts-module
 
 (require 'package-module)

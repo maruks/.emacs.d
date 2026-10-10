@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; racket-module
 
 (require 'package-module)

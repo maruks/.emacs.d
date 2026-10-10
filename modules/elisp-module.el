@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; elisp-module
 
 (require 'package-module)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; xml-module
 
 (require 'package-module)

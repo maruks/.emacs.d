@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; json-module
 
 (require 'package-module)

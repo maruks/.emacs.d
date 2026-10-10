@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; electric-pair-module
 
 (require 'package-module)

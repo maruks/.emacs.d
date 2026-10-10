@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; git-module
 
 (require 'package-module)

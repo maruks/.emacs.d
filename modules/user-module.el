@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; user-module
 
 (require 'package-module)

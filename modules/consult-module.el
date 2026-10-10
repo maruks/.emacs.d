@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; consult-module
 
 (require 'package-module)

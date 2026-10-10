@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; lua-module
 
 (require 'package-module)

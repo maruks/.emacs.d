@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; smartparens-module
 
 (require 'package-module)

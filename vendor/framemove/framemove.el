@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;;; framemove.el --- directional frame selection routines
 ;;
 ;; Copyright (C) 2010
@@ -26,7 +27,7 @@
 ;;    (require 'framemove)
 ;;    (windmove-default-keybindings)
 ;;    (setq framemove-hook-into-windmove t)
-;; 
+;;
 ;; Compatibility: GNU Emacs 22.x, 23.x
 ;;
 
@@ -150,7 +151,7 @@
            x-dist)
           ((sqrt (+ (expt x-dist 2)
                     (expt y-dist 2)))))))
-              
+
 (defun fm-v-in-range (v range)
   (and (> v (car range))
        (< v (cdr range))))

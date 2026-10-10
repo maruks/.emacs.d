@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; gleam-module
 
 (require 'package-module)

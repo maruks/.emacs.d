@@ -1,4 +1,4 @@
-
+;; -*- lexical-binding: t; -*-
 (provide 'mode-line)
 
 (defun mode-line-1 ()

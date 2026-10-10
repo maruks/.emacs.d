@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; erlang-module
 
 (require 'package-module)

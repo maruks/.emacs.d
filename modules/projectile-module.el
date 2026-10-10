@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; projectile-module
 
 (require 'package-module)
@@ -6,6 +7,7 @@
 
 ;; projectile
 (use-package projectile
+  :ensure t
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :bind (:map projectile-mode-map
@@ -17,10 +19,10 @@
 	      ("s-g t" . projectile-find-implementation-or-test-other-window)
 	      ("s-g r" . projectile-grep)
 	      ("s-r" . projectile-replace))
-  :init
+  :config
   (setq projectile-create-missing-test-files t)
   (setq ag-reuse-buffers 't)
   (setq projectile-completion-system 'default)
-  (projectile-global-mode))
+  (projectile-mode +1))
 
 (provide 'projectile-module)

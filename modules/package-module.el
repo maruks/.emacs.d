@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; package-module
 
 (require 'package)
@@ -14,6 +15,10 @@
 
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+(unless (package-installed-p 'dash)
+  (package-refresh-contents)
+  (package-install 'dash))
 
 (when (boundp 'package-pinned-packages)
   (setq package-pinned-packages

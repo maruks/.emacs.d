@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; rust-module
 
 (require 'package-module)

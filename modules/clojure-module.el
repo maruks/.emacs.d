@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; clojure-module
 
 (require 'package-module)
