@@ -5,19 +5,19 @@
 
 (use-package sly
   :mode ("\\.lisp\\'" . lisp-mode)
+  :ensure t
   :bind (:map lisp-mode-map
 	      ("s-c" . sly-compile-and-load-file)
 	      ("s-s s-s" . sly-scratch))
 
   :diminish (which-key-mode)
 
-  :hook ((sly-mrepl . (lambda ()
-			(define-key sly-mrepl-mode-map (kbd "C-c C-o") 'sly-mrepl-clear-repl)))
-	 (lisp-mode . (lambda () (yas-minor-mode-on))))
+  :hook ((sly-mrepl . my-sly-mrepl-setup)
+         (lisp-mode . my-lisp-mode-setup))
+
   :init
   (setf sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix)
 				   (ccl ("ccl") :coding-system utf-8-unix)))
-  (setf sly-default-lisp 'sbcl)
 
   (setf sly-complete-symbol-function #'sly-flex-completions)
 
@@ -29,36 +29,50 @@
   ;; (ql:quickload "clhs")
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t)
 
-  (defmacro define-sly-lisp (name)
-    `(defun ,name ()  (interactive)
-	    (let ((sly-default-lisp ',name))
-	      (sly))))
+  (defun my-sly-start (implementation)
+    (interactive
+     (list (intern
+            (completing-read
+             "Lisp implementation: "
+             (mapcar #'symbol-name
+                     (mapcar #'car sly-lisp-implementations))
+             nil t))))
+    (let ((sly-default-lisp implementation))
+      (sly)))
 
-  (define-sly-lisp sbcl)
-  (define-sly-lisp ccl))
+  (defun my-sly-sbcl ()
+    (interactive)
+    (my-sly-start 'sbcl))
+
+  (defun my-sly-ccl ()
+    (interactive)
+    (my-sly-start 'ccl)))
 
 (use-package company
-  :init
-  (add-hook 'lisp-mode-hook 'company-mode)
-  (add-hook 'sly-mrepl-hook 'company-mode)
+  :ensure t
+  :hook ((lisp-mode . company-mode)
+         (sly-mrepl-mode . company-mode))
   :bind (:map lisp-mode-map
-	      ("TAB" . company-indent-or-complete-common)))
+         ("TAB" . company-indent-or-complete-common)))
+
 
 (use-package sly-asdf
   :after sly)
 
+;; M-x sly-quickload
+;; C-c C-d C-q
 (use-package sly-quicklisp
-  :after sly
+  :ensure t
+  :after sly)
 
-  :hook ((sly-quicklisp-mode . (lambda ()
-				 (setq sly-extra-mode-line-constructs
-				       '(sly-quicklisp--mode-line-construct--hack)))))
-  :config
+(defun my-lisp-mode-setup ()
+  (when (fboundp 'yas-minor-mode)
+    (yas-minor-mode 1)))
 
-  (require 'seq)
-
-  (defun sly-quicklisp--mode-line-construct--hack ()
-    (let ((line (sly-quicklisp--mode-line-construct)))
-      (seq-filter (lambda (x) (not (member x '(face hi-pink)))) line))))
+(defun my-sly-mrepl-setup ()
+  (when (boundp 'sly-mrepl-mode-map)
+    (define-key sly-mrepl-mode-map
+                (kbd "C-c C-o")
+                #'sly-mrepl-clear-repl)))
 
 (provide 'lisp-module)
