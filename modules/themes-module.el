@@ -160,14 +160,14 @@
 	       (lambda () (interactive) (theme-enable v))))
 	    theme-set-keys))
 
-(defun theme-load (name)
+(defun my-load-theme (name)
   (interactive
    (list
     (intern (completing-read "Load custom theme: "
                              (mapcar 'symbol-name (custom-available-themes))))))
   (theme-enable name))
 
-(global-set-key (kbd "s-2") 'theme-load)
+(global-set-key (kbd "s-2") 'my-load-theme)
 
 (defun theme-load-default ()
   (let ((default-theme (getenv "EMACS_DEFAULT_THEME")))
